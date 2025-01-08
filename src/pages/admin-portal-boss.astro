@@ -1,18 +1,37 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PortfolioManager from '../components/PortfolioManager.vue';
-import { isAuthenticated } from '../lib/auth';
 
-const authenticated = await isAuthenticated(Astro.request);
+export const prerender = false;  // Disable static prerendering, use SSR instead
 
-if (!authenticated) {
-  return Astro.redirect('/admin-login');
-}
+// Simulated authentication check: Always return false (not authenticated)
+// const authenticated = false; // Temporarily comment out authentication logic
+
+// if (!authenticated) {
+//   // Use Astro's syntax to return content
+//   return (
+//     <Layout title="Access Denied">
+//       <div class="container mx-auto px-4 py-12">
+//         <h1 class="text-4xl font-display text-center mb-12">Access Denied</h1>
+//         <p class="text-lg text-center">You must be authenticated to access this page.</p>
+//       </div>
+//     </Layout>
+//   );
+// }
 ---
 
+<!-- Temporarily disabling page content -->
+<!-- 
 <Layout title="Portfolio Management">
   <div class="container mx-auto px-4 py-12">
     <h1 class="text-4xl font-display text-center mb-12">Portfolio Management</h1>
     <PortfolioManager client:load />
   </div>
 </Layout>
+-->
+
+<!-- Placeholder content while disabled -->
+<div class="container mx-auto px-4 py-12">
+  <h1 class="text-4xl font-display text-center mb-12">Admin Portal (Disabled for now)</h1>
+  <p class="text-lg text-center">This page is temporarily disabled for testing purposes.</p>
+</div>

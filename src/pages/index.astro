@@ -3,13 +3,13 @@ import Layout from '../layouts/Layout.astro';
 
 const services = [
   {
-    title: 'Custom Carpentry',
-    description: 'Bespoke woodworking solutions tailored to your needs.',
+    title: 'Home Improvements',
+    description: 'One room at a time--now is great time to rejuvenate THAT space.',
     icon: '🔨'
   },
   {
     title: 'Renovations',
-    description: 'Complete home transformations and updates.',
+    description: 'Complete basement, bathroom and kitchens overhauls',
     icon: '🏠'
   },
   {
@@ -69,7 +69,7 @@ const services = [
         <div>
           <h3 class="text-2xl font-bold mb-4">Expert Craftsmanship</h3>
           <p class="text-primary-600 dark:text-primary-300 mb-4">
-            With years of experience in the industry, we bring skill and precision to every project.
+            With over 8 years of experience in the construction, Mitchell has the right tools and integrity for your project.
           </p>
           <ul class="space-y-2">
             <li class="flex items-center">
@@ -92,27 +92,16 @@ const services = [
             </li>
           </ul>
         </div>
-        <div class="bg-white dark:bg-primary-700 p-6 rounded-lg">
-          <h3 class="text-2xl font-bold mb-4">Get Started Today</h3>
-          <form class="space-y-4">
-            <div>
-              <label class="block text-sm font-medium mb-1" for="email">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                class="w-full px-3 py-2 border border-primary-300 dark:border-primary-600 rounded-lg focus:ring-2 focus:ring-wood-light dark:bg-primary-800"
-                required
-              />
-            </div>
-            <button
-              type="submit"
-              class="w-full bg-wood-dark hover:bg-wood text-white px-4 py-2 rounded-lg transition-colors"
-            >
-              Subscribe to Updates
-            </button>
-          </form>
+        <div class="container mx-auto px-4 py-12 relative z-30">
+          <h2 class="text-3xl font-bold">Get Started Today</h2>
+          <p class="text-lg mb-8">Interested in our services? Contact us to discuss your project.</p>
+          <a 
+            href="/contact" 
+            class="bg-brown-500 text-white px-6 py-2 rounded-lg hover:bg-brown-600 transition-colors"
+            style="display: inline-block; text-align: center; cursor: pointer;"
+          >
+            Contact Us
+          </a>
         </div>
       </div>
     </div>
