@@ -3,9 +3,6 @@ export const prerender = false;
 
 import Layout from '../layouts/Layout.astro';
 
-// === ARRAY OF 10 "BEST OF ALL TIME" IMAGES FOR THE CAROUSEL ===
-// Put these 10 image files into `public/images/` (adjust names to match).
-// Array of image paths in /public/images/
 const topImages = [
   '/images/Top1.png',
   '/images/Top2.png',
@@ -19,7 +16,6 @@ const topImages = [
   '/images/Top10.png',
 ];
 
-// === ARRAY OF 6 PROJECT IMAGES FOR THE CARDS ===
 const projectImages = [
   '/images/placeholder_1.png',
   '/images/placeholder_2.png',
@@ -31,7 +27,6 @@ const projectImages = [
 ---
 
 <Layout title="Portfolio - Core Contracting">
-  <!-- BANNER: warns mobile portrait users to rotate device -->
   <div
     id="rotate-banner"
     class="hidden fixed top-0 left-0 w-full bg-yellow-300 text-black text-center p-3 z-[999]"
@@ -39,47 +34,40 @@ const projectImages = [
     Please rotate your device to landscape for the best experience.
   </div>
 
-  <!-- PAGE HEADING -->
   <h1 class="text-4xl font-serif font-bold text-center mt-20 mb-8">
     Our Portfolio
   </h1>
 
-  <!-- 
-    CAROUSEL SECTION: 
-    - On desktop or mobile-portrait => inline
-    - On mobile-landscape => full screen (to remove letterboxing)
-    Wrapping in a black container ensures leftover space is black, not white
-  -->
   <section
     id="carousel-wrapper"
     class="relative transition-all duration-300 ease-in-out"
   >
     <div
       id="carousel-container"
-      class="mx-auto flex overflow-hidden relative bg-black w-full h-64"
-      style="touch-action: pan-x;"
+      class="relative w-full h-64 bg-black overflow-hidden"
     >
-      <!-- Map over the 10 "Best Of" images for the carousel slides -->
-      {topImages.map((imgSrc, i) => (
-        <div class="shrink-0 w-full h-full flex justify-center items-center" key={i}>
+      {topImages.map((image, index) => (
+        <div 
+          class="absolute top-0 left-0 w-full h-full flex justify-center items-center transition-transform duration-300"
+          style={`transform: translateX(${100 * index}%)`}
+        >
           <img
-            src={imgSrc}
-            alt={`Slide ${i + 1}`}
-            class="object-contain h-full bg-black"
+            src={image}
+            alt={`Slide ${index + 1}`}
+            class="h-full w-auto object-contain"
           />
         </div>
       ))}
     </div>
 
-    <!-- Carousel arrows (previous/next) -->
-    <div class="flex justify-center mt-2 gap-4 items-center">
+    <div class="absolute bottom-[-2.5rem] left-0 right-0 flex justify-center gap-4 items-center">
       <button
         id="carousel-prev"
         class="px-3 py-1 bg-gray-300 dark:bg-gray-700 rounded text-black dark:text-white"
       >
         &larr;
       </button>
-      <span id="slide-number" class="text-sm min-w-[60px] text-center">1 / 10</span>
+      <span id="slide-number" class="text-sm min-w-[60px] text-center">1 / {topImages.length}</span>
       <button
         id="carousel-next"
         class="px-3 py-1 bg-gray-300 dark:bg-gray-700 rounded text-black dark:text-white"
@@ -89,7 +77,6 @@ const projectImages = [
     </div>
   </section>
 
-  <!-- 6 PROJECT CARDS BELOW -->
   <div
     id="portfolio-cards"
     class="container mx-auto px-4 py-12 transition-all duration-300 ease-in-out"
@@ -97,17 +84,16 @@ const projectImages = [
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {projectImages.map((imagePath, index) => (
         <div
-          key={index}
           class="bg-white dark:bg-primary-800 rounded-lg shadow-lg overflow-hidden"
         >
           <img
             src={imagePath}
-            alt={`Project Placeholder ${index + 1}`}
+            alt={`Project ${index + 1}`}
             class="w-full h-64 object-cover"
           />
           <div class="p-6">
             <h2 class="text-2xl font-bold mb-2">
-              Placeholder {index + 1}
+              Project {index + 1}
             </h2>
             <p class="text-primary-600 dark:text-primary-300 mb-4">
               Lorem ipsum dolor sit amet.
@@ -122,15 +108,9 @@ const projectImages = [
       ))}
     </div>
   </div>
-
 </Layout>
 
 <script>
-  /* 
-    === Basic orientation detection ===
-    We'll show a banner if the device is in mobile portrait,
-    and go fullscreen if the device is in mobile landscape.
-  */
   function isMobilePortrait() {
     return (
       window.matchMedia('(max-width: 767px)').matches &&
@@ -145,23 +125,22 @@ const projectImages = [
     );
   }
 
-  let landscapeLocked = false; // track if we've gone to fullscreen mode
+  let landscapeLocked = false;
 
   function showBanner() {
-    document.getElementById('rotate-banner').classList.remove('hidden');
-  }
-  function hideBanner() {
-    document.getElementById('rotate-banner').classList.add('hidden');
+    document.getElementById('rotate-banner')?.classList.remove('hidden');
   }
 
-  // Force the carousel section to fill screen in mobile-landscape
+  function hideBanner() {
+    document.getElementById('rotate-banner')?.classList.add('hidden');
+  }
+
   function applyFullscreen() {
     const wrapper = document.getElementById('carousel-wrapper');
     const container = document.getElementById('carousel-container');
-    // Ensure leftover space is black
-    wrapper.style.backgroundColor = 'black';
+    if (!wrapper || !container) return;
 
-    // Fill the screen
+    wrapper.style.backgroundColor = 'black';
     wrapper.style.position = 'fixed';
     wrapper.style.top = '0';
     wrapper.style.left = '0';
@@ -173,10 +152,11 @@ const projectImages = [
     container.style.height = '100vh';
   }
 
-  // Revert the carousel to an inline display
   function revertInline() {
     const wrapper = document.getElementById('carousel-wrapper');
     const container = document.getElementById('carousel-container');
+    if (!wrapper || !container) return;
+
     wrapper.style.backgroundColor = '';
     wrapper.style.position = '';
     wrapper.style.top = '';
@@ -192,19 +172,16 @@ const projectImages = [
   function updateLayout() {
     if (landscapeLocked) return;
 
-    // If mobile-landscape => go fullscreen
     if (isMobileLandscape()) {
       hideBanner();
       applyFullscreen();
       landscapeLocked = true;
     } else {
-      // If mobile-portrait => show "Rotate device" banner
       if (isMobilePortrait()) {
         showBanner();
       } else {
         hideBanner();
       }
-      // Revert the carousel to normal inline
       revertInline();
     }
   }
@@ -214,116 +191,143 @@ const projectImages = [
     window.addEventListener('orientationchange', updateLayout);
     window.addEventListener('resize', updateLayout);
 
-    // === Enhanced Carousel Logic ===
-    let currentSlide = 0;
     const container = document.getElementById('carousel-container');
-    const slides = Array.from(container.children);
-    const totalSlides = slides.length;
     const prevBtn = document.getElementById('carousel-prev');
     const nextBtn = document.getElementById('carousel-next');
+    const slideNumber = document.getElementById('slide-number');
+    
+    if (!container || !prevBtn || !nextBtn || !slideNumber) return;
 
-    // Initialize slide positions and verify order
-    slides.forEach((slide, index) => {
-      slide.style.transform = `translateX(${100 * index}%)`;
-      // Log the image source to verify order
-      const img = slide.querySelector('img');
-      console.log(`Slide ${index + 1} loaded with image: ${img.src}`);
-    });
+    const slides = Array.from(container.children);
+    const totalSlides = slides.length;
+    let currentSlide = 0;
+    let isTransitioning = false;
+    let lastClickTime = 0;
+    const CLICK_DELAY = 400;
 
     function showSlide(idx) {
-      // Handle wraparound
       if (idx < 0) idx = totalSlides - 1;
       if (idx >= totalSlides) idx = 0;
       currentSlide = idx;
 
-      // Move all slides
       slides.forEach((slide, index) => {
         slide.style.transform = `translateX(${100 * (index - currentSlide)}%)`;
-        slide.style.transition = 'transform 0.3s ease-in-out';
       });
 
-      // Debug logging
-      console.log(`Current slide: ${currentSlide + 1} of ${totalSlides}`);
-      
-      // Add visual indicator of current slide (optional)
-      const slideNumberElement = document.getElementById('slide-number');
-      if (slideNumberElement) {
-        slideNumberElement.textContent = `${currentSlide + 1} / ${totalSlides}`;
-      }
+      slideNumber.textContent = `${currentSlide + 1} / ${totalSlides}`;
     }
 
-    // Event listeners for buttons with enhanced debounce
-    let isTransitioning = false;
-    let lastClickTime = 0;
-    const CLICK_DELAY = 400; // Minimum time between clicks in milliseconds
-    
-    function handleSlideChange(direction) {
+    // Separate handling for button clicks vs swipes
+    function handleButtonClick(direction) {
       const now = Date.now();
-      if (isTransitioning || (now - lastClickTime) < CLICK_DELAY) {
-        return; // Ignore click if we're transitioning or clicked too recently
-      }
+      if (isTransitioning || (now - lastClickTime) < CLICK_DELAY) return;
       
       isTransitioning = true;
       lastClickTime = now;
       
       showSlide(currentSlide + direction);
       
-      // Reset flags after transition
       setTimeout(() => {
         isTransitioning = false;
       }, CLICK_DELAY);
     }
     
-    prevBtn?.addEventListener('click', () => handleSlideChange(-1));
-    nextBtn?.addEventListener('click', () => handleSlideChange(1));
+    prevBtn.addEventListener('click', () => handleButtonClick(-1));
+    nextBtn.addEventListener('click', () => handleButtonClick(1));
 
-    // Add touch swipe functionality
+    // Touch handling with smoother transitions
     let touchStartX = 0;
-    let touchEndX = 0;
+    let touchStartTime = 0;
+    let isSwiping = false;
 
     container.addEventListener('touchstart', (e) => {
       touchStartX = e.touches[0].clientX;
+      touchStartTime = Date.now();
+      isSwiping = true;
     });
 
     container.addEventListener('touchmove', (e) => {
-      touchEndX = e.touches[0].clientX;
+      if (!isSwiping) return;
+      
+      const currentX = e.touches[0].clientX;
+      const deltaX = currentX - touchStartX;
+      
+      // Move all slides with the finger
+      slides.forEach((slide, index) => {
+        const offset = (index - currentSlide) * 100;
+        slide.style.transform = `translateX(calc(${offset}% + ${deltaX}px))`;
+        slide.style.transition = 'none'; // Remove transition during touch move
+      });
     });
 
-    container.addEventListener('touchend', () => {
-      const swipeDistance = touchEndX - touchStartX;
-      if (Math.abs(swipeDistance) > 50) { // minimum swipe distance
-        if (swipeDistance > 0) {
-          showSlide(currentSlide - 1); // swipe right = previous
+    container.addEventListener('touchend', (e) => {
+      if (!isSwiping) return;
+      isSwiping = false;
+      
+      const touchEndX = e.changedTouches[0].clientX;
+      const deltaX = touchEndX - touchStartX;
+      const timeTaken = Date.now() - touchStartTime;
+      
+      // Calculate velocity (pixels per millisecond)
+      const velocity = Math.abs(deltaX) / timeTaken;
+      
+      // Determine if swipe should trigger slide change
+      // Either by distance (>50px) or by speed (>0.5 pixels/ms)
+      if (Math.abs(deltaX) > 50 || velocity > 0.5) {
+        // Re-enable transitions for the snap
+        slides.forEach(slide => {
+          slide.style.transition = 'transform 0.3s ease-out';
+        });
+        
+        if (deltaX > 0) {
+          showSlide(currentSlide - 1);
         } else {
-          showSlide(currentSlide + 1); // swipe left = next
+          showSlide(currentSlide + 1);
         }
+      } else {
+        // If the swipe wasn't far/fast enough, snap back
+        slides.forEach(slide => {
+          slide.style.transition = 'transform 0.3s ease-out';
+          const offset = (index - currentSlide) * 100;
+          slide.style.transform = `translateX(${offset}%)`;
+        });
       }
     });
 
-    /* 
-      === Swipe-down to revert fullscreen ===
-      If user swipes downward ~80px, exit fullscreen so they can scroll to cards.
-    */
+    container.addEventListener('touchcancel', () => {
+      if (!isSwiping) return;
+      isSwiping = false;
+      
+      // Reset positions on cancel
+      slides.forEach((slide, index) => {
+        slide.style.transition = 'transform 0.3s ease-out';
+        const offset = (index - currentSlide) * 100;
+        slide.style.transform = `translateX(${offset}%)`;
+      });
+    });
+
     let startY = null;
     const wrapper = document.getElementById('carousel-wrapper');
-    wrapper.addEventListener('touchstart', (e) => {
-      startY = e.touches[0].clientY;
-    });
-    wrapper.addEventListener('touchmove', (e) => {
-      if (startY === null) return;
-      const currentY = e.touches[0].clientY;
-      const diff = startY - currentY; 
-      // Negative diff means user is swiping down
-      if (diff < -80 && landscapeLocked) {
-        landscapeLocked = false;
-        revertInline();
-      }
-    });
-    wrapper.addEventListener('touchend', () => {
-      startY = null;
-    });
+    if (wrapper) {
+      wrapper.addEventListener('touchstart', (e) => {
+        startY = e.touches[0].clientY;
+      });
+      
+      wrapper.addEventListener('touchmove', (e) => {
+        if (startY === null) return;
+        const currentY = e.touches[0].clientY;
+        const diff = startY - currentY;
+        if (diff < -80 && landscapeLocked) {
+          landscapeLocked = false;
+          revertInline();
+        }
+      });
+      
+      wrapper.addEventListener('touchend', () => {
+        startY = null;
+      });
+    }
 
-    // Initialize first slide
     showSlide(0);
   });
 </script>
