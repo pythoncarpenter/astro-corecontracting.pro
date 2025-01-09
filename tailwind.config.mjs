@@ -27,6 +27,18 @@ export default {
           DEFAULT: '#adb5bd',
           dark: '#495057',
         },
+        brown: {
+          50: '#fdf8f5',
+          100: '#faf2ec',
+          200: '#f4e4da',
+          300: '#e7c9b9',
+          400: '#d9ac94',
+          500: "#744923", // You can tweak these hex codes to suit your brand
+          600: '#ac744f',
+          700: '#8b5a3c',
+          800: '#6a422b',
+          900: '#4c2c1c',
+        },
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],

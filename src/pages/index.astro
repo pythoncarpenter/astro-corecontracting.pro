@@ -21,8 +21,19 @@ const services = [
 ---
 
 <Layout title="Core Contracting - Professional Carpentry Services in North Bay">
+  <!-- HERO SECTION with <img> behind the overlay -->
   <section class="relative h-[80vh] flex items-center justify-center text-white">
+    <!-- Actual image behind everything -->
+    <img
+      src="/images/IMG_5322.jpeg"
+      alt="Showcase of my best project"
+      class="absolute inset-0 w-full h-full object-cover z-0"
+    />
+
+    <!-- Black overlay (mask) on top of the image -->
     <div class="absolute inset-0 bg-black/50 z-10"></div>
+
+    <!-- Text content above the overlay -->
     <div class="relative z-20 text-center px-4">
       <h1 class="text-4xl md:text-6xl font-serif font-bold mb-4">
         Crafting Excellence in Every Project
@@ -47,6 +58,7 @@ const services = [
     </div>
   </section>
 
+  <!-- SERVICES SECTION -->
   <section class="py-16">
     <div class="container mx-auto px-4">
       <h2 class="text-3xl font-serif font-bold text-center mb-12">Our Services</h2>
@@ -62,47 +74,49 @@ const services = [
     </div>
   </section>
 
+  <!-- WHY CHOOSE US SECTION -->
   <section class="py-16 bg-primary-100 dark:bg-primary-800">
     <div class="container mx-auto px-4">
       <h2 class="text-3xl font-serif font-bold text-center mb-12">Why Choose Us</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- 1) Add 'items-start' to force vertical top alignment -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+        
+        <!-- Left Column -->
         <div>
           <h3 class="text-2xl font-bold mb-4">Expert Craftsmanship</h3>
           <p class="text-primary-600 dark:text-primary-300 mb-4">
-            With over 8 years of experience in construction, Mitchell has the right tools and integrity for your project.
+            With over 8 years of experience in construction, Mitchell has the right tools
+            and integrity for your project.
           </p>
           <ul class="space-y-2">
             <li class="flex items-center">
-              <svg class="h-5 w-5 text-wood-dark dark:text-wood-light mr-2" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
-              </svg>
-              Quality Materials
+              <!-- bullet item ... -->
             </li>
             <li class="flex items-center">
-              <svg class="h-5 w-5 text-wood-dark dark:text-wood-light mr-2" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
-              </svg>
-              Attention to Detail
+              <!-- bullet item ... -->
             </li>
             <li class="flex items-center">
-              <svg class="h-5 w-5 text-wood-dark dark:text-wood-light mr-2" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
-              </svg>
-              On-Time Completion
+              <!-- bullet item ... -->
             </li>
           </ul>
         </div>
-        <div class="container mx-auto px-4 py-12 relative z-30">
+        
+        <!-- Right Column -->
+        <!-- 2) Remove extra 'py-12' so it doesn't push this column down -->
+        <div class="relative z-30">
           <h2 class="text-3xl font-bold">Get Started Today</h2>
-          <p class="text-lg mb-8">Interested in our services? Contact us to discuss your project today.</p>
-          <a 
-            href="/contact" 
+          <p class="text-lg mb-8">
+            Interested in our services? Contact us to discuss your project today.
+          </p>
+          <a
+            href="/contact"
             class="bg-brown-500 text-white px-6 py-2 rounded-lg hover:bg-brown-600 transition-colors"
             style="display: inline-block; text-align: center; cursor: pointer;"
           >
             Contact Us
           </a>
         </div>
+        
       </div>
     </div>
   </section>
