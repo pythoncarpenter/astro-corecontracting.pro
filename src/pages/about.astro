@@ -42,10 +42,10 @@ const values = [
         <p class="text-primary-600 dark:text-primary-300 mb-4">
           Core Contracting was founded in North Bay with family values at its core: honesty, hard work, and a dedication to building trust with every client. What began as a small, family-inspired operation is becoming a growing force in custom carpentry and contracting, driven by a passion for quality craftsmanship and a commitment to the North Bay community.
         </p>
-        <p class="text-primary-600 dark:text-primary-300">
+        <p class="text-primary-600 dark:text-primary-300 mb-4">
           As we expand, we remain focused on what matters most: delivering exceptional results while fostering strong relationships. Whether we’re creating spaces for families to thrive or tackling ambitious projects for businesses, we approach every job with the same care and attention to detail that has been our hallmark since day one.
         </p>
-        <p class="text-primary-600 dark:text-primary-300">
+        <p class="text-primary-600 dark:text-primary-300 mb-4">
           At Core Contracting, we’re proud to grow alongside the North Bay community. Together, we’re building more than just spaces—we’re creating lasting value and relationships that stand the test of time.
         </p>
       </div>
@@ -64,7 +64,7 @@ const values = [
 
     <div class="bg-primary-100 dark:bg-primary-800 rounded-lg p-8 mb-16">
       <h2 class="text-3xl font-bold text-center mb-8">Our Team</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
         {team.map(member => (
           <div class="text-center">
             <div class="w-32 h-32 bg-primary-200 dark:bg-primary-700 rounded-full mx-auto mb-4"></div>
@@ -78,11 +78,11 @@ const values = [
 
     <div class="text-center">
       <a
-        href="/contact"
-        class="inline-block bg-wood-dark hover:bg-wood text-white px-8 py-3 rounded-lg transition-colors"
-      >
-        Work With Us
-      </a>
+      href="/contact"
+      class="inline-block bg-wood-dark hover:bg-wood-light text-white px-8 py-3 rounded-lg transition-transform transform hover:scale-105 hover:shadow-md"
+    >
+      Work With Us
+    </a>
     </div>
   </div>
 </Layout>
