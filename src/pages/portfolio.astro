@@ -111,6 +111,20 @@ const projectImages = [
 </Layout>
 
 <script>
+  function preventScroll() {
+    const body = document.body as HTMLElement;
+    body.style.overflow = 'hidden';
+    body.style.position = 'fixed';
+    body.style.width = '100%';
+  }
+
+  function allowScroll() {
+    const body = document.body as HTMLElement;
+    body.style.overflow = '';
+    body.style.position = '';
+    body.style.width = '';
+  }
+
   function isMobilePortrait() {
     return (
       window.matchMedia('(max-width: 767px)').matches &&
@@ -128,11 +142,13 @@ const projectImages = [
   let landscapeLocked = false;
 
   function showBanner() {
-    document.getElementById('rotate-banner')?.classList.remove('hidden');
+    const banner = document.getElementById('rotate-banner');
+    if (banner) banner.classList.remove('hidden');
   }
 
   function hideBanner() {
-    document.getElementById('rotate-banner')?.classList.add('hidden');
+    const banner = document.getElementById('rotate-banner');
+    if (banner) banner.classList.add('hidden');
   }
 
   function applyFullscreen() {
@@ -140,16 +156,21 @@ const projectImages = [
     const container = document.getElementById('carousel-container');
     if (!wrapper || !container) return;
 
-    wrapper.style.backgroundColor = 'black';
-    wrapper.style.position = 'fixed';
-    wrapper.style.top = '0';
-    wrapper.style.left = '0';
-    wrapper.style.width = '100vw';
-    wrapper.style.height = '100vh';
-    wrapper.style.zIndex = '50';
+    const wrapperEl = wrapper as HTMLElement;
+    const containerEl = container as HTMLElement;
 
-    container.style.width = '100vw';
-    container.style.height = '100vh';
+    wrapperEl.style.backgroundColor = 'black';
+    wrapperEl.style.position = 'fixed';
+    wrapperEl.style.top = '0';
+    wrapperEl.style.left = '0';
+    wrapperEl.style.width = '100vw';
+    wrapperEl.style.height = '100vh';
+    wrapperEl.style.zIndex = '50';
+
+    containerEl.style.width = '100vw';
+    containerEl.style.height = '100vh';
+    
+    preventScroll();
   }
 
   function revertInline() {
@@ -157,16 +178,21 @@ const projectImages = [
     const container = document.getElementById('carousel-container');
     if (!wrapper || !container) return;
 
-    wrapper.style.backgroundColor = '';
-    wrapper.style.position = '';
-    wrapper.style.top = '';
-    wrapper.style.left = '';
-    wrapper.style.width = '';
-    wrapper.style.height = '';
-    wrapper.style.zIndex = '';
+    const wrapperEl = wrapper as HTMLElement;
+    const containerEl = container as HTMLElement;
 
-    container.style.width = '';
-    container.style.height = '';
+    wrapperEl.style.backgroundColor = '';
+    wrapperEl.style.position = '';
+    wrapperEl.style.top = '';
+    wrapperEl.style.left = '';
+    wrapperEl.style.width = '';
+    wrapperEl.style.height = '';
+    wrapperEl.style.zIndex = '';
+
+    containerEl.style.width = '';
+    containerEl.style.height = '';
+    
+    allowScroll();
   }
 
   function updateLayout() {
@@ -211,13 +237,13 @@ const projectImages = [
       currentSlide = idx;
 
       slides.forEach((slide, index) => {
-        slide.style.transform = `translateX(${100 * (index - currentSlide)}%)`;
+        const el = slide as HTMLElement;
+        el.style.transform = `translateX(${100 * (index - currentSlide)}%)`;
       });
 
       slideNumber.textContent = `${currentSlide + 1} / ${totalSlides}`;
     }
 
-    // Separate handling for button clicks vs swipes
     function handleButtonClick(direction) {
       const now = Date.now();
       if (isTransitioning || (now - lastClickTime) < CLICK_DELAY) return;
@@ -235,30 +261,73 @@ const projectImages = [
     prevBtn.addEventListener('click', () => handleButtonClick(-1));
     nextBtn.addEventListener('click', () => handleButtonClick(1));
 
-    // Touch handling with smoother transitions
     let touchStartX = 0;
+    let touchStartY = 0;
+    let lastTouchY = 0;
     let touchStartTime = 0;
     let isSwiping = false;
+    let swipeDirection = null;
+    const SWIPE_THRESHOLD = 50;
+    const VERTICAL_SWIPE_THRESHOLD = 40;
+    const MAX_SWIPE_TIME = 300;
+    const MIN_VELOCITY = 0.5;
 
     container.addEventListener('touchstart', (e) => {
       touchStartX = e.touches[0].clientX;
+      touchStartY = lastTouchY = e.touches[0].clientY;
       touchStartTime = Date.now();
       isSwiping = true;
-    });
+      swipeDirection = null;
+    }, { passive: false });
 
     container.addEventListener('touchmove', (e) => {
       if (!isSwiping) return;
       
       const currentX = e.touches[0].clientX;
+      const currentY = e.touches[0].clientY;
       const deltaX = currentX - touchStartX;
+      const deltaY = currentY - touchStartY;
+      const moveDistance = Math.abs(deltaY);
       
-      // Move all slides with the finger
-      slides.forEach((slide, index) => {
-        const offset = (index - currentSlide) * 100;
-        slide.style.transform = `translateX(calc(${offset}% + ${deltaX}px))`;
-        slide.style.transition = 'none'; // Remove transition during touch move
-      });
-    });
+      if (!swipeDirection) {
+        if (Math.abs(deltaY) > Math.abs(deltaX)) {
+          swipeDirection = 'vertical';
+        } else {
+          swipeDirection = 'horizontal';
+        }
+      }
+
+      if (landscapeLocked) {
+        e.preventDefault();
+        
+        if (swipeDirection === 'vertical' && moveDistance > VERTICAL_SWIPE_THRESHOLD) {
+          const velocity = Math.abs(currentY - lastTouchY);
+          
+          if (velocity > MIN_VELOCITY) {
+            landscapeLocked = false;
+            revertInline();
+            
+            requestAnimationFrame(() => {
+              const cards = document.getElementById('portfolio-cards');
+              if (cards) {
+                cards.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            });
+          }
+        }
+      }
+      
+      lastTouchY = currentY;
+      
+      if (swipeDirection === 'horizontal') {
+        slides.forEach((slide, index) => {
+          const el = slide as HTMLElement;
+          const offset = (index - currentSlide) * 100;
+          el.style.transform = `translateX(calc(${offset}% + ${deltaX}px))`;
+          el.style.transition = 'none';
+        });
+      }
+    }, { passive: false });
 
     container.addEventListener('touchend', (e) => {
       if (!isSwiping) return;
@@ -266,67 +335,42 @@ const projectImages = [
       
       const touchEndX = e.changedTouches[0].clientX;
       const deltaX = touchEndX - touchStartX;
-      const timeTaken = Date.now() - touchStartTime;
       
-      // Calculate velocity (pixels per millisecond)
-      const velocity = Math.abs(deltaX) / timeTaken;
-      
-      // Determine if swipe should trigger slide change
-      // Either by distance (>50px) or by speed (>0.5 pixels/ms)
-      if (Math.abs(deltaX) > 50 || velocity > 0.5) {
-        // Re-enable transitions for the snap
+      if (swipeDirection === 'horizontal') {
         slides.forEach(slide => {
-          slide.style.transition = 'transform 0.3s ease-out';
+          const el = slide as HTMLElement;
+          el.style.transition = 'transform 0.3s ease-out';
         });
         
-        if (deltaX > 0) {
-          showSlide(currentSlide - 1);
+        if (Math.abs(deltaX) > SWIPE_THRESHOLD) {
+          if (deltaX > 0) {
+            showSlide(currentSlide - 1);
+          } else {
+            showSlide(currentSlide + 1);
+          }
         } else {
-          showSlide(currentSlide + 1);
+          slides.forEach((slide, index) => {
+            const el = slide as HTMLElement;
+            const offset = (index - currentSlide) * 100;
+            el.style.transform = `translateX(${offset}%)`;
+          });
         }
-      } else {
-        // If the swipe wasn't far/fast enough, snap back
-        slides.forEach(slide => {
-          slide.style.transition = 'transform 0.3s ease-out';
-          const offset = (index - currentSlide) * 100;
-          slide.style.transform = `translateX(${offset}%)`;
-        });
       }
+      
+      swipeDirection = null;
     });
 
     container.addEventListener('touchcancel', () => {
       if (!isSwiping) return;
       isSwiping = false;
       
-      // Reset positions on cancel
       slides.forEach((slide, index) => {
-        slide.style.transition = 'transform 0.3s ease-out';
+        const el = slide as HTMLElement;
+        el.style.transition = 'transform 0.3s ease-out';
         const offset = (index - currentSlide) * 100;
-        slide.style.transform = `translateX(${offset}%)`;
+        el.style.transform = `translateX(${offset}%)`;
       });
     });
-
-    let startY = null;
-    const wrapper = document.getElementById('carousel-wrapper');
-    if (wrapper) {
-      wrapper.addEventListener('touchstart', (e) => {
-        startY = e.touches[0].clientY;
-      });
-      
-      wrapper.addEventListener('touchmove', (e) => {
-        if (startY === null) return;
-        const currentY = e.touches[0].clientY;
-        const diff = startY - currentY;
-        if (diff < -80 && landscapeLocked) {
-          landscapeLocked = false;
-          revertInline();
-        }
-      });
-      
-      wrapper.addEventListener('touchend', () => {
-        startY = null;
-      });
-    }
 
     showSlide(0);
   });
