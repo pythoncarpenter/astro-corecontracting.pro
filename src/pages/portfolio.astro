@@ -2,22 +2,36 @@
 export const prerender = false;
 
 import Layout from '../layouts/Layout.astro';
-import { getProjects } from '../lib/portfolio';
 
-// Fetch real projects or create placeholders:
-const projects = await getProjects();
-const placeholderProjects = projects.slice(0, 6);
+// === ARRAY OF 10 "BEST OF ALL TIME" IMAGES FOR THE CAROUSEL ===
+// Put these 10 image files into `public/images/` (adjust names to match).
+// Array of image paths in /public/images/
+const topImages = [
+  '/images/Top1.png',
+  '/images/Top2.png',
+  '/images/Top3.png',
+  '/images/Top4.png',
+  '/images/Top5.png',
+  '/images/Top6.png',
+  '/images/Top7.png',
+  '/images/Top8.png',
+  '/images/Top9.png',
+  '/images/Top10.png',
+];
 
-// Alternatively, define your own placeholders:
-// const placeholderProjects = Array.from({ length: 6 }, (_, i) => ({
-//   title: `Placeholder ${i + 1}`,
-//   images: ['/placeholder.jpg'],
-//   description: 'Lorem ipsum dolor sit amet.'
-// }));
+// === ARRAY OF 6 PROJECT IMAGES FOR THE CARDS ===
+const projectImages = [
+  '/images/placeholder_1.png',
+  '/images/placeholder_2.png',
+  '/images/placeholder_3.png',
+  '/images/placeholder_4.png',
+  '/images/placeholder_5.png',
+  '/images/placeholder_6.png',
+];
 ---
 
 <Layout title="Portfolio - Core Contracting">
-  <!-- BANNER: optional, appears in portrait -->
+  <!-- BANNER: warns mobile portrait users to rotate device -->
   <div
     id="rotate-banner"
     class="hidden fixed top-0 left-0 w-full bg-yellow-300 text-black text-center p-3 z-[999]"
@@ -31,10 +45,10 @@ const placeholderProjects = projects.slice(0, 6);
   </h1>
 
   <!-- 
-    CAROUSEL SECTION
-    - Desktop / mobile-portrait => inline
-    - Mobile-landscape => fill screen (letterboxed with black bars)
-      Wrapping it in a black container ensures leftover space is black, not white
+    CAROUSEL SECTION: 
+    - On desktop or mobile-portrait => inline
+    - On mobile-landscape => full screen (to remove letterboxing)
+    Wrapping in a black container ensures leftover space is black, not white
   -->
   <section
     id="carousel-wrapper"
@@ -42,33 +56,30 @@ const placeholderProjects = projects.slice(0, 6);
   >
     <div
       id="carousel-container"
-      class="mx-auto flex overflow-hidden transition-transform duration-500 ease-in-out
-             w-full h-64 relative bg-black" 
-      style="touch-action: pan-y;"
+      class="mx-auto flex overflow-hidden relative bg-black w-full h-64"
+      style="touch-action: pan-x;"
     >
-      <!-- 
-        Letterboxing approach: `object-contain` + black background 
-        so leftover space is black bars, not white.
-      -->
-      {placeholderProjects.map((project, i) => (
-        <div class="shrink-0 w-full h-full flex justify-center items-center">
+      <!-- Map over the 10 "Best Of" images for the carousel slides -->
+      {topImages.map((imgSrc, i) => (
+        <div class="shrink-0 w-full h-full flex justify-center items-center" key={i}>
           <img
-            src={project.images[0] ?? '/placeholder.jpg'}
-            alt={`Project ${i + 1}`}
+            src={imgSrc}
+            alt={`Slide ${i + 1}`}
             class="object-contain h-full bg-black"
           />
         </div>
       ))}
     </div>
 
-    <!-- Carousel arrows -->
-    <div class="flex justify-center mt-2 gap-4">
+    <!-- Carousel arrows (previous/next) -->
+    <div class="flex justify-center mt-2 gap-4 items-center">
       <button
         id="carousel-prev"
         class="px-3 py-1 bg-gray-300 dark:bg-gray-700 rounded text-black dark:text-white"
       >
         &larr;
       </button>
+      <span id="slide-number" class="text-sm min-w-[60px] text-center">1 / 10</span>
       <button
         id="carousel-next"
         class="px-3 py-1 bg-gray-300 dark:bg-gray-700 rounded text-black dark:text-white"
@@ -78,26 +89,28 @@ const placeholderProjects = projects.slice(0, 6);
     </div>
   </section>
 
-  <!-- 6 PLACEHOLDER CARDS BELOW FOR TESTING -->
+  <!-- 6 PROJECT CARDS BELOW -->
   <div
     id="portfolio-cards"
     class="container mx-auto px-4 py-12 transition-all duration-300 ease-in-out"
   >
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {placeholderProjects.map((p, index) => (
+      {projectImages.map((imagePath, index) => (
         <div
           key={index}
           class="bg-white dark:bg-primary-800 rounded-lg shadow-lg overflow-hidden"
         >
           <img
-            src={p.images[0] ?? '/placeholder.jpg'}
-            alt={p.title}
+            src={imagePath}
+            alt={`Project Placeholder ${index + 1}`}
             class="w-full h-64 object-cover"
           />
           <div class="p-6">
-            <h2 class="text-2xl font-bold mb-2">{p.title}</h2>
+            <h2 class="text-2xl font-bold mb-2">
+              Placeholder {index + 1}
+            </h2>
             <p class="text-primary-600 dark:text-primary-300 mb-4">
-              {p.description ?? 'Lorem ipsum dolor sit amet.'}
+              Lorem ipsum dolor sit amet.
             </p>
             <button
               class="bg-wood-dark hover:bg-wood text-white px-4 py-2 rounded-lg transition-colors"
@@ -110,12 +123,14 @@ const placeholderProjects = projects.slice(0, 6);
     </div>
   </div>
 
-  <!-- (Optional) Modal or other site elements -->
-
 </Layout>
 
 <script>
-  /* Basic orientation detection */
+  /* 
+    === Basic orientation detection ===
+    We'll show a banner if the device is in mobile portrait,
+    and go fullscreen if the device is in mobile landscape.
+  */
   function isMobilePortrait() {
     return (
       window.matchMedia('(max-width: 767px)').matches &&
@@ -130,7 +145,7 @@ const placeholderProjects = projects.slice(0, 6);
     );
   }
 
-  let landscapeLocked = false;
+  let landscapeLocked = false; // track if we've gone to fullscreen mode
 
   function showBanner() {
     document.getElementById('rotate-banner').classList.remove('hidden');
@@ -139,6 +154,7 @@ const placeholderProjects = projects.slice(0, 6);
     document.getElementById('rotate-banner').classList.add('hidden');
   }
 
+  // Force the carousel section to fill screen in mobile-landscape
   function applyFullscreen() {
     const wrapper = document.getElementById('carousel-wrapper');
     const container = document.getElementById('carousel-container');
@@ -157,6 +173,7 @@ const placeholderProjects = projects.slice(0, 6);
     container.style.height = '100vh';
   }
 
+  // Revert the carousel to an inline display
   function revertInline() {
     const wrapper = document.getElementById('carousel-wrapper');
     const container = document.getElementById('carousel-container');
@@ -175,16 +192,19 @@ const placeholderProjects = projects.slice(0, 6);
   function updateLayout() {
     if (landscapeLocked) return;
 
+    // If mobile-landscape => go fullscreen
     if (isMobileLandscape()) {
       hideBanner();
       applyFullscreen();
       landscapeLocked = true;
     } else {
+      // If mobile-portrait => show "Rotate device" banner
       if (isMobilePortrait()) {
         showBanner();
       } else {
         hideBanner();
       }
+      // Revert the carousel to normal inline
       revertInline();
     }
   }
@@ -194,30 +214,96 @@ const placeholderProjects = projects.slice(0, 6);
     window.addEventListener('orientationchange', updateLayout);
     window.addEventListener('resize', updateLayout);
 
-    /* Simple carousel logic */
+    // === Enhanced Carousel Logic ===
     let currentSlide = 0;
     const container = document.getElementById('carousel-container');
-    const slides = container.children;
+    const slides = Array.from(container.children);
     const totalSlides = slides.length;
     const prevBtn = document.getElementById('carousel-prev');
     const nextBtn = document.getElementById('carousel-next');
 
+    // Initialize slide positions and verify order
+    slides.forEach((slide, index) => {
+      slide.style.transform = `translateX(${100 * index}%)`;
+      // Log the image source to verify order
+      const img = slide.querySelector('img');
+      console.log(`Slide ${index + 1} loaded with image: ${img.src}`);
+    });
+
     function showSlide(idx) {
+      // Handle wraparound
       if (idx < 0) idx = totalSlides - 1;
       if (idx >= totalSlides) idx = 0;
       currentSlide = idx;
-      container.style.transform = `translateX(-${100 * idx}%)`;
+
+      // Move all slides
+      slides.forEach((slide, index) => {
+        slide.style.transform = `translateX(${100 * (index - currentSlide)}%)`;
+        slide.style.transition = 'transform 0.3s ease-in-out';
+      });
+
+      // Debug logging
+      console.log(`Current slide: ${currentSlide + 1} of ${totalSlides}`);
+      
+      // Add visual indicator of current slide (optional)
+      const slideNumberElement = document.getElementById('slide-number');
+      if (slideNumberElement) {
+        slideNumberElement.textContent = `${currentSlide + 1} / ${totalSlides}`;
+      }
     }
 
-    prevBtn.addEventListener('click', () => {
-      showSlide(currentSlide - 1);
-    });
-    nextBtn.addEventListener('click', () => {
-      showSlide(currentSlide + 1);
-    });
-    showSlide(0);
+    // Event listeners for buttons with enhanced debounce
+    let isTransitioning = false;
+    let lastClickTime = 0;
+    const CLICK_DELAY = 400; // Minimum time between clicks in milliseconds
+    
+    function handleSlideChange(direction) {
+      const now = Date.now();
+      if (isTransitioning || (now - lastClickTime) < CLICK_DELAY) {
+        return; // Ignore click if we're transitioning or clicked too recently
+      }
+      
+      isTransitioning = true;
+      lastClickTime = now;
+      
+      showSlide(currentSlide + direction);
+      
+      // Reset flags after transition
+      setTimeout(() => {
+        isTransitioning = false;
+      }, CLICK_DELAY);
+    }
+    
+    prevBtn?.addEventListener('click', () => handleSlideChange(-1));
+    nextBtn?.addEventListener('click', () => handleSlideChange(1));
 
-    /* If you want to allow a swipe-down to revert from fullscreen, e.g.: */
+    // Add touch swipe functionality
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    container.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+    });
+
+    container.addEventListener('touchmove', (e) => {
+      touchEndX = e.touches[0].clientX;
+    });
+
+    container.addEventListener('touchend', () => {
+      const swipeDistance = touchEndX - touchStartX;
+      if (Math.abs(swipeDistance) > 50) { // minimum swipe distance
+        if (swipeDistance > 0) {
+          showSlide(currentSlide - 1); // swipe right = previous
+        } else {
+          showSlide(currentSlide + 1); // swipe left = next
+        }
+      }
+    });
+
+    /* 
+      === Swipe-down to revert fullscreen ===
+      If user swipes downward ~80px, exit fullscreen so they can scroll to cards.
+    */
     let startY = null;
     const wrapper = document.getElementById('carousel-wrapper');
     wrapper.addEventListener('touchstart', (e) => {
@@ -226,9 +312,8 @@ const placeholderProjects = projects.slice(0, 6);
     wrapper.addEventListener('touchmove', (e) => {
       if (startY === null) return;
       const currentY = e.touches[0].clientY;
-      const diff = startY - currentY;
-
-      // "Deadzone" threshold
+      const diff = startY - currentY; 
+      // Negative diff means user is swiping down
       if (diff < -80 && landscapeLocked) {
         landscapeLocked = false;
         revertInline();
@@ -237,5 +322,8 @@ const placeholderProjects = projects.slice(0, 6);
     wrapper.addEventListener('touchend', () => {
       startY = null;
     });
+
+    // Initialize first slide
+    showSlide(0);
   });
 </script>
