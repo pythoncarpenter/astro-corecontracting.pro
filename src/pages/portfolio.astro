@@ -111,6 +111,9 @@ const projectImages = [
 </Layout>
 
 <script>
+  let manuallyExited = false;
+  let landscapeLocked = false;
+
   function preventScroll() {
     const body = document.body as HTMLElement;
     body.style.overflow = 'hidden';
@@ -138,8 +141,6 @@ const projectImages = [
       (window.orientation === 90 || window.orientation === -90)
     );
   }
-
-  let landscapeLocked = false;
 
   function showBanner() {
     const banner = document.getElementById('rotate-banner');
@@ -196,7 +197,13 @@ const projectImages = [
   }
 
   function updateLayout() {
-    if (landscapeLocked) return;
+    // Only handle orientation changes if we're not in a post-exit state
+    if (manuallyExited) {
+      if (!isMobileLandscape()) {
+        revertInline();
+      }
+      return;
+    }
 
     if (isMobileLandscape()) {
       hideBanner();
@@ -213,6 +220,17 @@ const projectImages = [
   }
 
   document.addEventListener('astro:page-load', () => {
+    const carouselWrapper = document.getElementById('carousel-wrapper');
+    if (carouselWrapper) {
+      carouselWrapper.addEventListener('click', () => {
+        if (manuallyExited && isMobileLandscape()) {
+          manuallyExited = false;
+          applyFullscreen();
+          landscapeLocked = true;
+        }
+      });
+    }
+
     updateLayout();
     window.addEventListener('orientationchange', updateLayout);
     window.addEventListener('resize', updateLayout);
@@ -305,6 +323,7 @@ const projectImages = [
           
           if (velocity > MIN_VELOCITY) {
             landscapeLocked = false;
+            manuallyExited = true;
             revertInline();
             
             requestAnimationFrame(() => {
@@ -374,4 +393,4 @@ const projectImages = [
 
     showSlide(0);
   });
-</script>
+</script>X
