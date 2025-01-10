@@ -1,13 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import profileImage from '/images/profile.jpeg'; // Corrected import path
 
 const team = [
   {
     name: 'Mitchell McQuoid',
     role: 'Owner & Red Seal Carpenter',
     bio: 'With almost a decade of experience in custom carpentry and contracting, Mitchell leads Core Contracting with expertise and dedication to quality craftsmanship. Getting it right the first time and being accountable is something we are proud of. Our mission is to hand over your project to you, turnkey ready--we will take care of you from start to finish.',
-    image: profileImage
+    image: '/images/IMG_2604.jpeg' // Static path
   }
 ];
 
@@ -60,7 +59,7 @@ const values = [
         <h2 class="text-3xl font-bold mb-4">Our Values</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {values.map(value => (
-            <div key={value.title}>
+            <div data-key={value.title}>
               <h3 class="text-xl font-bold mb-2">{value.title}</h3>
               <p class="text-primary-600 dark:text-primary-300">{value.description}</p>
             </div>
@@ -69,24 +68,22 @@ const values = [
       </div>
     </div>
 
-    <!-- Our Team -->
-    <div class="bg-primary-100 dark:bg-primary-800 rounded-lg p-8 mb-16">
-      <h2 class="text-3xl font-bold text-center mb-8">Our Team</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-        {team.map(member => (
-          <div class="text-center">
-            <img 
-              src={member.image} 
-              alt={member.name} 
-              class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-2 border-primary-500"
-            />
-            <h3 class="text-xl font-bold mb-2">{member.name}</h3>
-            <p class="text-primary-600 dark:text-primary-300 mb-2">{member.role}</p>
-            <p class="text-sm">{member.bio}</p>
-          </div>
-        ))}
-      </div>
-    </div>
+<!-- The Team -->
+<div class="flex flex-col items-center text-center py-12">
+  <h2 class="text-3xl font-bold mb-8">The Team</h2>
+  <div class="bg-primary-100 dark:bg-primary-800 rounded-lg shadow-md p-6 max-w-md w-full">
+    <img 
+      src="/images/IMG_2604.jpeg" 
+      alt="Mitchell McQuoid" 
+      class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-2 border-primary-500"
+    />
+    <h3 class="text-xl font-bold mb-2">Mitchell McQuoid</h3>
+    <p class="text-primary-600 dark:text-primary-300 mb-2">Owner & Red Seal Carpenter</p>
+    <p class="text-sm max-w-xs mx-auto">
+      With almost a decade of experience in custom carpentry and contracting, Mitchell leads Core Contracting with expertise and dedication to quality craftsmanship. Getting it right the first time and being accountable is something we are proud of. Our mission is to hand over your project to you, turnkey ready--we will take care of you from start to finish.
+    </p>
+  </div>
+</div>
 
     <!-- Call to Action -->
     <div class="text-center">
