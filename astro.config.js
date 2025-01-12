@@ -5,12 +5,12 @@ import vue from '@astrojs/vue';
 import netlify from '@astrojs/netlify';
 
 export default defineConfig({
-  output: 'server',  // Ensure SSR is used for dynamic pages like this
-  adapter: netlify(),  // Keep the Netlify adapter for deployment
+  output: 'server',
+  adapter: netlify(),
   integrations: [
     tailwind(),
     vue(),
     sitemap(),
   ],
-  site: 'https://corecontracting.pro'
+  site: 'https://corecontracting.pro',
 });

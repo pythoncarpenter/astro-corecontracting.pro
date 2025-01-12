@@ -1,0 +1,5 @@
+[dev]
+  # The port or command that starts Astro
+  command = "npm run dev"
+  port = 3000
+  # Or whatever your local dev port is
