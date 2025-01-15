@@ -8,7 +8,9 @@ export default defineConfig({
   output: 'server',
   adapter: netlify(),
   integrations: [
-    tailwind(),
+    tailwind({
+      applyBaseStyles: true,
+    }), 
     vue(),
     sitemap(),
   ],

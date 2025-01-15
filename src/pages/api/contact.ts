@@ -1,3 +1,5 @@
+// src/pages/api/contact.ts
+import type { APIRoute } from 'astro';
 import nodemailer from 'nodemailer';
 
 // Helper to build an HTML message body
@@ -16,35 +18,44 @@ function buildHtmlEmail({ name, email, phone, message }) {
         <p><strong>Message:</strong></p>
         <p>${message}</p>
         <hr style="margin-top: 2rem;" />
-        <p style="font-size: 12px; color: #888;">Sent from your website contact form.</p>
+        <p style="font-size: 12px; color: #888;">Sent from your website www.corecontracting.pro</p>
       </body>
     </html>
   `;
 }
 
-// Astro 2.x supports an async function named `post()` to handle POST requests:
-export async function POST({ request }) {
+export const POST: APIRoute = async ({ request }) => {
   try {
     // Parse form data from the request
     const formData = await request.formData();
-    const name = formData.get('name') || '';
-    const email = formData.get('email') || '';
-    const phone = formData.get('phone') || '';
-    const message = formData.get('message') || '';
+    const name = formData.get('name')?.toString();
+    const email = formData.get('email')?.toString();
+    const phone = formData.get('phone')?.toString();
+    const message = formData.get('message')?.toString();
+
+    // Validate required fields (add more validation as needed)
+    if (!name || !email || !message) {
+      return new Response(JSON.stringify({ success: false, message: 'Name, email, and message are required fields.' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
 
     // Create the Nodemailer transporter
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      host: import.meta.env.SMTP_HOST,
+      port: Number(import.meta.env.SMTP_PORT),
+      secure: false, // true for 465, false for other ports
       auth: {
-        user: import.meta.env.EMAIL_USER, // .env -> "EMAIL_USER"
-        pass: import.meta.env.EMAIL_PASS, // .env -> "EMAIL_PASS"
+        user: import.meta.env.SMTP_USER,
+        pass: import.meta.env.SMTP_PASS,
       },
     });
 
     // Prepare the mail data
     const mailOptions = {
-      from: import.meta.env.EMAIL_USER,
-      to: import.meta.env.EMAIL_USER, // Or your own
+      from: import.meta.env.SMTP_USER, // Use the SMTP user as sender (your Gmail)
+      to: import.meta.env.SMTP_USER,    // Send to yourself
       subject: 'New Contact Form Submission',
       html: buildHtmlEmail({ name, email, phone, message }),
     };
@@ -65,4 +76,4 @@ export async function POST({ request }) {
       headers: { 'Content-Type': 'application/json' },
     });
   }
-}
+};

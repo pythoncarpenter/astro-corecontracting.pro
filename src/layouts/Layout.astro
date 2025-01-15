@@ -4,7 +4,6 @@ import '@fontsource/inter/700.css';
 import '@fontsource/merriweather/400.css';
 import '@fontsource/merriweather/700.css';
 import '@fontsource/racing-sans-one/400.css';
-import { ViewTransitions } from 'astro:transitions';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ThemeScript from '../components/ThemeScript.astro';
@@ -19,23 +18,48 @@ const {
   description = "Core Contracting - Professional Carpentry and Contracting Services in North Bay, Ontario"
 } = Astro.props;
 ---
+<script>
+  (function () {
+    // Only override in development
+    if (import.meta.env.DEV) {
+      localStorage.setItem('theme', 'light');
+    }
+
+    let theme = localStorage.getItem('theme');
+
+    if (!theme) {
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        theme = 'dark';
+      } else {
+        theme = 'light';
+      }
+      localStorage.setItem('theme', theme);
+    }
+
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  })();
+</script>
 
 <!doctype html>
 <html lang="en">
   <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} /> <!-- ✅ Added this line -->
-    <ViewTransitions />
     <ThemeScript />
   </head>
   <body class="min-h-screen bg-primary-50 dark:bg-primary-900 text-primary-900 dark:text-primary-50 transition-colors duration-300">
     <Header />
     <main class="container mx-auto px-4 py-8">
-      <slot />
+      <slot transition:animate="slide" />
     </main>
     <Footer />
   </body>
