@@ -1,0 +1,33 @@
+---
+// SchemeToggle.astro
+---
+
+<button id="theme-toggle" type="button" aria-label="Toggle Light/Dark">
+  {/* ... your icon or text for the button ... */} 
+</button>
+
+<script>
+  const toggleButton = document.getElementById('theme-toggle');
+
+  function toggleScheme() {
+    const isDark = document.documentElement.classList.contains('dark');
+    const newScheme = isDark ? 'light' : 'dark';
+
+    // 1. Update localStorage
+    localStorage.setItem('colorScheme', newScheme);
+
+    // 2. Update Astro cookie 
+    Astro.cookies.set('colorScheme', newScheme); 
+
+    // 3. Toggle the dark class
+    document.documentElement.classList.toggle('dark');
+  }
+
+  toggleButton.addEventListener('click', toggleScheme);
+
+  // Initialize theme on page load (using localStorage and prefers-color-scheme)
+  const storedTheme = localStorage.getItem('colorScheme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  if (storedTheme === 'dark') {
+    document.documentElement.classList.add('dark');
+  }
+</script>
