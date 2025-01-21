@@ -6,7 +6,6 @@ import '@fontsource/merriweather/700.css';
 import '@fontsource/racing-sans-one/400.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import SchemeToggle from '../components/SchemeToggle.astro';
 
 interface Props {
   title: string;
@@ -20,7 +19,7 @@ const {
 ---
 
 <!doctype html>
-<html lang="en" class:list={Astro.cookies.get('colorScheme')?.value === 'dark' ? ['dark'] : []}>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -35,12 +34,25 @@ const {
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <SchemeToggle />  {/* Removed client:idle */}
+    <style>
+      html {
+        -webkit-text-size-adjust: 100%; /* Maintain compatibility */
+      }
+
+      /* Feature detection for view-transition properties */
+      @supports (view-transition-name: fade) {
+        html {
+          /* Safely ignore experimental property */
+        }
+      }
+    </style>
   </head>
   <body
     class="min-h-screen bg-primary-50 dark:bg-primary-900 text-primary-900 dark:text-primary-50 transition-colors duration-300"
   >
-    <Header />
+    <Header>
+      <slot name="theme-toggle" slot="theme-toggle" />
+    </Header>
     <main class="container mx-auto px-4 py-8">
       <slot transition:animate="slide" />
     </main>
