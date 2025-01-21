@@ -1,0 +1,33 @@
+---
+---
+<script is:inline>
+  function setTheme() {
+    const hour = new Date().getHours();
+    const isDaytime = hour >= 6 && hour < 18;
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const storedTheme = localStorage.getItem('theme');
+    
+    if (storedTheme) {
+      document.documentElement.classList.toggle('dark', storedTheme === 'dark');
+    } else {
+      document.documentElement.classList.toggle('dark', !isDaytime || prefersDark);
+    }
+  }
+
+  // Set theme on load
+  setTheme();
+
+  // Update theme every hour
+  setInterval(setTheme, 3600000);
+
+  // Theme toggle functionality
+  document.addEventListener('astro:page-load', () => {
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      });
+    }
+  });
+</script>
