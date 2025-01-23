@@ -1,0 +1,25 @@
+graph TD
+    Layout --> about
+    Layout --> index
+    Layout --> services
+    Layout --> blog
+    Layout --> contact
+    Layout --> portfolio
+    
+    Header --> Layout
+    Footer --> Layout
+    ThemeToggle --> Header
+
+    blog --> Layout
+    about --> Layout
+    Layout --> Header
+    Layout --> Footer
+    Header --> ThemeToggle
+    Header --> mobile-menu-button
+    Header --> mobile-menu
+    index --> Layout
+    contact --> Layout
+    portfolio --> Layout
+    portfolio --> portfolio-cards
+    services --> Layout
+    ThemeToggle --> theme-toggle

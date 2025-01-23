@@ -1,0 +1,94 @@
+Project Flow Analysis
+===================
+[0;34mAnalyzing Component: Card[0m
+[0;34mAnalyzing Component: Footer[0m
+[0;34mAnalyzing Component: MobileNav[0m
+[0;34mAnalyzing Component: ThemeToggle[0m
+[0;34mAnalyzing Component: Header[0m
+[0;34mAnalyzing Component: Layout[0m
+[0;34mAnalyzing Component: about[0m
+[0;34mAnalyzing Component: index[0m
+[0;34mAnalyzing Component: services[0m
+[0;34mAnalyzing Component: blog[0m
+[0;34mAnalyzing Component: contact[0m
+[0;34mAnalyzing Component: portfolio[0m
+[0;32mAnalyzing TypeScript: env.d[0m
+[0;32mAnalyzing TypeScript: portfolio[0m
+[0;32mAnalyzing TypeScript: auth[0m
+
+Component Flow Analysis
+=====================
+
+[0;34mComponent Hierarchy:[0m
+Component: Footer
+  └─ Used by: Layout
+Component: Layout
+  └─ Used by: about
+  └─ Used by: index
+  └─ Used by: services
+  └─ Used by: blog
+  └─ Used by: contact
+  └─ Used by: portfolio
+Component: Header
+  └─ Used by: Layout
+Component: ThemeToggle
+  └─ Used by: Header
+
+[1;33mData Flow:[0m
+Component: blog
+  └─ uses:Layout
+Component: about
+  └─ uses:Layout
+Component: Layout
+  └─ uses:Header
+  └─ uses:Footer
+Component: Header
+  └─ uses:ThemeToggle
+  └─ binds:mobile-menu-button
+  └─ binds:mobile-menu
+Component: index
+  └─ uses:Layout
+Component: contact
+  └─ uses:Layout
+Component: portfolio
+  └─ uses:Layout
+  └─ binds:rotate-banner
+  └─ binds:rotate-banner
+  └─ binds:carousel-wrapper
+  └─ binds:carousel-container
+  └─ binds:carousel-wrapper
+  └─ binds:carousel-container
+  └─ binds:carousel-wrapper
+  └─ binds:carousel-container
+  └─ binds:carousel-prev
+  └─ binds:carousel-next
+  └─ binds:slide-number
+  └─ binds:portfolio-cards
+Component: services
+  └─ uses:Layout
+Component: ThemeToggle
+  └─ binds:theme-toggle
+
+[0;32mTypeScript Functions:[0m
+Module: auth
+  └─ Exports: isAuthenticated
+  └─ Exports: authenticate
+Module: portfolio
+  └─ Exports: getProjects
+  └─ Exports: saveProjects
+  └─ Exports: addProject
+  └─ Exports: updateProject
+  └─ Exports: deleteProject
+
+[0;32mShared Data:[0m
+Module: auth
+  └─ Constant: token
+  └─ Constant: isValid
+Module: portfolio
+  └─ Constant: data
+  └─ Constant: projects
+  └─ Constant: newProject
+  └─ Constant: projects
+  └─ Constant: index
+  └─ Constant: projects
+  └─ Constant: newProjects
