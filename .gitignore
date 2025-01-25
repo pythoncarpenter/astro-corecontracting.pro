@@ -25,3 +25,4 @@ pnpm-debug.log*
 
 # Local Netlify folder
 .netlify
+header_current.txt
