@@ -48,8 +48,13 @@ echo "" >> "$temp_file"
 for file_pattern in "$@"; do
   # Find files matching the pattern in the current directory and its subdirectories
   find "$repo_root" -name "$file_pattern" -type f -print0 | while IFS= read -r -d $'\0' file; do
-    cat "$file" >> "$temp_file"
-    echo "" >> "$temp_file"  # Add an empty line (optional)
+    # Check if the file is text-based using the file command
+    if file "$file" | grep -q "text"; then 
+      cat "$file" >> "$temp_file"
+      echo "" >> "$temp_file"  # Add an empty line (optional)
+    else
+      echo "Skipping non-text file: $file"
+    fi
   done
 done
 
