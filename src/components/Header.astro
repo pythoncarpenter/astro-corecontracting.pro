@@ -1,69 +1,100 @@
 ---
-import ThemeToggle from './ThemeToggle.astro';
+import ThemeToggle from "./ThemeToggle.astro";
 
 const navItems = [
-  { href: '/', text: 'Home' },
-  { href: '/services', text: 'Services' },
-  { href: '/portfolio', text: 'Portfolio' },
-  { href: '/about', text: 'About' },
-  { href: '/blog', text: 'Blog' },
-  { href: '/contact', text: 'Contact' },
+  { href: "/", text: "Home" },
+  { href: "/services", text: "Services" },
+  { href: "/portfolio", text: "Portfolio" },
+  { href: "/about", text: "About" },
+  { href: "/blog", text: "Blog" },
+  { href: "/contact", text: "Contact" },
 ];
 ---
 
 <header class="bg-white dark:bg-primary-800 shadow-md">
   <nav class="container mx-auto px-4 py-4">
     <div class="flex items-center justify-between">
-      <a href="/" class="text-2xl font-display text-wood-dark dark:text-wood-light">
+      <a
+        href="/"
+        class="text-2xl font-display text-wood-dark dark:text-wood-light"
+      >
         Core Contracting
       </a>
 
       <div class="hidden md:flex items-center space-x-6">
-        {navItems.map(item => (
-          <a
-            href={item.href}
-            class:list={[
-              "text-primary-600 dark:text-primary-300 hover:text-wood-dark dark:hover:text-wood-light transition-colors",
-              {
-                'font-bold': Astro.url.pathname === item.href,
-                'hover:text-blue-700 dark:hover:text-blue-300': Astro.url.pathname !== item.href,
-                'active:text-blue-800 dark:active:text-blue-200': Astro.url.pathname !== item.href
-              }
-            ]}
-          >
-            {item.text}
-          </a>
-        ))}
+        {
+          navItems.map((item) => (
+            <a
+              href={item.href}
+              class:list={[
+                "text-primary-600 dark:text-primary-300 hover:text-wood-dark dark:hover:text-wood-light transition-colors",
+                {
+                  "font-bold": Astro.url.pathname === item.href,
+                  "hover:text-blue-700 dark:hover:text-blue-300":
+                    Astro.url.pathname !== item.href,
+                  "active:text-blue-800 dark:active:text-blue-200":
+                    Astro.url.pathname !== item.href,
+                },
+              ]}
+            >
+              {item.text}
+              {" "}
+            </a>
+          ))
+        }
         <ThemeToggle />
       </div>
 
-      <button
-        id="mobile-menu-button"
-        class="md:hidden p-2 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-700 active:bg-primary-200 dark:active:bg-primary-600"
-        aria-label="Toggle menu"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
+      <div class="flex items-center md:hidden">
+        <button
+
+          id="mobile-menu-button"
+
+          class="md:hidden p-2 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-700 active:bg-primary-200 dark:active:bg-primary-600"
+
+          aria-label="Toggle menu"
+
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
     </div>
 
-    <div id="mobile-menu" class="hidden md:hidden mt-4 space-y-4 bg-primary-50 dark:bg-primary-800 p-4 rounded-lg">
-      {navItems.map(item => (
-        <a
-          href={item.href}
-          class:list={[
-            "block py-2 text-primary-600 dark:text-primary-300 hover:text-wood-dark dark:hover:text-wood-light transition-colors",
-            {
-              'font-bold': Astro.url.pathname === item.href,
-              'hover:text-blue-700 dark:hover:text-blue-300': Astro.url.pathname !== item.href,
-              'active:text-blue-800 dark:active:text-blue-200': Astro.url.pathname !== item.href
-            }
-          ]}
-        >
-          {item.text}
-        </a>
-      ))}
+    <div
+      id="mobile-menu"
+      class="hidden md:hidden mt-4 space-y-4 bg-primary-50 dark:bg-primary-800 p-4 rounded-lg"
+    >
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              "block py-2 text-primary-600 dark:text-primary-300 hover:text-wood-dark dark:hover:text-wood-light transition-colors",
+              {
+                "font-bold": Astro.url.pathname === item.href,
+                "hover:text-blue-700 dark:hover:text-blue-300":
+                  Astro.url.pathname !== item.href,
+                "active:text-blue-800 dark:active:text-blue-200":
+                  Astro.url.pathname !== item.href,
+              },
+            ]}
+          >
+            {item.text}{" "}
+          </a>
+        ))
+      }
     </div>
   </nav>
 </header>

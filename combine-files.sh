@@ -46,12 +46,12 @@ echo "" >> "$temp_file"
 
 # Process each file name provided as a command-line argument
 for file_pattern in "$@"; do
-  # Find files matching the pattern in the current directory and its subdirectories
+  # Find files matching the pattern (including [id].ts)
   find "$repo_root" -name "$file_pattern" -type f -print0 | while IFS= read -r -d $'\0' file; do
-    # Check if the file is text-based using the file command
-    if file "$file" | grep -q "text"; then 
+    # Check if the file is text-based
+    if file "$file" | grep -q "text"; then
       cat "$file" >> "$temp_file"
-      echo "" >> "$temp_file"  # Add an empty line (optional)
+      echo "" >> "$temp_file" 
     else
       echo "Skipping non-text file: $file"
     fi
