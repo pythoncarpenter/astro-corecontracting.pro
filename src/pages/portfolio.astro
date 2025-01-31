@@ -4,16 +4,16 @@ export const prerender = false;
 import Layout from '../layouts/Layout.astro';
 
 const topImages = [
-  '/images/Top1.jpeg', //Bob's Bathroom
-  '/images/Top2.jpeg', //Backyard Reno
-  '/images/Top3.jpeg', //Coffered Beams
-  '/images/Top4.jpeg', //Siding
-  '/images/Top5.jpeg', //Suspended Ceiling
-  '/images/Top6.jpeg', //Fireproof Door
-  '/images/Top7.jpeg', //Stairs
-  '/images/Top8.jpeg', //Framing
-  '/images/Top9.jpeg', //Framing
-  '/images/Top10.jpeg', //Concrete
+  '/images/Top1.jpeg',
+  '/images/Top2.jpeg',
+  '/images/Top3.jpeg',
+  '/images/Top4.jpeg',
+  '/images/Top5.jpeg',
+  '/images/Top6.jpeg',
+  '/images/Top7.jpeg',
+  '/images/Top8.jpeg',
+  '/images/Top9.jpeg',
+  '/images/Top10.jpeg',
 ];
 
 const projectImages = [
@@ -23,6 +23,15 @@ const projectImages = [
   '/images/placeholder_4.jpeg',
   '/images/placeholder_5.jpeg',
   '/images/placeholder_6.jpeg',
+];
+
+const cardDescriptions = [
+  'High-End Bathroom Uplift',
+  'Backyard Reno',
+  'Coffered-style Maple Beams',
+  'Vertical Siding on Poolhouse',
+  'Apartment Fire-Door',
+  'Beach-house Stair Reno'
 ];
 ---
 
@@ -38,16 +47,17 @@ const projectImages = [
     Our Portfolio
   </h1>
 
+  <!-- Carousel Section with 80vh on desktop -->
   <section
     id="carousel-wrapper"
     class="relative transition-all duration-300 ease-in-out"
   >
     <div
       id="carousel-container"
-      class="relative w-full h-64 bg-black overflow-hidden"
+      class="relative w-full h-[80vh] bg-black overflow-hidden"
     >
       {topImages.map((image, index) => (
-        <div 
+        <div
           class="absolute top-0 left-0 w-full h-full flex justify-center items-center transition-transform duration-300"
           style={`transform: translateX(${100 * index}%)`}
         >
@@ -67,7 +77,9 @@ const projectImages = [
       >
         &larr;
       </button>
-      <span id="slide-number" class="text-sm min-w-[60px] text-center">1 / {topImages.length}</span>
+      <span id="slide-number" class="text-sm min-w-[60px] text-center">
+        1 / {topImages.length}
+      </span>
       <button
         id="carousel-next"
         class="px-3 py-1 bg-gray-300 dark:bg-gray-700 rounded text-black dark:text-white"
@@ -77,6 +89,7 @@ const projectImages = [
     </div>
   </section>
 
+  <!-- Portfolio Cards Below the Carousel -->
   <div
     id="portfolio-cards"
     class="container mx-auto px-4 py-12 transition-all duration-300 ease-in-out"
@@ -96,7 +109,7 @@ const projectImages = [
               Project {index + 1}
             </h2>
             <p class="text-primary-600 dark:text-primary-300 mb-4">
-              Lorem ipsum dolor sit amet.
+              {cardDescriptions[index]}
             </p>
             <button
               class="bg-wood-dark hover:bg-wood text-white px-4 py-2 rounded-lg transition-colors"
@@ -110,22 +123,21 @@ const projectImages = [
   </div>
 </Layout>
 
+<!-- Note: This is a plain <script> now, no 'lang=ts' and no type annotations -->
 <script>
   let manuallyExited = false;
   let landscapeLocked = false;
 
   function preventScroll() {
-    const body = document.body as HTMLElement;
-    body.style.overflow = 'hidden';
-    body.style.position = 'fixed';
-    body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
   }
 
   function allowScroll() {
-    const body = document.body as HTMLElement;
-    body.style.overflow = '';
-    body.style.position = '';
-    body.style.width = '';
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.width = '';
   }
 
   function isMobilePortrait() {
@@ -157,19 +169,20 @@ const projectImages = [
     const container = document.getElementById('carousel-container');
     if (!wrapper || !container) return;
 
-    const wrapperEl = wrapper as HTMLElement;
-    const containerEl = container as HTMLElement;
+    if (wrapper instanceof HTMLElement) {
+      wrapper.style.backgroundColor = 'black';
+      wrapper.style.position = 'fixed';
+      wrapper.style.top = '0';
+      wrapper.style.left = '0';
+      wrapper.style.width = '100vw';
+      wrapper.style.height = '100vh';
+      wrapper.style.zIndex = '50';
+    }
 
-    wrapperEl.style.backgroundColor = 'black';
-    wrapperEl.style.position = 'fixed';
-    wrapperEl.style.top = '0';
-    wrapperEl.style.left = '0';
-    wrapperEl.style.width = '100vw';
-    wrapperEl.style.height = '100vh';
-    wrapperEl.style.zIndex = '50';
-
-    containerEl.style.width = '100vw';
-    containerEl.style.height = '100vh';
+    if (container instanceof HTMLElement) {
+      container.style.width = '100vw';
+      container.style.height = '100vh';
+    }
     
     preventScroll();
   }
@@ -179,19 +192,20 @@ const projectImages = [
     const container = document.getElementById('carousel-container');
     if (!wrapper || !container) return;
 
-    const wrapperEl = wrapper as HTMLElement;
-    const containerEl = container as HTMLElement;
+    if (wrapper instanceof HTMLElement) {
+      wrapper.style.backgroundColor = '';
+      wrapper.style.position = '';
+      wrapper.style.top = '';
+      wrapper.style.left = '';
+      wrapper.style.width = '';
+      wrapper.style.height = '';
+      wrapper.style.zIndex = '';
+    }
 
-    wrapperEl.style.backgroundColor = '';
-    wrapperEl.style.position = '';
-    wrapperEl.style.top = '';
-    wrapperEl.style.left = '';
-    wrapperEl.style.width = '';
-    wrapperEl.style.height = '';
-    wrapperEl.style.zIndex = '';
-
-    containerEl.style.width = '';
-    containerEl.style.height = '';
+    if (container instanceof HTMLElement) {
+      container.style.width = '';
+      container.style.height = '';
+    }
     
     allowScroll();
   }
@@ -219,7 +233,7 @@ const projectImages = [
     }
   }
 
-  document.addEventListener('astro:page-load', () => {
+  window.addEventListener('load', () => {
     const carouselWrapper = document.getElementById('carousel-wrapper');
     if (carouselWrapper) {
       carouselWrapper.addEventListener('click', () => {
@@ -240,6 +254,7 @@ const projectImages = [
     const nextBtn = document.getElementById('carousel-next');
     const slideNumber = document.getElementById('slide-number');
     
+    // bail if any are missing
     if (!container || !prevBtn || !nextBtn || !slideNumber) return;
 
     const slides = Array.from(container.children);
@@ -255,8 +270,10 @@ const projectImages = [
       currentSlide = idx;
 
       slides.forEach((slide, index) => {
-        const el = slide as HTMLElement;
-        el.style.transform = `translateX(${100 * (index - currentSlide)}%)`;
+        if (slide instanceof HTMLElement) {
+          slide.style.transform = `translateX(${100 * (index - currentSlide)}%)`;
+          slide.style.transition = 'transform 0.3s ease-out';
+        }
       });
 
       slideNumber.textContent = `${currentSlide + 1} / ${totalSlides}`;
@@ -264,7 +281,7 @@ const projectImages = [
 
     function handleButtonClick(direction) {
       const now = Date.now();
-      if (isTransitioning || (now - lastClickTime) < CLICK_DELAY) return;
+      if (isTransitioning || now - lastClickTime < CLICK_DELAY) return;
       
       isTransitioning = true;
       lastClickTime = now;
@@ -279,21 +296,21 @@ const projectImages = [
     prevBtn.addEventListener('click', () => handleButtonClick(-1));
     nextBtn.addEventListener('click', () => handleButtonClick(1));
 
+    // Touch / swipe logic
     let touchStartX = 0;
     let touchStartY = 0;
     let lastTouchY = 0;
-    let touchStartTime = 0;
     let isSwiping = false;
     let swipeDirection = null;
+
     const SWIPE_THRESHOLD = 50;
     const VERTICAL_SWIPE_THRESHOLD = 40;
-    const MAX_SWIPE_TIME = 300;
     const MIN_VELOCITY = 0.5;
 
     container.addEventListener('touchstart', (e) => {
       touchStartX = e.touches[0].clientX;
-      touchStartY = lastTouchY = e.touches[0].clientY;
-      touchStartTime = Date.now();
+      touchStartY = e.touches[0].clientY;
+      lastTouchY = touchStartY;
       isSwiping = true;
       swipeDirection = null;
     }, { passive: false });
@@ -307,6 +324,7 @@ const projectImages = [
       const deltaY = currentY - touchStartY;
       const moveDistance = Math.abs(deltaY);
       
+      // Determine swipe direction
       if (!swipeDirection) {
         if (Math.abs(deltaY) > Math.abs(deltaX)) {
           swipeDirection = 'vertical';
@@ -315,17 +333,15 @@ const projectImages = [
         }
       }
 
+      // If locked in landscape mode, allow vertical swipe to exit
       if (landscapeLocked) {
         e.preventDefault();
-        
         if (swipeDirection === 'vertical' && moveDistance > VERTICAL_SWIPE_THRESHOLD) {
           const velocity = Math.abs(currentY - lastTouchY);
-          
           if (velocity > MIN_VELOCITY) {
             landscapeLocked = false;
             manuallyExited = true;
             revertInline();
-            
             requestAnimationFrame(() => {
               const cards = document.getElementById('portfolio-cards');
               if (cards) {
@@ -335,15 +351,17 @@ const projectImages = [
           }
         }
       }
-      
+
       lastTouchY = currentY;
       
+      // Horizontal swipe = move slides
       if (swipeDirection === 'horizontal') {
         slides.forEach((slide, index) => {
-          const el = slide as HTMLElement;
-          const offset = (index - currentSlide) * 100;
-          el.style.transform = `translateX(calc(${offset}% + ${deltaX}px))`;
-          el.style.transition = 'none';
+          if (slide instanceof HTMLElement) {
+            const offset = (index - currentSlide) * 100;
+            slide.style.transform = `translateX(calc(${offset}% + ${deltaX}px))`;
+            slide.style.transition = 'none';
+          }
         });
       }
     }, { passive: false });
@@ -356,9 +374,10 @@ const projectImages = [
       const deltaX = touchEndX - touchStartX;
       
       if (swipeDirection === 'horizontal') {
-        slides.forEach(slide => {
-          const el = slide as HTMLElement;
-          el.style.transition = 'transform 0.3s ease-out';
+        slides.forEach((slide) => {
+          if (slide instanceof HTMLElement) {
+            slide.style.transition = 'transform 0.3s ease-out';
+          }
         });
         
         if (Math.abs(deltaX) > SWIPE_THRESHOLD) {
@@ -369,9 +388,10 @@ const projectImages = [
           }
         } else {
           slides.forEach((slide, index) => {
-            const el = slide as HTMLElement;
-            const offset = (index - currentSlide) * 100;
-            el.style.transform = `translateX(${offset}%)`;
+            if (slide instanceof HTMLElement) {
+              const offset = (index - currentSlide) * 100;
+              slide.style.transform = `translateX(${offset}%)`;
+            }
           });
         }
       }
@@ -384,13 +404,14 @@ const projectImages = [
       isSwiping = false;
       
       slides.forEach((slide, index) => {
-        const el = slide as HTMLElement;
-        el.style.transition = 'transform 0.3s ease-out';
-        const offset = (index - currentSlide) * 100;
-        el.style.transform = `translateX(${offset}%)`;
+        if (slide instanceof HTMLElement) {
+          slide.style.transition = 'transform 0.3s ease-out';
+          const offset = (index - currentSlide) * 100;
+          slide.style.transform = `translateX(${offset}%)`;
+        }
       });
     });
 
     showSlide(0);
   });
-</script>X
+</script>
