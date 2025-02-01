@@ -1,21 +1,32 @@
 ---
 export const prerender = false;
 
+// NOTE: Make sure you have Tailwind and a global font setup. For example:
+// 1. In your Layout.astro, include Google Fonts for Open Sans:
+//   <link rel="preconnect" href="https://fonts.googleapis.com" />
+//   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+//   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+//
+// 2. In your tailwind.config.js, set fontFamily.sans = ['Open Sans', 'sans-serif']
+// 3. Then in your Layout.astro or global CSS, apply "font-sans" to <body> or a container.
+
 import Layout from '../layouts/Layout.astro';
 
+// Top images for the carousel
 const topImages = [
-  '/images/Top1.jpeg',
-  '/images/Top2.jpeg',
-  '/images/Top3.jpeg',
-  '/images/Top4.jpeg',
-  '/images/Top5.jpeg',
-  '/images/Top6.jpeg',
-  '/images/Top7.jpeg',
-  '/images/Top8.jpeg',
-  '/images/Top9.jpeg',
-  '/images/Top10.jpeg',
+  '/images/Top1.jpeg', // example
+  '/images/Top2.jpeg', // example
+  '/images/Top3.jpeg', // example
+  '/images/Top4.jpeg', // example
+  '/images/Top5.jpeg', // example
+  '/images/Top6.jpeg', // example
+  '/images/Top7.jpeg', // example
+  '/images/Top8.jpeg', // example
+  '/images/Top9.jpeg', // example
+  '/images/Top10.jpeg', // example
 ];
 
+// Project images for the cards
 const projectImages = [
   '/images/placeholder_1.jpeg',
   '/images/placeholder_2.jpeg',
@@ -25,17 +36,19 @@ const projectImages = [
   '/images/placeholder_6.jpeg',
 ];
 
+// Card descriptions
 const cardDescriptions = [
-  'High-End Bathroom Uplift',
+  'High-End Uplift',
   'Backyard Reno',
-  'Coffered-style Maple Beams',
+  'Bathroom Maple Beams',
   'Vertical Siding on Poolhouse',
   'Apartment Fire-Door',
-  'Beach-house Stair Reno'
+  'Beachouse Stair Reno'
 ];
 ---
 
 <Layout title="Portfolio - Core Contracting">
+  <!-- Banner prompting device rotation -->
   <div
     id="rotate-banner"
     class="hidden fixed top-0 left-0 w-full bg-yellow-300 text-black text-center p-3 z-[999]"
@@ -43,11 +56,9 @@ const cardDescriptions = [
     Please rotate your device to landscape for the best experience.
   </div>
 
-  <h1 class="text-4xl font-serif font-bold text-center mt-20 mb-8">
-    Our Portfolio
-  </h1>
-
-  <!-- Carousel Section with 80vh on desktop -->
+  <!-- Main heading -->
+  <h1 class="text-4xl font-display text-center mb-4">Our Portfolio</h1>
+  <!-- Carousel Section -->
   <section
     id="carousel-wrapper"
     class="relative transition-all duration-300 ease-in-out"
@@ -57,7 +68,7 @@ const cardDescriptions = [
       class="relative w-full h-[80vh] bg-black overflow-hidden"
     >
       {topImages.map((image, index) => (
-        <div
+        <div 
           class="absolute top-0 left-0 w-full h-full flex justify-center items-center transition-transform duration-300"
           style={`transform: translateX(${100 * index}%)`}
         >
@@ -70,19 +81,32 @@ const cardDescriptions = [
       ))}
     </div>
 
-    <div class="absolute bottom-[-2.5rem] left-0 right-0 flex justify-center gap-4 items-center">
+    <!-- Updated arrow container, absolutely positioned at the bottom center -->
+    <div
+      class="absolute bottom-4 left-1/2 transform -translate-x-1/2
+             flex items-center gap-4 z-10"
+    >
       <button
         id="carousel-prev"
-        class="px-3 py-1 bg-gray-300 dark:bg-gray-700 rounded text-black dark:text-white"
+        class="bg-gray-800 text-white text-base h-8 w-8 flex items-center 
+         justify-center rounded-full hover:bg-gray-900 transition-colors shadow"
+        aria-label="Previous Slide"
       >
         &larr;
       </button>
-      <span id="slide-number" class="text-sm min-w-[60px] text-center">
+
+      <span
+        id="slide-number"
+        class="text-md font-medium text-white"
+      >
         1 / {topImages.length}
       </span>
+
       <button
         id="carousel-next"
-        class="px-3 py-1 bg-gray-300 dark:bg-gray-700 rounded text-black dark:text-white"
+        class="bg-gray-800 text-white text-base h-8 w-8 flex items-center 
+         justify-center rounded-full hover:bg-gray-900 transition-colors shadow"
+        aria-label="Next Slide"
       >
         &rarr;
       </button>
@@ -123,7 +147,7 @@ const cardDescriptions = [
   </div>
 </Layout>
 
-<!-- Note: This is a plain <script> now, no 'lang=ts' and no type annotations -->
+<!-- Plain script (JS) to avoid TS assertion errors. Keep orientation & carousel logic -->
 <script>
   let manuallyExited = false;
   let landscapeLocked = false;
@@ -254,7 +278,6 @@ const cardDescriptions = [
     const nextBtn = document.getElementById('carousel-next');
     const slideNumber = document.getElementById('slide-number');
     
-    // bail if any are missing
     if (!container || !prevBtn || !nextBtn || !slideNumber) return;
 
     const slides = Array.from(container.children);
@@ -281,7 +304,7 @@ const cardDescriptions = [
 
     function handleButtonClick(direction) {
       const now = Date.now();
-      if (isTransitioning || now - lastClickTime < CLICK_DELAY) return;
+      if (isTransitioning || (now - lastClickTime) < CLICK_DELAY) return;
       
       isTransitioning = true;
       lastClickTime = now;
@@ -324,7 +347,6 @@ const cardDescriptions = [
       const deltaY = currentY - touchStartY;
       const moveDistance = Math.abs(deltaY);
       
-      // Determine swipe direction
       if (!swipeDirection) {
         if (Math.abs(deltaY) > Math.abs(deltaX)) {
           swipeDirection = 'vertical';
