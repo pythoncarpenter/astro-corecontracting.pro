@@ -1,32 +1,31 @@
 ---
 export const prerender = false;
 
-// NOTE: Make sure you have Tailwind and a global font setup. For example:
-// 1. In your Layout.astro, include Google Fonts for Open Sans:
-//   <link rel="preconnect" href="https://fonts.googleapis.com" />
-//   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-//   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
-//
-// 2. In your tailwind.config.js, set fontFamily.sans = ['Open Sans', 'sans-serif']
-// 3. Then in your Layout.astro or global CSS, apply "font-sans" to <body> or a container.
+export const head = `
+  <link rel="preload" as="image" href="/images/Top1.jpeg" />
+  <style>
+    /* When in fullscreen mode, force images to cover the container */
+    #carousel-wrapper.fullscreen img {
+      object-fit: cover;
+    }
+  </style>
+`;
 
 import Layout from '../layouts/Layout.astro';
 
-// Top images for the carousel
 const topImages = [
-  '/images/Top1.jpeg', // example
-  '/images/Top2.jpeg', // example
-  '/images/Top3.jpeg', // example
-  '/images/Top4.jpeg', // example
-  '/images/Top5.jpeg', // example
-  '/images/Top6.jpeg', // example
-  '/images/Top7.jpeg', // example
-  '/images/Top8.jpeg', // example
-  '/images/Top9.jpeg', // example
-  '/images/Top10.jpeg', // example
+  '/images/Top1.jpeg',
+  '/images/Top2.jpeg',
+  '/images/Top3.jpeg',
+  '/images/Top4.jpeg',
+  '/images/Top5.jpeg',
+  '/images/Top6.jpeg',
+  '/images/Top7.jpeg',
+  '/images/Top8.jpeg',
+  '/images/Top9.jpeg',
+  '/images/Top10.jpeg',
 ];
 
-// Project images for the cards
 const projectImages = [
   '/images/placeholder_1.jpeg',
   '/images/placeholder_2.jpeg',
@@ -36,7 +35,6 @@ const projectImages = [
   '/images/placeholder_6.jpeg',
 ];
 
-// Card descriptions
 const cardDescriptions = [
   'High-End Uplift',
   'Backyard Reno',
@@ -48,27 +46,20 @@ const cardDescriptions = [
 ---
 
 <Layout title="Portfolio - Core Contracting">
-  <!-- Banner prompting device rotation -->
-  <div
-    id="rotate-banner"
-    class="hidden fixed top-0 left-0 w-full bg-yellow-300 text-black text-center p-3 z-[999]"
-  >
-    Please rotate your device to landscape for the best experience.
+  <!-- Banner prompting device rotation with dismiss button -->
+  <div id="rotate-banner" class="hidden fixed top-0 left-0 w-full bg-yellow-300 text-black p-3 z-[999] flex items-center justify-between">
+    <span>Please rotate your device to landscape for the best experience.</span>
+    <button id="dismiss-banner" class="text-black font-bold">X</button>
   </div>
 
   <!-- Main heading -->
   <h1 class="text-4xl font-display text-center mb-4">Our Portfolio</h1>
+
   <!-- Carousel Section -->
-  <section
-    id="carousel-wrapper"
-    class="relative transition-all duration-300 ease-in-out"
-  >
-    <div
-      id="carousel-container"
-      class="relative w-full h-[80vh] bg-black overflow-hidden"
-    >
+  <section id="carousel-wrapper" class="relative transition-all duration-300 ease-in-out">
+    <div id="carousel-container" class="relative w-full h-[80vh] bg-black overflow-hidden">
       {topImages.map((image, index) => (
-        <div 
+        <div
           class="absolute top-0 left-0 w-full h-full flex justify-center items-center transition-transform duration-300"
           style={`transform: translateX(${100 * index}%)`}
         >
@@ -81,31 +72,25 @@ const cardDescriptions = [
       ))}
     </div>
 
-    <!-- Updated arrow container, absolutely positioned at the bottom center -->
-    <div
-      class="absolute bottom-4 left-1/2 transform -translate-x-1/2
-             flex items-center gap-4 z-10"
-    >
+    <!-- Arrow controls:
+         • On mobile: arrows remain at the left/right sides (vertically centered)
+         • On desktop: controls are grouped together at the center–bottom -->
+    <div class="absolute top-1/2 left-0 right-0 flex justify-between items-center px-4 z-10
+                md:bottom-4 md:left-1/2 md:top-auto md:transform md:-translate-x-1/2 md:px-0
+                md:justify-center md:gap-4">
       <button
         id="carousel-prev"
-        class="bg-gray-800 text-white text-base h-8 w-8 flex items-center 
-         justify-center rounded-full hover:bg-gray-900 transition-colors shadow"
+        class="bg-gray-800 text-white text-base h-8 w-8 flex items-center justify-center rounded-full hover:bg-gray-900 transition-colors shadow"
         aria-label="Previous Slide"
       >
         &larr;
       </button>
-
-      <span
-        id="slide-number"
-        class="text-md font-medium text-white"
-      >
+      <span id="slide-number" class="hidden md:block text-md font-medium text-white">
         1 / {topImages.length}
       </span>
-
       <button
         id="carousel-next"
-        class="bg-gray-800 text-white text-base h-8 w-8 flex items-center 
-         justify-center rounded-full hover:bg-gray-900 transition-colors shadow"
+        class="bg-gray-800 text-white text-base h-8 w-8 flex items-center justify-center rounded-full hover:bg-gray-900 transition-colors shadow"
         aria-label="Next Slide"
       >
         &rarr;
@@ -114,30 +99,19 @@ const cardDescriptions = [
   </section>
 
   <!-- Portfolio Cards Below the Carousel -->
-  <div
-    id="portfolio-cards"
-    class="container mx-auto px-4 py-12 transition-all duration-300 ease-in-out"
-  >
+  <div id="portfolio-cards" class="container mx-auto px-4 py-12 transition-all duration-300 ease-in-out">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {projectImages.map((imagePath, index) => (
-        <div
-          class="bg-white dark:bg-primary-800 rounded-lg shadow-lg overflow-hidden"
-        >
+        <div class="bg-white dark:bg-primary-800 rounded-lg shadow-lg overflow-hidden">
           <img
             src={imagePath}
             alt={`Project ${index + 1}`}
             class="w-full h-64 object-cover"
           />
           <div class="p-6">
-            <h2 class="text-2xl font-bold mb-2">
-              Project {index + 1}
-            </h2>
-            <p class="text-primary-600 dark:text-primary-300 mb-4">
-              {cardDescriptions[index]}
-            </p>
-            <button
-              class="bg-wood-dark hover:bg-wood text-white px-4 py-2 rounded-lg transition-colors"
-            >
+            <h2 class="text-2xl font-bold mb-2">Project {index + 1}</h2>
+            <p class="text-primary-600 dark:text-primary-300 mb-4">{cardDescriptions[index]}</p>
+            <button class="bg-wood-dark hover:bg-wood text-white px-4 py-2 rounded-lg transition-colors">
               View Project
             </button>
           </div>
@@ -147,7 +121,7 @@ const cardDescriptions = [
   </div>
 </Layout>
 
-<!-- Plain script (JS) to avoid TS assertion errors. Keep orientation & carousel logic -->
+<!-- Vanilla JS for carousel and banner behavior -->
 <script>
   let manuallyExited = false;
   let landscapeLocked = false;
@@ -165,17 +139,13 @@ const cardDescriptions = [
   }
 
   function isMobilePortrait() {
-    return (
-      window.matchMedia('(max-width: 767px)').matches &&
-      (window.orientation === 0 || window.orientation === 180)
-    );
+    return window.matchMedia('(max-width: 767px)').matches &&
+      (window.orientation === 0 || window.orientation === 180);
   }
 
   function isMobileLandscape() {
-    return (
-      window.matchMedia('(max-width: 767px)').matches &&
-      (window.orientation === 90 || window.orientation === -90)
-    );
+    return window.matchMedia('(max-width: 767px)').matches &&
+      (window.orientation === 90 || window.orientation === -90);
   }
 
   function showBanner() {
@@ -192,22 +162,16 @@ const cardDescriptions = [
     const wrapper = document.getElementById('carousel-wrapper');
     const container = document.getElementById('carousel-container');
     if (!wrapper || !container) return;
-
-    if (wrapper instanceof HTMLElement) {
-      wrapper.style.backgroundColor = 'black';
-      wrapper.style.position = 'fixed';
-      wrapper.style.top = '0';
-      wrapper.style.left = '0';
-      wrapper.style.width = '100vw';
-      wrapper.style.height = '100vh';
-      wrapper.style.zIndex = '50';
-    }
-
-    if (container instanceof HTMLElement) {
-      container.style.width = '100vw';
-      container.style.height = '100vh';
-    }
-    
+    wrapper.style.backgroundColor = 'black';
+    wrapper.style.position = 'fixed';
+    wrapper.style.top = '0';
+    wrapper.style.left = '0';
+    wrapper.style.width = '100vw';
+    wrapper.style.height = '100vh';
+    wrapper.style.zIndex = '50';
+    container.style.width = '100vw';
+    container.style.height = '100vh';
+    wrapper.classList.add('fullscreen'); // triggers object-fit: cover via CSS
     preventScroll();
   }
 
@@ -215,34 +179,26 @@ const cardDescriptions = [
     const wrapper = document.getElementById('carousel-wrapper');
     const container = document.getElementById('carousel-container');
     if (!wrapper || !container) return;
-
-    if (wrapper instanceof HTMLElement) {
-      wrapper.style.backgroundColor = '';
-      wrapper.style.position = '';
-      wrapper.style.top = '';
-      wrapper.style.left = '';
-      wrapper.style.width = '';
-      wrapper.style.height = '';
-      wrapper.style.zIndex = '';
-    }
-
-    if (container instanceof HTMLElement) {
-      container.style.width = '';
-      container.style.height = '';
-    }
-    
+    wrapper.style.backgroundColor = '';
+    wrapper.style.position = '';
+    wrapper.style.top = '';
+    wrapper.style.left = '';
+    wrapper.style.width = '';
+    wrapper.style.height = '';
+    wrapper.style.zIndex = '';
+    container.style.width = '';
+    container.style.height = '';
+    wrapper.classList.remove('fullscreen');
     allowScroll();
   }
 
   function updateLayout() {
-    // Only handle orientation changes if we're not in a post-exit state
     if (manuallyExited) {
       if (!isMobileLandscape()) {
         revertInline();
       }
       return;
     }
-
     if (isMobileLandscape()) {
       hideBanner();
       applyFullscreen();
@@ -261,14 +217,13 @@ const cardDescriptions = [
     const carouselWrapper = document.getElementById('carousel-wrapper');
     if (carouselWrapper) {
       carouselWrapper.addEventListener('click', () => {
-        if (manuallyExited && isMobileLandscape()) {
+        if (isMobileLandscape() && !landscapeLocked) {
           manuallyExited = false;
           applyFullscreen();
           landscapeLocked = true;
         }
       });
     }
-
     updateLayout();
     window.addEventListener('orientationchange', updateLayout);
     window.addEventListener('resize', updateLayout);
@@ -277,9 +232,7 @@ const cardDescriptions = [
     const prevBtn = document.getElementById('carousel-prev');
     const nextBtn = document.getElementById('carousel-next');
     const slideNumber = document.getElementById('slide-number');
-    
     if (!container || !prevBtn || !nextBtn || !slideNumber) return;
-
     const slides = Array.from(container.children);
     const totalSlides = slides.length;
     let currentSlide = 0;
@@ -291,41 +244,34 @@ const cardDescriptions = [
       if (idx < 0) idx = totalSlides - 1;
       if (idx >= totalSlides) idx = 0;
       currentSlide = idx;
-
-      slides.forEach((slide, index) => {
+      slides.forEach((slide, i) => {
         if (slide instanceof HTMLElement) {
-          slide.style.transform = `translateX(${100 * (index - currentSlide)}%)`;
+          slide.style.transform = `translateX(${100 * (i - currentSlide)}%)`;
           slide.style.transition = 'transform 0.3s ease-out';
         }
       });
-
       slideNumber.textContent = `${currentSlide + 1} / ${totalSlides}`;
     }
 
     function handleButtonClick(direction) {
       const now = Date.now();
       if (isTransitioning || (now - lastClickTime) < CLICK_DELAY) return;
-      
       isTransitioning = true;
       lastClickTime = now;
-      
       showSlide(currentSlide + direction);
-      
       setTimeout(() => {
         isTransitioning = false;
       }, CLICK_DELAY);
     }
-    
+
     prevBtn.addEventListener('click', () => handleButtonClick(-1));
     nextBtn.addEventListener('click', () => handleButtonClick(1));
 
-    // Touch / swipe logic
     let touchStartX = 0;
     let touchStartY = 0;
     let lastTouchY = 0;
     let isSwiping = false;
     let swipeDirection = null;
-
     const SWIPE_THRESHOLD = 50;
     const VERTICAL_SWIPE_THRESHOLD = 40;
     const MIN_VELOCITY = 0.5;
@@ -340,22 +286,14 @@ const cardDescriptions = [
 
     container.addEventListener('touchmove', (e) => {
       if (!isSwiping) return;
-      
       const currentX = e.touches[0].clientX;
       const currentY = e.touches[0].clientY;
       const deltaX = currentX - touchStartX;
       const deltaY = currentY - touchStartY;
       const moveDistance = Math.abs(deltaY);
-      
       if (!swipeDirection) {
-        if (Math.abs(deltaY) > Math.abs(deltaX)) {
-          swipeDirection = 'vertical';
-        } else {
-          swipeDirection = 'horizontal';
-        }
+        swipeDirection = Math.abs(deltaY) > Math.abs(deltaX) ? 'vertical' : 'horizontal';
       }
-
-      // If locked in landscape mode, allow vertical swipe to exit
       if (landscapeLocked) {
         e.preventDefault();
         if (swipeDirection === 'vertical' && moveDistance > VERTICAL_SWIPE_THRESHOLD) {
@@ -373,14 +311,11 @@ const cardDescriptions = [
           }
         }
       }
-
       lastTouchY = currentY;
-      
-      // Horizontal swipe = move slides
       if (swipeDirection === 'horizontal') {
-        slides.forEach((slide, index) => {
+        slides.forEach((slide, i) => {
           if (slide instanceof HTMLElement) {
-            const offset = (index - currentSlide) * 100;
+            const offset = (i - currentSlide) * 100;
             slide.style.transform = `translateX(calc(${offset}% + ${deltaX}px))`;
             slide.style.transition = 'none';
           }
@@ -391,17 +326,14 @@ const cardDescriptions = [
     container.addEventListener('touchend', (e) => {
       if (!isSwiping) return;
       isSwiping = false;
-      
       const touchEndX = e.changedTouches[0].clientX;
       const deltaX = touchEndX - touchStartX;
-      
       if (swipeDirection === 'horizontal') {
         slides.forEach((slide) => {
           if (slide instanceof HTMLElement) {
             slide.style.transition = 'transform 0.3s ease-out';
           }
         });
-        
         if (Math.abs(deltaX) > SWIPE_THRESHOLD) {
           if (deltaX > 0) {
             showSlide(currentSlide - 1);
@@ -409,26 +341,24 @@ const cardDescriptions = [
             showSlide(currentSlide + 1);
           }
         } else {
-          slides.forEach((slide, index) => {
+          slides.forEach((slide, i) => {
             if (slide instanceof HTMLElement) {
-              const offset = (index - currentSlide) * 100;
+              const offset = (i - currentSlide) * 100;
               slide.style.transform = `translateX(${offset}%)`;
             }
           });
         }
       }
-      
       swipeDirection = null;
     });
 
     container.addEventListener('touchcancel', () => {
       if (!isSwiping) return;
       isSwiping = false;
-      
-      slides.forEach((slide, index) => {
+      slides.forEach((slide, i) => {
         if (slide instanceof HTMLElement) {
           slide.style.transition = 'transform 0.3s ease-out';
-          const offset = (index - currentSlide) * 100;
+          const offset = (i - currentSlide) * 100;
           slide.style.transform = `translateX(${offset}%)`;
         }
       });
@@ -436,4 +366,12 @@ const cardDescriptions = [
 
     showSlide(0);
   });
+
+  const dismissBanner = document.getElementById('dismiss-banner');
+  if (dismissBanner) {
+    dismissBanner.addEventListener('click', () => {
+      const banner = document.getElementById('rotate-banner');
+      if (banner) banner.classList.add('hidden');
+    });
+  }
 </script>
