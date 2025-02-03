@@ -121,3 +121,39 @@ const services = [
     </div>
   </section>
 </Layout>
+
+
+<script>
+  window.addEventListener('load', () => {
+    const topImages = [
+      '/images/Top1.jpeg',
+      '/images/Top2.jpeg',
+      '/images/Top3.jpeg',
+      '/images/Top4.jpeg',
+      '/images/Top5.jpeg',
+      '/images/Top6.jpeg',
+      '/images/Top7.jpeg',
+      '/images/Top8.jpeg',
+      '/images/Top9.jpeg',
+      '/images/Top10.jpeg'
+    ];
+
+    const projectImages = [
+      '/images/placeholder_1.jpeg',
+      '/images/placeholder_2.jpeg',
+      '/images/placeholder_3.jpeg',
+      '/images/placeholder_4.jpeg',
+      '/images/placeholder_5.jpeg',
+      '/images/placeholder_6.jpeg'
+    ];
+
+    // Combine both arrays
+    const allImages = [...topImages, ...projectImages];
+
+    // Preload each image in the combined array
+    allImages.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+  });
+</script>

@@ -2,7 +2,6 @@
 export const prerender = false;
 
 export const head = `
-  <link rel="preload" as="image" href="/images/Top1.jpeg" />
   <style>
     /* When in fullscreen mode, force images to cover the container */
     #carousel-wrapper.fullscreen img {
@@ -35,16 +34,16 @@ const projectImages = [
   '/images/placeholder_6.jpeg',
 ];
 
-const cardDescriptions = [
-  'High-End Uplift',
-  'Backyard Reno',
-  'Bathroom Maple Beams',
-  'Vertical Siding on Poolhouse',
-  'Apartment Fire-Door',
-  'Beachouse Stair Reno'
-];
+// Using a dictionary (object) for the project titles
+const projectTitles: Record<number, string> = {
+  1: 'High-End Bathroom Uplift',
+  2: 'Backyard Reno',
+  3: 'Bathroom Maple Beams',
+  4: 'Vertical Siding on Poolhouse',
+  5: 'Apartment Fire-Door',
+  6: 'Beachouse Stair Repair'
+};
 ---
-
 <Layout title="Portfolio - Core Contracting">
   <!-- Banner prompting device rotation with dismiss button -->
   <div id="rotate-banner" class="hidden fixed top-0 left-0 w-full bg-yellow-300 text-black p-3 z-[999] flex items-center justify-between">
@@ -109,8 +108,8 @@ const cardDescriptions = [
             class="w-full h-64 object-cover"
           />
           <div class="p-6">
-            <h2 class="text-2xl font-bold mb-2">Project {index + 1}</h2>
-            <p class="text-primary-600 dark:text-primary-300 mb-4">{cardDescriptions[index]}</p>
+            <!-- Remove the "Project {index + 1}" placeholder and use the real title -->
+            <h2 class="text-2xl font-bold mb-2">{projectTitles[index + 1]}</h2>
             <button class="bg-wood-dark hover:bg-wood text-white px-4 py-2 rounded-lg transition-colors">
               View Project
             </button>
