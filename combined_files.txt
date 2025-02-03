@@ -1,5 +1,755 @@
-Files used in this run: Index.astro Header.astro tailwind.config.mjs Layout.astro
+Files used in this run: astro.config.mjs package.json tsconfig.json Card.astro Footer.astro Header.astro ThemeToggle.astro Layout.astro auth.ts portfolio.ts about.astro contact.astro index.astro portfolio.astro services.astro
 
+import { defineConfig } from 'astro/config';
+import tailwind from '@astrojs/tailwind';
+import sitemap from '@astrojs/sitemap';
+import netlify from '@astrojs/netlify';
+
+export default defineConfig({
+  output: 'server',
+  adapter: netlify(),
+  integrations: [
+    tailwind({
+      applyBaseStyles: true,
+    }), 
+    sitemap(),
+  ],
+  site: 'https://corecontracting.pro',
+});
+{
+  "name": "text-decoder",
+  "version": "1.2.3",
+  "description": "Streaming text decoder that preserves multibyte Unicode characters",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "lib"
+  ],
+  "browser": {
+    "./lib/pass-through-decoder.js": "./lib/browser-decoder.js",
+    "./lib/utf8-decoder.js": "./lib/browser-decoder.js"
+  },
+  "react-native": {
+    "./lib/pass-through-decoder.js": "./lib/pass-through-decoder.js",
+    "./lib/utf8-decoder.js": "./lib/utf8-decoder.js"
+  },
+  "scripts": {
+    "test": "standard && brittle test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/holepunchto/text-decoder.git"
+  },
+  "author": "Holepunch",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/holepunchto/text-decoder/issues"
+  },
+  "homepage": "https://github.com/holepunchto/text-decoder#readme",
+  "dependencies": {
+    "b4a": "^1.6.4"
+  },
+  "devDependencies": {
+    "brittle": "^3.3.2",
+    "standard": "^17.0.0"
+  }
+}
+
+{
+  "name": "@shikijs/vscode-textmate",
+  "version": "10.0.1",
+  "type": "module",
+  "description": "Shiki's fork of `vscode-textmate`",
+  "author": {
+    "name": "Microsoft Corporation"
+  },
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shikijs/vscode-textmate"
+  },
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shikijs/vscode-textmate/issues"
+  },
+  "devDependencies": {
+    "@types/mocha": "^9.1.1",
+    "@types/node": "^16.18.121",
+    "bumpp": "^9.9.0",
+    "mocha": "^9.2.2",
+    "tsup": "^8.3.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vscode-oniguruma": "^1.7.0"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "mocha --ui=tdd ./src/tests/all.test.ts",
+    "benchmark": "node benchmark/benchmark.js",
+    "inspect": "tsx src/tests/inspect.ts",
+    "typecheck": "tsc --noEmit",
+    "tmconvert": "node scripts/tmconvert.js",
+    "version": "npm run compile && npm run test",
+    "postversion": "git push && git push --tags",
+    "release": "bumpp && pnpm publish"
+  }
+}
+{
+  "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "bugs": "https://github.com/retextjs/retext-smartypants/issues",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
+  ],
+  "dependencies": {
+    "@types/nlcst": "^2.0.0",
+    "nlcst-to-string": "^4.0.0",
+    "unist-util-visit": "^5.0.0"
+  },
+  "description": "retext plugin to implement SmartyPants",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "c8": "^10.0.0",
+    "prettier": "^3.0.0",
+    "remark-cli": "^12.0.0",
+    "remark-preset-wooorm": "^10.0.0",
+    "retext": "^9.0.0",
+    "type-coverage": "^2.0.0",
+    "typescript": "^5.0.0",
+    "xo": "^0.59.0"
+  },
+  "exports": "./index.js",
+  "files": [
+    "lib/",
+    "index.d.ts.map",
+    "index.d.ts",
+    "index.js"
+  ],
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "keywords": [
+    "dashes",
+    "ellipses",
+    "quotes",
+    "retext",
+    "retext-plugin",
+    "smartypants",
+    "typography",
+    "unified"
+  ],
+  "license": "MIT",
+  "name": "retext-smartypants",
+  "prettier": {
+    "bracketSpacing": false,
+    "singleQuote": true,
+    "semi": false,
+    "tabWidth": 2,
+    "trailingComma": "none",
+    "useTabs": false
+  },
+  "remarkConfig": {
+    "plugins": [
+      "remark-preset-wooorm"
+    ]
+  },
+  "repository": "retextjs/retext-smartypants",
+  "scripts": {
+    "build": "tsc --build --clean && tsc --build && type-coverage",
+    "format": "remark . --frail --output --quiet && prettier . --log-level warn --write && xo --fix",
+    "prepack": "npm run build && npm run format",
+    "test-api": "node --conditions development test.js",
+    "test-coverage": "c8 --100 --check-coverage --reporter lcov npm run test-api",
+    "test": "npm run build && npm run format && npm run test-coverage"
+  },
+  "sideEffects": false,
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "ignoreCatch": true,
+    "strict": true
+  },
+  "type": "module",
+  "version": "6.2.0",
+  "xo": {
+    "prettier": true
+  }
+}
+
+{
+  "name": "hast-util-to-text",
+  "version": "4.0.2",
+  "description": "hast utility to get the plain-text value of a node according to the `innerText` algorithm",
+  "license": "MIT",
+  "keywords": [
+    "unist",
+    "hast",
+    "hast-util",
+    "util",
+    "utility",
+    "html",
+    "string",
+    "content",
+    "text",
+    "innertext"
+  ],
+  "repository": "syntax-tree/hast-util-to-text",
+  "bugs": "https://github.com/syntax-tree/hast-util-to-text/issues",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "exports": "./index.js",
+  "files": [
+    "lib/",
+    "index.d.ts",
+    "index.js"
+  ],
+  "dependencies": {
+    "@types/hast": "^3.0.0",
+    "@types/unist": "^3.0.0",
+    "hast-util-is-element": "^3.0.0",
+    "unist-util-find-after": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "c8": "^9.0.0",
+    "hastscript": "^9.0.0",
+    "prettier": "^3.0.0",
+    "remark-cli": "^12.0.0",
+    "remark-preset-wooorm": "^10.0.0",
+    "type-coverage": "^2.0.0",
+    "typescript": "^5.0.0",
+    "xo": "^0.58.0"
+  },
+  "scripts": {
+    "prepack": "npm run build && npm run format",
+    "build": "tsc --build --clean && tsc --build && type-coverage",
+    "format": "remark . -qfo && prettier . -w --log-level warn && xo --fix",
+    "test-api": "node --conditions development test.js",
+    "test-coverage": "c8 --100 --reporter lcov npm run test-api",
+    "test": "npm run build && npm run format && npm run test-coverage"
+  },
+  "prettier": {
+    "bracketSpacing": false,
+    "semi": false,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "none",
+    "useTabs": false
+  },
+  "remarkConfig": {
+    "plugins": [
+      "remark-preset-wooorm"
+    ]
+  },
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "ignoreCatch": true,
+    "strict": true
+  },
+  "xo": {
+    "prettier": true,
+    "rules": {
+      "unicorn/prefer-code-point": "off",
+      "unicorn/prefer-string-replace-all": "off"
+    }
+  }
+}
+
+{
+  "name": "retext-stringify",
+  "version": "4.0.0",
+  "description": "retext plugin to serialize prose",
+  "license": "MIT",
+  "keywords": [
+    "concrete",
+    "cst",
+    "language",
+    "natural",
+    "plugin",
+    "process",
+    "retext",
+    "retext-plugin",
+    "stringify",
+    "syntax",
+    "serialize",
+    "text",
+    "tree",
+    "unified"
+  ],
+  "homepage": "https://github.com/retextjs/retext",
+  "repository": "https://github.com/retextjs/retext/tree/main/packages/retext-stringify",
+  "bugs": "https://github.com/retextjs/retext/issues",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "exports": "./index.js",
+  "files": [
+    "lib/",
+    "index.d.ts",
+    "index.js"
+  ],
+  "dependencies": {
+    "@types/nlcst": "^2.0.0",
+    "nlcst-to-string": "^4.0.0",
+    "unified": "^11.0.0"
+  },
+  "scripts": {},
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "strict": true,
+    "ignoreCatch": true
+  },
+  "xo": {
+    "overrides": [
+      {
+        "files": [
+          "**/*.ts"
+        ],
+        "rules": {
+          "@typescript-eslint/ban-types": "off"
+        }
+      }
+    ],
+    "prettier": true
+  }
+}
+
+{
+  "name": "retext-latin",
+  "version": "4.0.0",
+  "description": "retext plugin to parse Latin-script prose",
+  "license": "MIT",
+  "keywords": [
+    "concrete",
+    "cst",
+    "language",
+    "latin",
+    "natural",
+    "parse",
+    "plugin",
+    "process",
+    "retext",
+    "retext-plugin",
+    "syntax",
+    "tree",
+    "unified"
+  ],
+  "homepage": "https://github.com/retextjs/retext",
+  "repository": "https://github.com/retextjs/retext/tree/main/packages/retext-latin",
+  "bugs": "https://github.com/retextjs/retext/issues",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "exports": "./index.js",
+  "files": [
+    "lib/",
+    "index.d.ts",
+    "index.js"
+  ],
+  "dependencies": {
+    "@types/nlcst": "^2.0.0",
+    "parse-latin": "^7.0.0",
+    "unified": "^11.0.0"
+  },
+  "scripts": {},
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "ignoreCatch": true,
+    "strict": true
+  },
+  "xo": {
+    "overrides": [
+      {
+        "files": [
+          "**/*.ts"
+        ],
+        "rules": {
+          "@typescript-eslint/ban-types": "off",
+          "@typescript-eslint/consistent-type-definitions": "off"
+        }
+      }
+    ],
+    "prettier": true
+  }
+}
+
+{
+  "name": "retext",
+  "version": "9.0.0",
+  "description": "natural language processor powered by plugins part of the unified collective",
+  "license": "MIT",
+  "keywords": [
+    "concrete",
+    "cst",
+    "language",
+    "natural",
+    "parse",
+    "process",
+    "retext",
+    "stringify",
+    "syntax",
+    "tree",
+    "unified"
+  ],
+  "homepage": "https://github.com/retextjs/retext",
+  "repository": "https://github.com/retextjs/retext/tree/main/packages/retext",
+  "bugs": "https://github.com/retextjs/retext/issues",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "exports": "./index.js",
+  "files": [
+    "index.d.ts",
+    "index.js"
+  ],
+  "dependencies": {
+    "@types/nlcst": "^2.0.0",
+    "retext-latin": "^4.0.0",
+    "retext-stringify": "^4.0.0",
+    "unified": "^11.0.0"
+  },
+  "scripts": {},
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "ignoreCatch": true,
+    "strict": true
+  },
+  "xo": {
+    "overrides": [
+      {
+        "files": [
+          "**/*.ts"
+        ],
+        "rules": {
+          "@typescript-eslint/triple-slash-reference": "off"
+        }
+      }
+    ],
+    "prettier": true
+  }
+}
+
+{
+	"compilerOptions": {
+		/* Visit https://aka.ms/tsconfig.json to read more about this file */
+
+		/* Projects */
+
+		/* Language and Environment */
+		"target": "es5",																	/* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+		// "lib": [],																				/* Specify a set of bundled library declaration files that describe the target runtime environment. */
+		// "noLib": true,																		/* Disable including any library files, including the default lib.d.ts. */
+		"useDefineForClassFields": true,										 /* Emit ECMAScript-standard-compliant class fields. */
+		// "moduleDetection": "auto",												/* Control what method is used to detect module-format JS files. */
+
+		/* Modules */
+		"module": "commonjs",																/* Specify what module code is generated. */
+		// "rootDir": "./",																	/* Specify the root folder within your source files. */
+		// "moduleResolution": "node",											 /* Specify how TypeScript looks up a file from a given module specifier. */
+		// "baseUrl": "./",																	/* Specify the base directory to resolve non-relative module names. */
+		// "paths": {},																			/* Specify a set of entries that re-map imports to additional lookup locations. */
+		// "rootDirs": [],																	 /* Allow multiple folders to be treated as one when resolving modules. */
+		// "typeRoots": ["types"],													 /* Specify multiple folders that act like `./node_modules/@types`. */
+		"resolveJsonModule": true,													 /* Enable importing .json files. */
+		// "allowArbitraryExtensions": true,								 /* Enable importing files with any extension, provided a declaration file is present. */
+
+		/* JavaScript Support */
+		"allowJs": true,																		 /* Allow JavaScript files to be a part of your program. Use the `checkJS` option to get errors from these files. */
+		"checkJs": true,																		 /* Enable error reporting in type-checked JavaScript files. */
+		"maxNodeModuleJsDepth": 1,													 /* Specify the maximum folder depth used for checking JavaScript files from `node_modules`. Only applicable with `allowJs`. */
+
+		/* Emit */
+		"declaration": true,																 /* Generate .d.ts files from TypeScript and JavaScript files in your project. */
+		"declarationMap": true,															/* Create sourcemaps for d.ts files. */
+		"noEmit": true,																			/* Disable emitting files from a compilation. */
+
+		/* Interop Constraints */
+		"allowSyntheticDefaultImports": true,								/* Allow `import x from y` when a module doesn't have a default export. */
+		"esModuleInterop": true,														 /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */
+		"forceConsistentCasingInFileNames": true,						/* Ensure that casing is correct in imports. */
+
+		/* Type Checking */
+		"strict": true,																			/* Enable all strict type-checking options. */
+
+		/* Completeness */
+		// "skipLibCheck": true															/* Skip type checking all .d.ts files. */
+	},
+	"exclude": [
+		"coverage",
+	],
+}
+
+{
+	"extends": "@ljharb/tsconfig",
+	"compilerOptions": {
+		"target": "es2021",
+	},
+	"exclude": [
+		"coverage",
+	],
+}
+
+{
+	"extends": "@ljharb/tsconfig",
+	"compilerOptions": {
+		"target": "es2021",
+	},
+	"exclude": [
+		"coverage",
+	],
+}
+{
+	"extends": "@ljharb/tsconfig",
+	"compilerOptions": {
+		"target": "es2021",
+	},
+	"exclude": [
+		"coverage",
+	],
+}
+
+{
+	"extends": "@ljharb/tsconfig",
+	"compilerOptions": {
+		"target": "ES2021",
+	},
+	"exclude": [
+		"coverage",
+	],
+}
+
+{
+  "extends": "@ljharb/tsconfig",
+  "exclude": [
+    "coverage",
+  ],
+}
+
+{
+	"extends": "@ljharb/tsconfig",
+	"compilerOptions": {
+		"target": "es2021",
+	},
+	"exclude": [
+		"coverage",
+	],
+}
+
+{
+	"extends": "@ljharb/tsconfig",
+	"compilerOptions": {
+		"target": "es2021",
+	},
+	"exclude": [
+		"coverage",
+	],
+}
+
+{
+	"extends": "@ljharb/tsconfig",
+	"compilerOptions": {
+		//"target": "es2021",
+	},
+	"exclude": [
+		"coverage",
+	],
+}
+
+{
+	"extends": "@ljharb/tsconfig",
+	"compilerOptions": {
+		"target": "es2021",
+	},
+	"exclude": [
+		"coverage",
+	],
+}
+
+{
+	"extends": "@ljharb/tsconfig",
+	"compilerOptions": {
+		"target": "es2021",
+	},
+	"exclude": [
+		"coverage",
+	],
+}
+
+---
+interface Props {
+	title: string;
+	body: string;
+	href: string;
+}
+
+const { href, title, body } = Astro.props;
+---
+
+<li class="link-card">
+	<a href={href}>
+		<h2>
+			{title}
+			<span>&rarr;</span>
+		</h2>
+		<p>
+			{body}
+		</p>
+	</a>
+</li>
+<style>
+	.link-card {
+		list-style: none;
+		display: flex;
+		padding: 1px;
+		background-color: #23262d;
+		background-image: none;
+		background-size: 400%;
+		border-radius: 7px;
+		background-position: 100%;
+		transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+	}
+	.link-card > a {
+		width: 100%;
+		text-decoration: none;
+		line-height: 1.4;
+		padding: calc(1.5rem - 1px);
+		border-radius: 8px;
+		color: white;
+		background-color: #23262d;
+		opacity: 0.8;
+	}
+	h2 {
+		margin: 0;
+		font-size: 1.25rem;
+		transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+	}
+	p {
+		margin-top: 0.5rem;
+		margin-bottom: 0;
+	}
+	.link-card:is(:hover, :focus-within) {
+		background-position: 0;
+		background-image: var(--accent-gradient);
+	}
+	.link-card:is(:hover, :focus-within) h2 {
+		color: rgb(var(--accent-light));
+	}
+</style>
+
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-primary-100 dark:bg-primary-800 mt-12">
+  <div class="container mx-auto px-4 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div>
+        <h3 class="text-lg font-bold mb-4">Core Contracting</h3>
+        <p class="text-sm">Professional carpentry and contracting services in North Bay, Ontario.</p>
+      </div>
+      
+      <div>
+        <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+        <ul class="space-y-2">
+          <li><a href="/services" class="text-sm hover:text-wood-dark dark:hover:text-wood-light">Services</a></li>
+          <li><a href="/portfolio" class="text-sm hover:text-wood-dark dark:hover:text-wood-light">Portfolio</a></li>
+          <li><a href="/about" class="text-sm hover:text-wood-dark dark:hover:text-wood-light">About Us</a></li>
+          <li><a href="/contact" class="text-sm hover:text-wood-dark dark:hover:text-wood-light">Contact</a></li>
+        </ul>
+      </div>
+      
+      <div>
+        <h3 class="text-lg font-bold mb-4">Contact Info</h3>
+        <ul class="space-y-2 text-sm">
+          <li>
+            <a href="tel:+17054987194" class="hover:text-wood-dark dark:hover:text-wood-light">
+              (705) 498-7194
+            </a>
+          </li>
+          <li>
+            <a href="mailto:mitch.mcquoid@gmail.com" class="hover:text-wood-dark dark:hover:text-wood-light">
+              mitch.mcquoid@gmail.com
+            </a>
+          </li>
+          <li>North Bay, Ontario</li>
+        </ul>
+      </div>
+      
+      <div>
+        <h3 class="text-lg font-bold mb-4">Follow Us</h3>
+        <div class="flex space-x-4">
+          <a 
+            href="https://www.facebook.com/corecontractingpro" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="hover:text-wood-dark dark:hover:text-wood-light" 
+            aria-label="Facebook"
+          >
+            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+            </svg>
+          </a>
+          <a 
+            href="https://www.instagram.com/corecontracting.pro" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="hover:text-wood-dark dark:hover:text-wood-light" 
+            aria-label="Instagram"
+          >
+            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.254 1.216.598 1.772 1.153a4.908 4.908 0 011.153 1.772c.247.637.415 1.363.465 2.428.047 1.066.06 1.405.06 4.122 0 2.717-.01 3.056-.06 4.122-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 01-1.153 1.772 4.915 4.915 0 01-1.772 1.153c-.637.247-1.363.415-2.428.465-1.066.047-1.405.06-4.122.06-2.717 0-3.056-.01-4.122-.06-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 01-1.772-1.153 4.904 4.904 0 01-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.013 15.056 2 14.717 2 12c0-2.717.01-3.056.06-4.122.05-1.066.217-1.79.465-2.428a4.88 4.88 0 011.153-1.772A4.897 4.897 0 015.45 2.525c.638-.248 1.362-.415 2.428-.465C8.944 2.013 9.283 2 12 2zm0 5a5 5 0 100 10 5 5 0 000-10zm6.5-.25a1.25 1.25 0 10-2.5 0 1.25 1.25 0 002.5 0zM12 9a3 3 0 110 6 3 3 0 010-6z"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-8 pt-8 border-t border-primary-200 dark:border-primary-700 text-center text-sm">
+      <p>&copy; {currentYear} Core Contracting. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
 ---
 import ThemeToggle from "./ThemeToggle.astro";
 
@@ -101,59 +851,55 @@ const navItems = [
   </nav>
 </header>
 
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: [
-    './src/**/*.{astro,html,js,jsx,svelte,ts,tsx,vue}', // Update with your file paths
-  ],
-  darkMode: 'class',
-  theme: {
-    extend: {
-      colors: {
-        primary: {
-          50: '#f8f9fa',
-          100: '#e9ecef',
-          200: '#dee2e6',
-          300: '#ced4da',
-          400: '#adb5bd',
-          500: '#6c757d',
-          600: '#495057',
-          700: '#343a40',
-          800: '#212529',
-          900: '#121416',
-        },
-        wood: {
-          light: '#d4a373',
-          DEFAULT: '#a87c4f',
-          dark: '#744924',
-        },
-        metal: {
-          light: '#e9ecef',
-          DEFAULT: '#adb5bd',
-          dark: '#495057',
-        },
-        brown: {
-          50: '#fdf8f5',
-          100: '#faf2ec',
-          200: '#f4e4da',
-          300: '#e7c9b9',
-          400: '#d9ac94',
-          500: "#744923", // You can tweak these hex codes to suit your brand
-          600: '#ac744f',
-          700: '#8b5a3c',
-          800: '#6a422b',
-          900: '#4c2c1c',
-        },
-      },
-      fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        serif: ['Merriweather', 'Georgia', 'serif'],
-        display: ['Racing Sans One', 'system-ui', 'sans-serif'],
-      },
-    },
-  },
-  plugins: [require('@tailwindcss/typography')],
-};
+---
+// (No frontmatter is required in this case)
+---
+
+<button id="theme-toggle" type="button" aria-label="Toggle Light/Dark">
+  <span id="theme-icon" class="flex items-center justify-center"></span>
+</button>
+
+<script>
+  // Function to update the theme toggle icon
+  function updateThemeIcon(isDark) {
+    const themeIcon = document.getElementById('theme-icon');
+    if (isDark) {
+      themeIcon.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round"
+             stroke-linejoin="round" class="w-6 h-6 text-yellow-300">
+          <circle cx="12" cy="12" r="5" />
+          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+        </svg>
+      `;
+    } else {
+      themeIcon.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round"
+             stroke-linejoin="round" class="w-6 h-6 text-blue-700">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+      `;
+    }
+  }
+
+  // Initialize the icon based on the current theme.
+  // The initial theme is already set by an inline script in your layout's <head>
+  updateThemeIcon(document.documentElement.classList.contains('dark'));
+
+  // Attach click event to toggle the theme and update localStorage
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    const isDark = document.documentElement.classList.contains('dark');
+    if (isDark) {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('colorScheme', 'light');
+    } else {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('colorScheme', 'dark');
+    }
+    updateThemeIcon(!isDark);
+  });
+</script>
 ---
 import '@fontsource/inter/400.css';
 import '@fontsource/inter/700.css';
@@ -227,3 +973,1903 @@ const {
     </script>
   </body>
 </html>
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+
+const JWT_SECRET = process.env.JWT_SECRET || 'core-contracting-jwt-secret-2024';
+const ADMIN_PASSWORD_HASH = '$2a$10$.s2qkJEP3v.glJThIeRIxOXm9lKKyX/sOCNIGIvCVSVPq5shf1M2K';
+
+export async function isAuthenticated(request: Request) {
+  const token = request.headers.get('Authorization')?.split(' ')[1] ||
+                request.cookies.get('auth_token')?.value;
+  
+  if (!token) return false;
+  
+  try {
+    jwt.verify(token, JWT_SECRET);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export async function authenticate(password: string) {
+  const isValid = await bcrypt.compare(password, ADMIN_PASSWORD_HASH);
+  
+  if (!isValid) {
+    throw new Error('Invalid password');
+  }
+  
+  return jwt.sign({}, JWT_SECRET, { expiresIn: '24h' });
+}
+import path from 'path';
+import fs from 'fs/promises';
+
+const PROJECTS_FILE = path.join(process.cwd(), 'data', 'projects.json');
+
+export async function getProjects() {
+  try {
+    const data = await fs.readFile(PROJECTS_FILE, 'utf-8');
+    return JSON.parse(data);
+  } catch {
+    return [];
+  }
+}
+
+export async function saveProjects(projects: any[]) {
+  await fs.writeFile(PROJECTS_FILE, JSON.stringify(projects, null, 2));
+}
+
+export async function addProject(project: any) {
+  const projects = await getProjects();
+  const newProject = {
+    id: Date.now().toString(),
+    ...project,
+    createdAt: new Date().toISOString()
+  };
+  
+  projects.push(newProject);
+  await saveProjects(projects);
+  return newProject;
+}
+
+export async function updateProject(id: string, updates: any) {
+  const projects = await getProjects();
+  const index = projects.findIndex(p => p.id === id);
+  
+  if (index === -1) {
+    throw new Error('Project not found');
+  }
+  
+  projects[index] = { ...projects[index], ...updates };
+  await saveProjects(projects);
+  return projects[index];
+}
+
+export async function deleteProject(id: string) {
+  const projects = await getProjects();
+  const newProjects = projects.filter(p => p.id !== id);
+  await saveProjects(newProjects);
+}
+---
+import Layout from '../layouts/Layout.astro';
+
+const team = [
+  {
+    name: 'Mitchell McQuoid',
+    role: 'Owner & Red Seal Carpenter',
+    bio: 'With almost a decade of experience in custom carpentry and contracting, Mitchell leads Core Contracting with expertise and dedication to quality craftsmanship. Getting it right the first time and being accountable is something we are proud of. Our mission is to hand over your project to you, turnkey ready--we will take care of you from start to finish.',
+    image: '/images/IMG_2604.jpeg' // Static path
+  }
+];
+
+const values = [
+  {
+    title: 'Quality Craftsmanship',
+    description: 'We take pride in delivering exceptional work that stands the test of time.'
+  },
+  {
+    title: 'Customer Satisfaction',
+    description: 'Your vision and satisfaction are our top priorities throughout every project.'
+  },
+  {
+    title: 'Professional Service',
+    description: 'We maintain clear communication and reliability from start to finish.'
+  },
+  {
+    title: 'Local Expertise',
+    description: 'Raised in North Bay, having worked in big cities and on multi-million dollar cottages too, building knowledge breadth is one of our biggest assets.'
+  }
+];
+---
+
+<Layout title="About Us - Core Contracting">
+  <div class="container mx-auto px-4 py-12">
+    <!-- Page Header -->
+    <h1 class="text-4xl font-display text-center mb-4">About Core Contracting</h1>
+
+    <p class="text-center text-lg mb-12 max-w-2xl mx-auto">
+      Building excellence in North Bay through quality craftsmanship and dedication
+    </p>
+
+    <!-- Our Story and Our Values -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+      <!-- Our Story -->
+      <div>
+        <h2 class="text-3xl font-bold mb-4">Our Story</h2>
+        <p class="text-primary-600 dark:text-primary-300 mb-4">
+          Core Contracting was founded in North Bay with family values at its core: honesty, hard work, and a dedication to building trust with every client. What began as a small, family-inspired operation is becoming a growing force in custom carpentry and contracting, driven by a passion for quality craftsmanship and a commitment to the North Bay community.
+        </p>
+        <p class="text-primary-600 dark:text-primary-300 mb-4">
+          As we expand, we remain focused on what matters most: delivering exceptional results while fostering strong relationships. Whether we’re creating spaces for families to thrive or tackling ambitious projects for businesses, we approach every job with the same care and attention to detail that has been our hallmark since day one.
+        </p>
+        <p class="text-primary-600 dark:text-primary-300 mb-4">
+          At Core Contracting, we’re proud to grow alongside the North Bay community. Together, we’re building more than just spaces—we’re creating lasting value and relationships that stand the test of time.
+        </p>
+      </div>
+
+      <!-- Our Values -->
+      <div class="bg-white dark:bg-primary-800 p-6 rounded-lg shadow-lg">
+        <h2 class="text-3xl font-bold mb-4">Our Values</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {values.map(value => (
+            <div data-key={value.title}>
+              <h3 class="text-xl font-bold mb-2">{value.title}</h3>
+              <p class="text-primary-600 dark:text-primary-300">{value.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+<!-- The Team -->
+<div class="flex flex-col items-center text-center py-12">
+  <h2 class="text-3xl font-bold mb-8">The Team</h2>
+  <div class="bg-primary-100 dark:bg-primary-800 rounded-lg shadow-md p-6 max-w-md w-full">
+    <img 
+      src="/images/IMG_2604.jpeg" 
+      alt="Mitchell McQuoid" 
+      class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-2 border-primary-500"
+    />
+    <h3 class="text-xl font-bold mb-2">Mitchell McQuoid</h3>
+    <p class="text-primary-600 dark:text-primary-300 mb-2">Owner & Red Seal Carpenter</p>
+    <p class="text-sm max-w-xs mx-auto">
+      With almost a decade of experience in custom carpentry and contracting, Mitchell leads Core Contracting with expertise and dedication to quality craftsmanship. Getting it right the first time and being accountable is something we are proud of. Our mission is to hand over your project to you, turnkey ready--we will take care of you from start to finish.
+    </p>
+  </div>
+</div>
+
+    <!-- Call to Action -->
+    <div class="text-center">
+      <a
+        href="/contact"
+        class="inline-block bg-wood-dark hover:bg-wood-light text-white px-8 py-3 rounded-lg transition-transform transform hover:scale-105 hover:shadow-md"
+      >
+        Work With Us
+      </a>
+    </div>
+  </div>
+</Layout>
+---
+import Layout from '../layouts/Layout.astro';
+
+const team = [
+  {
+    name: 'Mitchell McQuoid',
+    role: 'Owner & Red Seal Carpenter',
+    bio: 'With almost a decade of experience in custom carpentry and contracting, Mitchell leads Core Contracting with expertise and dedication to quality craftsmanship. Getting it right the first time and being accountable is something we are proud of. Our mission is to hand over your project to you, turnkey ready--we will take care of you from start to finish.',
+    image: '/images/IMG_2604.jpeg' // Static path
+  }
+];
+
+const values = [
+  {
+    title: 'Quality Craftsmanship',
+    description: 'We take pride in delivering exceptional work that stands the test of time.'
+  },
+  {
+    title: 'Customer Satisfaction',
+    description: 'Your vision and satisfaction are our top priorities throughout every project.'
+  },
+  {
+    title: 'Professional Service',
+    description: 'We maintain clear communication and reliability from start to finish.'
+  },
+  {
+    title: 'Local Expertise',
+    description: 'Raised in North Bay, having worked in big cities and on multi-million dollar cottages too, building knowledge breadth is one of our biggest assets.'
+  }
+];
+---
+
+<Layout title="About Us - Core Contracting">
+  <div class="container mx-auto px-4 py-12">
+    <!-- Page Header -->
+    <h1 class="text-4xl font-display text-center mb-4">About Core Contracting</h1>
+
+    <p class="text-center text-lg mb-12 max-w-2xl mx-auto">
+      Building excellence in North Bay through quality craftsmanship and dedication
+    </p>
+
+    <!-- Our Story and Our Values -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+      <!-- Our Story -->
+      <div>
+        <h2 class="text-3xl font-bold mb-4">Our Story</h2>
+        <p class="text-primary-600 dark:text-primary-300 mb-4">
+          Core Contracting was founded in North Bay with family values at its core: honesty, hard work, and a dedication to building trust with every client. What began as a small, family-inspired operation is becoming a growing force in custom carpentry and contracting, driven by a passion for quality craftsmanship and a commitment to the North Bay community.
+        </p>
+        <p class="text-primary-600 dark:text-primary-300 mb-4">
+          As we expand, we remain focused on what matters most: delivering exceptional results while fostering strong relationships. Whether we’re creating spaces for families to thrive or tackling ambitious projects for businesses, we approach every job with the same care and attention to detail that has been our hallmark since day one.
+        </p>
+        <p class="text-primary-600 dark:text-primary-300 mb-4">
+          At Core Contracting, we’re proud to grow alongside the North Bay community. Together, we’re building more than just spaces—we’re creating lasting value and relationships that stand the test of time.
+        </p>
+      </div>
+
+      <!-- Our Values -->
+      <div class="bg-white dark:bg-primary-800 p-6 rounded-lg shadow-lg">
+        <h2 class="text-3xl font-bold mb-4">Our Values</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {values.map(value => (
+            <div data-key={value.title}>
+              <h3 class="text-xl font-bold mb-2">{value.title}</h3>
+              <p class="text-primary-600 dark:text-primary-300">{value.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+<!-- The Team -->
+<div class="flex flex-col items-center text-center py-12">
+  <h2 class="text-3xl font-bold mb-8">The Team</h2>
+  <div class="bg-primary-100 dark:bg-primary-800 rounded-lg shadow-md p-6 max-w-md w-full">
+    <img 
+      src="/images/IMG_2604.jpeg" 
+      alt="Mitchell McQuoid" 
+      class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-2 border-primary-500"
+    />
+    <h3 class="text-xl font-bold mb-2">Mitchell McQuoid</h3>
+    <p class="text-primary-600 dark:text-primary-300 mb-2">Owner & Red Seal Carpenter</p>
+    <p class="text-sm max-w-xs mx-auto">
+      With almost a decade of experience in custom carpentry and contracting, Mitchell leads Core Contracting with expertise and dedication to quality craftsmanship. Getting it right the first time and being accountable is something we are proud of. Our mission is to hand over your project to you, turnkey ready--we will take care of you from start to finish.
+    </p>
+  </div>
+</div>
+
+    <!-- Call to Action -->
+    <div class="text-center">
+      <a
+        href="/contact"
+        class="inline-block bg-wood-dark hover:bg-wood-light text-white px-8 py-3 rounded-lg transition-transform transform hover:scale-105 hover:shadow-md"
+      >
+        Work With Us
+      </a>
+    </div>
+  </div>
+</Layout>
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Contact Us">
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      <!-- Match heading style from your Portfolio page -->
+      <h1 class="text-4xl font-display text-center mb-4">Contact Us</h1>
+      <p class="text-lg text-center mb-12">
+        Get in touch for a free quote or to discuss your project
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <!-- LEFT COLUMN: 3D White Card for the Form -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+          <h2 class="text-2xl font-bold mb-4">Send Us a Message</h2>
+          <form id="contact-form" action="/api/contact" method="POST">
+            <div class="mb-4">
+              <label for="name" class="block mb-2 text-sm font-medium"
+                >Name</label
+              >
+              <input
+                type="text"
+                id="name"
+                name="name"
+                class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-primary-500"
+                required
+              />
+            </div>
+            <div class="mb-4">
+              <label for="email" class="block mb-2 text-sm font-medium"
+                >Email</label
+              >
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-primary-500"
+                required
+              />
+            </div>
+            <div class="mb-4">
+              <label for="phone" class="block mb-2 text-sm font-medium"
+                >Phone (Optional)</label
+              >
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-primary-500"
+              />
+            </div>
+            <div class="mb-6">
+              <label for="message" class="block mb-2 text-sm font-medium"
+                >Message</label
+              >
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-primary-500"
+                required
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              class="bg-primary-500 hover:bg-primary-600 text-white font-bold py-2 px-4 rounded-md transition duration-300"
+            >
+              Send Message
+            </button>
+          </form>
+        </div>
+
+        <!-- RIGHT COLUMN: Info and Hours -->
+        <div>
+          <h2 class="text-2xl font-bold mb-4">Contact Information</h2>
+          
+          <!-- REVISED (WITH WOOD-COLORED ICONS) -->
+          <p class="mb-2 flex items-center space-x-2">
+            <i class="fas fa-phone-alt text-wood-dark"></i>
+            <span>(705) 498-7194</span>
+          </p>
+          <p class="mb-2 flex items-center space-x-2">
+            <i class="fas fa-envelope text-wood-dark"></i>
+            <span>mitch.mcquoid@gmail.com</span>
+          </p>
+          <p class="mb-6 flex items-center space-x-2">
+            <i class="fas fa-map-marker-alt text-wood-dark"></i>
+            <span>North Bay, Ontario</span>
+          </p>
+
+          <h2 class="text-2xl font-bold mb-4">Follow Us</h2>
+          <div class="flex space-x-4 mb-8">
+            <a
+              href="https://www.facebook.com/corecontractingpro/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-primary-500 hover:text-primary-600 transition duration-300"
+            >
+              <i class="fab fa-facebook-f fa-lg"></i>
+            </a>
+            <a
+              href="https://www.instagram.com/corecontracting.pro"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-primary-500 hover:text-primary-600 transition duration=300"
+            >
+              <i class="fab fa-instagram fa-lg"></i>
+            </a>
+          </div>
+
+          <!-- BUSINESS HOURS: Blue Container, Rounded Corners, Subtle Shadow -->
+          <div class="bg-gray-200 rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold mb-4">Business Hours</h2>
+            <div class="flex justify-between w-full">
+              <span>Monday - Friday</span>
+              <span>8:00 AM - 6:00 PM</span>
+            </div>
+            <div class="flex justify-between w-full">
+              <span>Saturday</span>
+              <span>By Appointment</span>
+            </div>
+            <div class="flex justify-between w-full">
+              <span>Sunday</span>
+              <span>Closed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Plain JS (no type assertions). We do runtime checks with 'instanceof'. -->
+  <script>
+    // Grab the form
+    const formEl = document.getElementById("contact-form");
+    if (!formEl) {
+      console.error("Contact form not found!");
+    } else if (formEl instanceof HTMLFormElement) {
+      // We now know formEl is actually an HTMLFormElement
+      const submitButton = formEl.querySelector("button[type='submit']");
+      const successMessage = document.createElement("p");
+      const errorMessage = document.createElement("p");
+
+      formEl.appendChild(successMessage);
+      formEl.appendChild(errorMessage);
+
+      formEl.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        // If no button or the button isn't an HTMLButtonElement, skip
+        if (!submitButton || !(submitButton instanceof HTMLButtonElement)) {
+          return;
+        }
+
+        // Disable the button while sending
+        submitButton.disabled = true;
+        submitButton.textContent = "Sending...";
+
+        const formData = new FormData(formEl);
+
+        try {
+          const response = await fetch("/api/contact", {
+            method: "POST",
+            body: formData,
+          });
+
+          const result = await response.json();
+
+          // Reset any previous messages
+          successMessage.textContent = "";
+          errorMessage.textContent = "";
+
+          if (result.success) {
+            successMessage.textContent = "Message sent successfully!";
+            successMessage.classList.add("text-green-500");
+
+            // Because formEl is an HTMLFormElement, .reset() is valid
+            formEl.reset();
+          } else {
+            errorMessage.textContent = "Error sending message: " + result.message;
+            errorMessage.classList.add("text-red-500");
+          }
+        } catch (err) {
+          console.error("Error:", err);
+          errorMessage.textContent = "An unexpected error occurred.";
+          errorMessage.classList.add("text-red-500");
+        } finally {
+          submitButton.disabled = false;
+          submitButton.textContent = "Send Message";
+        }
+      });
+    }
+  </script>
+</Layout>
+
+<style>
+  .container {
+    @apply max-w-7xl;
+  }
+</style>
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Contact Us">
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      <!-- Match heading style from your Portfolio page -->
+      <h1 class="text-4xl font-display text-center mb-4">Contact Us</h1>
+      <p class="text-lg text-center mb-12">
+        Get in touch for a free quote or to discuss your project
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <!-- LEFT COLUMN: 3D White Card for the Form -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+          <h2 class="text-2xl font-bold mb-4">Send Us a Message</h2>
+          <form id="contact-form" action="/api/contact" method="POST">
+            <div class="mb-4">
+              <label for="name" class="block mb-2 text-sm font-medium"
+                >Name</label
+              >
+              <input
+                type="text"
+                id="name"
+                name="name"
+                class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-primary-500"
+                required
+              />
+            </div>
+            <div class="mb-4">
+              <label for="email" class="block mb-2 text-sm font-medium"
+                >Email</label
+              >
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-primary-500"
+                required
+              />
+            </div>
+            <div class="mb-4">
+              <label for="phone" class="block mb-2 text-sm font-medium"
+                >Phone (Optional)</label
+              >
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-primary-500"
+              />
+            </div>
+            <div class="mb-6">
+              <label for="message" class="block mb-2 text-sm font-medium"
+                >Message</label
+              >
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-primary-500"
+                required
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              class="bg-primary-500 hover:bg-primary-600 text-white font-bold py-2 px-4 rounded-md transition duration-300"
+            >
+              Send Message
+            </button>
+          </form>
+        </div>
+
+        <!-- RIGHT COLUMN: Info and Hours -->
+        <div>
+          <h2 class="text-2xl font-bold mb-4">Contact Information</h2>
+          
+          <!-- REVISED (WITH WOOD-COLORED ICONS) -->
+          <p class="mb-2 flex items-center space-x-2">
+            <i class="fas fa-phone-alt text-wood-dark"></i>
+            <span>(705) 498-7194</span>
+          </p>
+          <p class="mb-2 flex items-center space-x-2">
+            <i class="fas fa-envelope text-wood-dark"></i>
+            <span>mitch.mcquoid@gmail.com</span>
+          </p>
+          <p class="mb-6 flex items-center space-x-2">
+            <i class="fas fa-map-marker-alt text-wood-dark"></i>
+            <span>North Bay, Ontario</span>
+          </p>
+
+          <h2 class="text-2xl font-bold mb-4">Follow Us</h2>
+          <div class="flex space-x-4 mb-8">
+            <a
+              href="https://www.facebook.com/corecontractingpro/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-primary-500 hover:text-primary-600 transition duration-300"
+            >
+              <i class="fab fa-facebook-f fa-lg"></i>
+            </a>
+            <a
+              href="https://www.instagram.com/corecontracting.pro"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-primary-500 hover:text-primary-600 transition duration=300"
+            >
+              <i class="fab fa-instagram fa-lg"></i>
+            </a>
+          </div>
+
+          <!-- BUSINESS HOURS: Blue Container, Rounded Corners, Subtle Shadow -->
+          <div class="bg-gray-200 rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold mb-4">Business Hours</h2>
+            <div class="flex justify-between w-full">
+              <span>Monday - Friday</span>
+              <span>8:00 AM - 6:00 PM</span>
+            </div>
+            <div class="flex justify-between w-full">
+              <span>Saturday</span>
+              <span>By Appointment</span>
+            </div>
+            <div class="flex justify-between w-full">
+              <span>Sunday</span>
+              <span>Closed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Plain JS (no type assertions). We do runtime checks with 'instanceof'. -->
+  <script>
+    // Grab the form
+    const formEl = document.getElementById("contact-form");
+    if (!formEl) {
+      console.error("Contact form not found!");
+    } else if (formEl instanceof HTMLFormElement) {
+      // We now know formEl is actually an HTMLFormElement
+      const submitButton = formEl.querySelector("button[type='submit']");
+      const successMessage = document.createElement("p");
+      const errorMessage = document.createElement("p");
+
+      formEl.appendChild(successMessage);
+      formEl.appendChild(errorMessage);
+
+      formEl.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        // If no button or the button isn't an HTMLButtonElement, skip
+        if (!submitButton || !(submitButton instanceof HTMLButtonElement)) {
+          return;
+        }
+
+        // Disable the button while sending
+        submitButton.disabled = true;
+        submitButton.textContent = "Sending...";
+
+        const formData = new FormData(formEl);
+
+        try {
+          const response = await fetch("/api/contact", {
+            method: "POST",
+            body: formData,
+          });
+
+          const result = await response.json();
+
+          // Reset any previous messages
+          successMessage.textContent = "";
+          errorMessage.textContent = "";
+
+          if (result.success) {
+            successMessage.textContent = "Message sent successfully!";
+            successMessage.classList.add("text-green-500");
+
+            // Because formEl is an HTMLFormElement, .reset() is valid
+            formEl.reset();
+          } else {
+            errorMessage.textContent = "Error sending message: " + result.message;
+            errorMessage.classList.add("text-red-500");
+          }
+        } catch (err) {
+          console.error("Error:", err);
+          errorMessage.textContent = "An unexpected error occurred.";
+          errorMessage.classList.add("text-red-500");
+        } finally {
+          submitButton.disabled = false;
+          submitButton.textContent = "Send Message";
+        }
+      });
+    }
+  </script>
+</Layout>
+
+<style>
+  .container {
+    @apply max-w-7xl;
+  }
+</style>
+---
+import Layout from '../layouts/Layout.astro';
+
+const services = [
+  {
+    title: 'Home Improvements',
+    description: 'One room at a time—now is a great time to rejuvenate THAT space.',
+    icon: '🔨'
+  },
+  {
+    title: 'Renovations',
+    description: 'Complete basement, bathroom and kitchens overhauls',
+    icon: '🏠'
+  },
+  {
+    title: 'General Contracting',
+    description: 'Full-service project management and execution.',
+    icon: '📋'
+  }
+];
+---
+
+<Layout title="Core Contracting - Professional Carpentry Services in North Bay">
+  <!-- HERO SECTION with <img> behind the overlay -->
+  <section class="relative h-[80vh] flex items-center justify-center text-white">
+    <!-- Actual image behind everything -->
+    <img
+      src="/images/IMG_5322.jpeg"
+      alt="Showcase of my best project"
+      class="absolute inset-0 w-full h-full object-cover z-0"
+    />
+
+    <!-- Black overlay (mask) on top of the image -->
+    <div class="absolute inset-0 bg-black/50 z-10"></div>
+
+    <!-- Text content above the overlay -->
+    <div class="relative z-20 text-center px-4">
+      <h1 class="text-4xl md:text-6xl font-serif font-bold mb-4">
+        Crafting Excellence in Every Project
+      </h1>
+      <p class="text-xl md:text-2xl mb-8">
+        Professional carpentry and contracting services in North Bay, Ontario
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href="/contact"
+          class="bg-wood-dark hover:bg-wood text-white px-8 py-3 rounded-lg transition-colors"
+        >
+          Get a Quote
+        </a>
+        <a
+          href="/portfolio"
+          class="bg-transparent border-2 border-white hover:bg-white/10 px-8 py-3 rounded-lg transition-colors"
+        >
+          View Our Work
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES SECTION -->
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-serif font-bold text-center mb-12">Our Services</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {services.map(service => (
+          <div class="bg-white dark:bg-primary-800 p-6 rounded-lg shadow-lg">
+            <div class="text-4xl mb-4">{service.icon}</div>
+            <h3 class="text-xl font-bold mb-2">{service.title}</h3>
+            <p class="text-primary-600 dark:text-primary-300">{service.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US SECTION -->
+  <section class="py-16 bg-primary-100 dark:bg-primary-800">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-serif font-bold text-center mb-12">Why Choose Us</h2>
+      <!-- 1) Add 'items-start' to force vertical top alignment -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+        
+        <!-- Left Column -->
+        <div>
+          <h3 class="text-2xl font-bold mb-4">Expert Craftsmanship</h3>
+          <p class="text-primary-600 dark:text-primary-300 mb-4">
+            With over 10 years of experience in construction, Mitchell has the right tools
+            and integrity for your project.
+          </p>
+          <ul class="space-y-2">
+            <li class="flex items-center">
+              <!-- bullet item ... -->
+            </li>
+            <li class="flex items-center">
+              <!-- bullet item ... -->
+            </li>
+            <li class="flex items-center">
+              <!-- bullet item ... -->
+            </li>
+          </ul>
+        </div>
+        
+        <!-- Right Column -->
+        <!-- 2) Remove extra 'py-12' so it doesn't push this column down -->
+        <div class="relative z-30">
+          <h2 class="text-3xl font-bold">Get Started Today</h2>
+          <p class="text-lg mb-8">
+            Interested in our services? Contact us to discuss your project today.
+          </p>
+          <a
+            href="/contact"
+            class="bg-brown-500 text-white px-6 py-2 rounded-lg hover:bg-brown-600 transition-colors"
+            style="display: inline-block; text-align: center; cursor: pointer;"
+          >
+            Contact Us
+          </a>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+</Layout>
+
+
+<script>
+  window.addEventListener('load', () => {
+    const topImages = [
+      '/images/Top1.jpeg',
+      '/images/Top2.jpeg',
+      '/images/Top3.jpeg',
+      '/images/Top4.jpeg',
+      '/images/Top5.jpeg',
+      '/images/Top6.jpeg',
+      '/images/Top7.jpeg',
+      '/images/Top8.jpeg',
+      '/images/Top9.jpeg',
+      '/images/Top10.jpeg'
+    ];
+
+    const projectImages = [
+      '/images/placeholder_1.jpeg',
+      '/images/placeholder_2.jpeg',
+      '/images/placeholder_3.jpeg',
+      '/images/placeholder_4.jpeg',
+      '/images/placeholder_5.jpeg',
+      '/images/placeholder_6.jpeg'
+    ];
+
+    // Combine both arrays
+    const allImages = [...topImages, ...projectImages];
+
+    // Preload each image in the combined array
+    allImages.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+  });
+</script>
+---
+import Layout from '../layouts/Layout.astro';
+
+const services = [
+  {
+    title: 'Home Improvements',
+    description: 'One room at a time—now is a great time to rejuvenate THAT space.',
+    icon: '🔨'
+  },
+  {
+    title: 'Renovations',
+    description: 'Complete basement, bathroom and kitchens overhauls',
+    icon: '🏠'
+  },
+  {
+    title: 'General Contracting',
+    description: 'Full-service project management and execution.',
+    icon: '📋'
+  }
+];
+---
+
+<Layout title="Core Contracting - Professional Carpentry Services in North Bay">
+  <!-- HERO SECTION with <img> behind the overlay -->
+  <section class="relative h-[80vh] flex items-center justify-center text-white">
+    <!-- Actual image behind everything -->
+    <img
+      src="/images/IMG_5322.jpeg"
+      alt="Showcase of my best project"
+      class="absolute inset-0 w-full h-full object-cover z-0"
+    />
+
+    <!-- Black overlay (mask) on top of the image -->
+    <div class="absolute inset-0 bg-black/50 z-10"></div>
+
+    <!-- Text content above the overlay -->
+    <div class="relative z-20 text-center px-4">
+      <h1 class="text-4xl md:text-6xl font-serif font-bold mb-4">
+        Crafting Excellence in Every Project
+      </h1>
+      <p class="text-xl md:text-2xl mb-8">
+        Professional carpentry and contracting services in North Bay, Ontario
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href="/contact"
+          class="bg-wood-dark hover:bg-wood text-white px-8 py-3 rounded-lg transition-colors"
+        >
+          Get a Quote
+        </a>
+        <a
+          href="/portfolio"
+          class="bg-transparent border-2 border-white hover:bg-white/10 px-8 py-3 rounded-lg transition-colors"
+        >
+          View Our Work
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES SECTION -->
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-serif font-bold text-center mb-12">Our Services</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {services.map(service => (
+          <div class="bg-white dark:bg-primary-800 p-6 rounded-lg shadow-lg">
+            <div class="text-4xl mb-4">{service.icon}</div>
+            <h3 class="text-xl font-bold mb-2">{service.title}</h3>
+            <p class="text-primary-600 dark:text-primary-300">{service.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US SECTION -->
+  <section class="py-16 bg-primary-100 dark:bg-primary-800">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-serif font-bold text-center mb-12">Why Choose Us</h2>
+      <!-- 1) Add 'items-start' to force vertical top alignment -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+        
+        <!-- Left Column -->
+        <div>
+          <h3 class="text-2xl font-bold mb-4">Expert Craftsmanship</h3>
+          <p class="text-primary-600 dark:text-primary-300 mb-4">
+            With over 10 years of experience in construction, Mitchell has the right tools
+            and integrity for your project.
+          </p>
+          <ul class="space-y-2">
+            <li class="flex items-center">
+              <!-- bullet item ... -->
+            </li>
+            <li class="flex items-center">
+              <!-- bullet item ... -->
+            </li>
+            <li class="flex items-center">
+              <!-- bullet item ... -->
+            </li>
+          </ul>
+        </div>
+        
+        <!-- Right Column -->
+        <!-- 2) Remove extra 'py-12' so it doesn't push this column down -->
+        <div class="relative z-30">
+          <h2 class="text-3xl font-bold">Get Started Today</h2>
+          <p class="text-lg mb-8">
+            Interested in our services? Contact us to discuss your project today.
+          </p>
+          <a
+            href="/contact"
+            class="bg-brown-500 text-white px-6 py-2 rounded-lg hover:bg-brown-600 transition-colors"
+            style="display: inline-block; text-align: center; cursor: pointer;"
+          >
+            Contact Us
+          </a>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+</Layout>
+
+
+<script>
+  window.addEventListener('load', () => {
+    const topImages = [
+      '/images/Top1.jpeg',
+      '/images/Top2.jpeg',
+      '/images/Top3.jpeg',
+      '/images/Top4.jpeg',
+      '/images/Top5.jpeg',
+      '/images/Top6.jpeg',
+      '/images/Top7.jpeg',
+      '/images/Top8.jpeg',
+      '/images/Top9.jpeg',
+      '/images/Top10.jpeg'
+    ];
+
+    const projectImages = [
+      '/images/placeholder_1.jpeg',
+      '/images/placeholder_2.jpeg',
+      '/images/placeholder_3.jpeg',
+      '/images/placeholder_4.jpeg',
+      '/images/placeholder_5.jpeg',
+      '/images/placeholder_6.jpeg'
+    ];
+
+    // Combine both arrays
+    const allImages = [...topImages, ...projectImages];
+
+    // Preload each image in the combined array
+    allImages.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+  });
+</script>
+---
+export const prerender = false;
+
+export const head = `
+  <style>
+    /* When in fullscreen mode, force images to cover the container */
+    #carousel-wrapper.fullscreen img {
+      object-fit: cover;
+    }
+  </style>
+`;
+
+import Layout from '../layouts/Layout.astro';
+
+const topImages = [
+  '/images/Top1.jpeg',
+  '/images/Top2.jpeg',
+  '/images/Top3.jpeg',
+  '/images/Top4.jpeg',
+  '/images/Top5.jpeg',
+  '/images/Top6.jpeg',
+  '/images/Top7.jpeg',
+  '/images/Top8.jpeg',
+  '/images/Top9.jpeg',
+  '/images/Top10.jpeg',
+];
+
+const projectImages = [
+  '/images/placeholder_1.jpeg',
+  '/images/placeholder_2.jpeg',
+  '/images/placeholder_3.jpeg',
+  '/images/placeholder_4.jpeg',
+  '/images/placeholder_5.jpeg',
+  '/images/placeholder_6.jpeg',
+];
+
+// Using a dictionary (object) for the project titles
+const projectTitles: Record<number, string> = {
+  1: 'High-End Bathroom Uplift',
+  2: 'Backyard Reno',
+  3: 'Bathroom Maple Beams',
+  4: 'Vertical Siding on Poolhouse',
+  5: 'Apartment Fire-Door',
+  6: 'Beachouse Stair Repair'
+};
+---
+<Layout title="Portfolio - Core Contracting">
+  <!-- Banner prompting device rotation with dismiss button -->
+  <div id="rotate-banner" class="hidden fixed top-0 left-0 w-full bg-yellow-300 text-black p-3 z-[999] flex items-center justify-between">
+    <span>Please rotate your device to landscape for the best experience.</span>
+    <button id="dismiss-banner" class="text-black font-bold">X</button>
+  </div>
+
+  <!-- Main heading -->
+  <h1 class="text-4xl font-display text-center mb-4">Our Portfolio</h1>
+
+  <!-- Carousel Section -->
+  <section id="carousel-wrapper" class="relative transition-all duration-300 ease-in-out">
+    <div id="carousel-container" class="relative w-full h-[80vh] bg-black overflow-hidden">
+      {topImages.map((image, index) => (
+        <div
+          class="absolute top-0 left-0 w-full h-full flex justify-center items-center transition-transform duration-300"
+          style={`transform: translateX(${100 * index}%)`}
+        >
+          <img
+            src={image}
+            alt={`Slide ${index + 1}`}
+            class="h-full w-auto object-contain"
+          />
+        </div>
+      ))}
+    </div>
+
+    <!-- Arrow controls:
+         • On mobile: arrows remain at the left/right sides (vertically centered)
+         • On desktop: controls are grouped together at the center–bottom -->
+    <div class="absolute top-1/2 left-0 right-0 flex justify-between items-center px-4 z-10
+                md:bottom-4 md:left-1/2 md:top-auto md:transform md:-translate-x-1/2 md:px-0
+                md:justify-center md:gap-4">
+      <button
+        id="carousel-prev"
+        class="bg-gray-800 text-white text-base h-8 w-8 flex items-center justify-center rounded-full hover:bg-gray-900 transition-colors shadow"
+        aria-label="Previous Slide"
+      >
+        &larr;
+      </button>
+      <span id="slide-number" class="hidden md:block text-md font-medium text-white">
+        1 / {topImages.length}
+      </span>
+      <button
+        id="carousel-next"
+        class="bg-gray-800 text-white text-base h-8 w-8 flex items-center justify-center rounded-full hover:bg-gray-900 transition-colors shadow"
+        aria-label="Next Slide"
+      >
+        &rarr;
+      </button>
+    </div>
+  </section>
+
+  <!-- Portfolio Cards Below the Carousel -->
+  <div id="portfolio-cards" class="container mx-auto px-4 py-12 transition-all duration-300 ease-in-out">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {projectImages.map((imagePath, index) => (
+        <div class="bg-white dark:bg-primary-800 rounded-lg shadow-lg overflow-hidden">
+          <img
+            src={imagePath}
+            alt={`Project ${index + 1}`}
+            class="w-full h-64 object-cover"
+          />
+          <div class="p-6">
+            <!-- Remove the "Project {index + 1}" placeholder and use the real title -->
+            <h2 class="text-2xl font-bold mb-2">{projectTitles[index + 1]}</h2>
+            <button class="bg-wood-dark hover:bg-wood text-white px-4 py-2 rounded-lg transition-colors">
+              View Project
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</Layout>
+
+<!-- Vanilla JS for carousel and banner behavior -->
+<script>
+  let manuallyExited = false;
+  let landscapeLocked = false;
+
+  function preventScroll() {
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+  }
+
+  function allowScroll() {
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.width = '';
+  }
+
+  function isMobilePortrait() {
+    return window.matchMedia('(max-width: 767px)').matches &&
+      (window.orientation === 0 || window.orientation === 180);
+  }
+
+  function isMobileLandscape() {
+    return window.matchMedia('(max-width: 767px)').matches &&
+      (window.orientation === 90 || window.orientation === -90);
+  }
+
+  function showBanner() {
+    const banner = document.getElementById('rotate-banner');
+    if (banner) banner.classList.remove('hidden');
+  }
+
+  function hideBanner() {
+    const banner = document.getElementById('rotate-banner');
+    if (banner) banner.classList.add('hidden');
+  }
+
+  function applyFullscreen() {
+    const wrapper = document.getElementById('carousel-wrapper');
+    const container = document.getElementById('carousel-container');
+    if (!wrapper || !container) return;
+    wrapper.style.backgroundColor = 'black';
+    wrapper.style.position = 'fixed';
+    wrapper.style.top = '0';
+    wrapper.style.left = '0';
+    wrapper.style.width = '100vw';
+    wrapper.style.height = '100vh';
+    wrapper.style.zIndex = '50';
+    container.style.width = '100vw';
+    container.style.height = '100vh';
+    wrapper.classList.add('fullscreen'); // triggers object-fit: cover via CSS
+    preventScroll();
+  }
+
+  function revertInline() {
+    const wrapper = document.getElementById('carousel-wrapper');
+    const container = document.getElementById('carousel-container');
+    if (!wrapper || !container) return;
+    wrapper.style.backgroundColor = '';
+    wrapper.style.position = '';
+    wrapper.style.top = '';
+    wrapper.style.left = '';
+    wrapper.style.width = '';
+    wrapper.style.height = '';
+    wrapper.style.zIndex = '';
+    container.style.width = '';
+    container.style.height = '';
+    wrapper.classList.remove('fullscreen');
+    allowScroll();
+  }
+
+  function updateLayout() {
+    if (manuallyExited) {
+      if (!isMobileLandscape()) {
+        revertInline();
+      }
+      return;
+    }
+    if (isMobileLandscape()) {
+      hideBanner();
+      applyFullscreen();
+      landscapeLocked = true;
+    } else {
+      if (isMobilePortrait()) {
+        showBanner();
+      } else {
+        hideBanner();
+      }
+      revertInline();
+    }
+  }
+
+  window.addEventListener('load', () => {
+    const carouselWrapper = document.getElementById('carousel-wrapper');
+    if (carouselWrapper) {
+      carouselWrapper.addEventListener('click', () => {
+        if (isMobileLandscape() && !landscapeLocked) {
+          manuallyExited = false;
+          applyFullscreen();
+          landscapeLocked = true;
+        }
+      });
+    }
+    updateLayout();
+    window.addEventListener('orientationchange', updateLayout);
+    window.addEventListener('resize', updateLayout);
+
+    const container = document.getElementById('carousel-container');
+    const prevBtn = document.getElementById('carousel-prev');
+    const nextBtn = document.getElementById('carousel-next');
+    const slideNumber = document.getElementById('slide-number');
+    if (!container || !prevBtn || !nextBtn || !slideNumber) return;
+    const slides = Array.from(container.children);
+    const totalSlides = slides.length;
+    let currentSlide = 0;
+    let isTransitioning = false;
+    let lastClickTime = 0;
+    const CLICK_DELAY = 400;
+
+    function showSlide(idx) {
+      if (idx < 0) idx = totalSlides - 1;
+      if (idx >= totalSlides) idx = 0;
+      currentSlide = idx;
+      slides.forEach((slide, i) => {
+        if (slide instanceof HTMLElement) {
+          slide.style.transform = `translateX(${100 * (i - currentSlide)}%)`;
+          slide.style.transition = 'transform 0.3s ease-out';
+        }
+      });
+      slideNumber.textContent = `${currentSlide + 1} / ${totalSlides}`;
+    }
+
+    function handleButtonClick(direction) {
+      const now = Date.now();
+      if (isTransitioning || (now - lastClickTime) < CLICK_DELAY) return;
+      isTransitioning = true;
+      lastClickTime = now;
+      showSlide(currentSlide + direction);
+      setTimeout(() => {
+        isTransitioning = false;
+      }, CLICK_DELAY);
+    }
+
+    prevBtn.addEventListener('click', () => handleButtonClick(-1));
+    nextBtn.addEventListener('click', () => handleButtonClick(1));
+
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let lastTouchY = 0;
+    let isSwiping = false;
+    let swipeDirection = null;
+    const SWIPE_THRESHOLD = 50;
+    const VERTICAL_SWIPE_THRESHOLD = 40;
+    const MIN_VELOCITY = 0.5;
+
+    container.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      lastTouchY = touchStartY;
+      isSwiping = true;
+      swipeDirection = null;
+    }, { passive: false });
+
+    container.addEventListener('touchmove', (e) => {
+      if (!isSwiping) return;
+      const currentX = e.touches[0].clientX;
+      const currentY = e.touches[0].clientY;
+      const deltaX = currentX - touchStartX;
+      const deltaY = currentY - touchStartY;
+      const moveDistance = Math.abs(deltaY);
+      if (!swipeDirection) {
+        swipeDirection = Math.abs(deltaY) > Math.abs(deltaX) ? 'vertical' : 'horizontal';
+      }
+      if (landscapeLocked) {
+        e.preventDefault();
+        if (swipeDirection === 'vertical' && moveDistance > VERTICAL_SWIPE_THRESHOLD) {
+          const velocity = Math.abs(currentY - lastTouchY);
+          if (velocity > MIN_VELOCITY) {
+            landscapeLocked = false;
+            manuallyExited = true;
+            revertInline();
+            requestAnimationFrame(() => {
+              const cards = document.getElementById('portfolio-cards');
+              if (cards) {
+                cards.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            });
+          }
+        }
+      }
+      lastTouchY = currentY;
+      if (swipeDirection === 'horizontal') {
+        slides.forEach((slide, i) => {
+          if (slide instanceof HTMLElement) {
+            const offset = (i - currentSlide) * 100;
+            slide.style.transform = `translateX(calc(${offset}% + ${deltaX}px))`;
+            slide.style.transition = 'none';
+          }
+        });
+      }
+    }, { passive: false });
+
+    container.addEventListener('touchend', (e) => {
+      if (!isSwiping) return;
+      isSwiping = false;
+      const touchEndX = e.changedTouches[0].clientX;
+      const deltaX = touchEndX - touchStartX;
+      if (swipeDirection === 'horizontal') {
+        slides.forEach((slide) => {
+          if (slide instanceof HTMLElement) {
+            slide.style.transition = 'transform 0.3s ease-out';
+          }
+        });
+        if (Math.abs(deltaX) > SWIPE_THRESHOLD) {
+          if (deltaX > 0) {
+            showSlide(currentSlide - 1);
+          } else {
+            showSlide(currentSlide + 1);
+          }
+        } else {
+          slides.forEach((slide, i) => {
+            if (slide instanceof HTMLElement) {
+              const offset = (i - currentSlide) * 100;
+              slide.style.transform = `translateX(${offset}%)`;
+            }
+          });
+        }
+      }
+      swipeDirection = null;
+    });
+
+    container.addEventListener('touchcancel', () => {
+      if (!isSwiping) return;
+      isSwiping = false;
+      slides.forEach((slide, i) => {
+        if (slide instanceof HTMLElement) {
+          slide.style.transition = 'transform 0.3s ease-out';
+          const offset = (i - currentSlide) * 100;
+          slide.style.transform = `translateX(${offset}%)`;
+        }
+      });
+    });
+
+    showSlide(0);
+  });
+
+  const dismissBanner = document.getElementById('dismiss-banner');
+  if (dismissBanner) {
+    dismissBanner.addEventListener('click', () => {
+      const banner = document.getElementById('rotate-banner');
+      if (banner) banner.classList.add('hidden');
+    });
+  }
+</script>
+---
+export const prerender = false;
+
+export const head = `
+  <style>
+    /* When in fullscreen mode, force images to cover the container */
+    #carousel-wrapper.fullscreen img {
+      object-fit: cover;
+    }
+  </style>
+`;
+
+import Layout from '../layouts/Layout.astro';
+
+const topImages = [
+  '/images/Top1.jpeg',
+  '/images/Top2.jpeg',
+  '/images/Top3.jpeg',
+  '/images/Top4.jpeg',
+  '/images/Top5.jpeg',
+  '/images/Top6.jpeg',
+  '/images/Top7.jpeg',
+  '/images/Top8.jpeg',
+  '/images/Top9.jpeg',
+  '/images/Top10.jpeg',
+];
+
+const projectImages = [
+  '/images/placeholder_1.jpeg',
+  '/images/placeholder_2.jpeg',
+  '/images/placeholder_3.jpeg',
+  '/images/placeholder_4.jpeg',
+  '/images/placeholder_5.jpeg',
+  '/images/placeholder_6.jpeg',
+];
+
+// Using a dictionary (object) for the project titles
+const projectTitles: Record<number, string> = {
+  1: 'High-End Bathroom Uplift',
+  2: 'Backyard Reno',
+  3: 'Bathroom Maple Beams',
+  4: 'Vertical Siding on Poolhouse',
+  5: 'Apartment Fire-Door',
+  6: 'Beachouse Stair Repair'
+};
+---
+<Layout title="Portfolio - Core Contracting">
+  <!-- Banner prompting device rotation with dismiss button -->
+  <div id="rotate-banner" class="hidden fixed top-0 left-0 w-full bg-yellow-300 text-black p-3 z-[999] flex items-center justify-between">
+    <span>Please rotate your device to landscape for the best experience.</span>
+    <button id="dismiss-banner" class="text-black font-bold">X</button>
+  </div>
+
+  <!-- Main heading -->
+  <h1 class="text-4xl font-display text-center mb-4">Our Portfolio</h1>
+
+  <!-- Carousel Section -->
+  <section id="carousel-wrapper" class="relative transition-all duration-300 ease-in-out">
+    <div id="carousel-container" class="relative w-full h-[80vh] bg-black overflow-hidden">
+      {topImages.map((image, index) => (
+        <div
+          class="absolute top-0 left-0 w-full h-full flex justify-center items-center transition-transform duration-300"
+          style={`transform: translateX(${100 * index}%)`}
+        >
+          <img
+            src={image}
+            alt={`Slide ${index + 1}`}
+            class="h-full w-auto object-contain"
+          />
+        </div>
+      ))}
+    </div>
+
+    <!-- Arrow controls:
+         • On mobile: arrows remain at the left/right sides (vertically centered)
+         • On desktop: controls are grouped together at the center–bottom -->
+    <div class="absolute top-1/2 left-0 right-0 flex justify-between items-center px-4 z-10
+                md:bottom-4 md:left-1/2 md:top-auto md:transform md:-translate-x-1/2 md:px-0
+                md:justify-center md:gap-4">
+      <button
+        id="carousel-prev"
+        class="bg-gray-800 text-white text-base h-8 w-8 flex items-center justify-center rounded-full hover:bg-gray-900 transition-colors shadow"
+        aria-label="Previous Slide"
+      >
+        &larr;
+      </button>
+      <span id="slide-number" class="hidden md:block text-md font-medium text-white">
+        1 / {topImages.length}
+      </span>
+      <button
+        id="carousel-next"
+        class="bg-gray-800 text-white text-base h-8 w-8 flex items-center justify-center rounded-full hover:bg-gray-900 transition-colors shadow"
+        aria-label="Next Slide"
+      >
+        &rarr;
+      </button>
+    </div>
+  </section>
+
+  <!-- Portfolio Cards Below the Carousel -->
+  <div id="portfolio-cards" class="container mx-auto px-4 py-12 transition-all duration-300 ease-in-out">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {projectImages.map((imagePath, index) => (
+        <div class="bg-white dark:bg-primary-800 rounded-lg shadow-lg overflow-hidden">
+          <img
+            src={imagePath}
+            alt={`Project ${index + 1}`}
+            class="w-full h-64 object-cover"
+          />
+          <div class="p-12">
+            <!-- Remove the "Project {index + 1}" placeholder and use the real title -->
+            <h2 class="text-2xl font-bold mb-2">{projectTitles[index + 1]}</h2>
+            <button class="bg-wood-dark hover:bg-wood text-white px-4 py-2 rounded-lg transition-colors">
+              View Project
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</Layout>
+
+<!-- Vanilla JS for carousel and banner behavior -->
+<script>
+  let manuallyExited = false;
+  let landscapeLocked = false;
+
+  function preventScroll() {
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+  }
+
+  function allowScroll() {
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.width = '';
+  }
+
+  function isMobilePortrait() {
+    return window.matchMedia('(max-width: 767px)').matches &&
+      (window.orientation === 0 || window.orientation === 180);
+  }
+
+  function isMobileLandscape() {
+    return window.matchMedia('(max-width: 767px)').matches &&
+      (window.orientation === 90 || window.orientation === -90);
+  }
+
+  function showBanner() {
+    const banner = document.getElementById('rotate-banner');
+    if (banner) banner.classList.remove('hidden');
+  }
+
+  function hideBanner() {
+    const banner = document.getElementById('rotate-banner');
+    if (banner) banner.classList.add('hidden');
+  }
+
+  function applyFullscreen() {
+    const wrapper = document.getElementById('carousel-wrapper');
+    const container = document.getElementById('carousel-container');
+    if (!wrapper || !container) return;
+    wrapper.style.backgroundColor = 'black';
+    wrapper.style.position = 'fixed';
+    wrapper.style.top = '0';
+    wrapper.style.left = '0';
+    wrapper.style.width = '100vw';
+    wrapper.style.height = '100vh';
+    wrapper.style.zIndex = '50';
+    container.style.width = '100vw';
+    container.style.height = '100vh';
+    wrapper.classList.add('fullscreen'); // triggers object-fit: cover via CSS
+    preventScroll();
+  }
+
+  function revertInline() {
+    const wrapper = document.getElementById('carousel-wrapper');
+    const container = document.getElementById('carousel-container');
+    if (!wrapper || !container) return;
+    wrapper.style.backgroundColor = '';
+    wrapper.style.position = '';
+    wrapper.style.top = '';
+    wrapper.style.left = '';
+    wrapper.style.width = '';
+    wrapper.style.height = '';
+    wrapper.style.zIndex = '';
+    container.style.width = '';
+    container.style.height = '';
+    wrapper.classList.remove('fullscreen');
+    allowScroll();
+  }
+
+  function updateLayout() {
+    if (manuallyExited) {
+      if (!isMobileLandscape()) {
+        revertInline();
+      }
+      return;
+    }
+    if (isMobileLandscape()) {
+      hideBanner();
+      applyFullscreen();
+      landscapeLocked = true;
+    } else {
+      if (isMobilePortrait()) {
+        showBanner();
+      } else {
+        hideBanner();
+      }
+      revertInline();
+    }
+  }
+
+  window.addEventListener('load', () => {
+    const carouselWrapper = document.getElementById('carousel-wrapper');
+    if (carouselWrapper) {
+      carouselWrapper.addEventListener('click', () => {
+        if (isMobileLandscape() && !landscapeLocked) {
+          manuallyExited = false;
+          applyFullscreen();
+          landscapeLocked = true;
+        }
+      });
+    }
+    updateLayout();
+    window.addEventListener('orientationchange', updateLayout);
+    window.addEventListener('resize', updateLayout);
+
+    const container = document.getElementById('carousel-container');
+    const prevBtn = document.getElementById('carousel-prev');
+    const nextBtn = document.getElementById('carousel-next');
+    const slideNumber = document.getElementById('slide-number');
+    if (!container || !prevBtn || !nextBtn || !slideNumber) return;
+    const slides = Array.from(container.children);
+    const totalSlides = slides.length;
+    let currentSlide = 0;
+    let isTransitioning = false;
+    let lastClickTime = 0;
+    const CLICK_DELAY = 400;
+
+    function showSlide(idx) {
+      if (idx < 0) idx = totalSlides - 1;
+      if (idx >= totalSlides) idx = 0;
+      currentSlide = idx;
+      slides.forEach((slide, i) => {
+        if (slide instanceof HTMLElement) {
+          slide.style.transform = `translateX(${100 * (i - currentSlide)}%)`;
+          slide.style.transition = 'transform 0.3s ease-out';
+        }
+      });
+      slideNumber.textContent = `${currentSlide + 1} / ${totalSlides}`;
+    }
+
+    function handleButtonClick(direction) {
+      const now = Date.now();
+      if (isTransitioning || (now - lastClickTime) < CLICK_DELAY) return;
+      isTransitioning = true;
+      lastClickTime = now;
+      showSlide(currentSlide + direction);
+      setTimeout(() => {
+        isTransitioning = false;
+      }, CLICK_DELAY);
+    }
+
+    prevBtn.addEventListener('click', () => handleButtonClick(-1));
+    nextBtn.addEventListener('click', () => handleButtonClick(1));
+
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let lastTouchY = 0;
+    let isSwiping = false;
+    let swipeDirection = null;
+    const SWIPE_THRESHOLD = 50;
+    const VERTICAL_SWIPE_THRESHOLD = 40;
+    const MIN_VELOCITY = 0.5;
+
+    container.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      lastTouchY = touchStartY;
+      isSwiping = true;
+      swipeDirection = null;
+    }, { passive: false });
+
+    container.addEventListener('touchmove', (e) => {
+      if (!isSwiping) return;
+      const currentX = e.touches[0].clientX;
+      const currentY = e.touches[0].clientY;
+      const deltaX = currentX - touchStartX;
+      const deltaY = currentY - touchStartY;
+      const moveDistance = Math.abs(deltaY);
+      if (!swipeDirection) {
+        swipeDirection = Math.abs(deltaY) > Math.abs(deltaX) ? 'vertical' : 'horizontal';
+      }
+      if (landscapeLocked) {
+        e.preventDefault();
+        if (swipeDirection === 'vertical' && moveDistance > VERTICAL_SWIPE_THRESHOLD) {
+          const velocity = Math.abs(currentY - lastTouchY);
+          if (velocity > MIN_VELOCITY) {
+            landscapeLocked = false;
+            manuallyExited = true;
+            revertInline();
+            requestAnimationFrame(() => {
+              const cards = document.getElementById('portfolio-cards');
+              if (cards) {
+                cards.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            });
+          }
+        }
+      }
+      lastTouchY = currentY;
+      if (swipeDirection === 'horizontal') {
+        slides.forEach((slide, i) => {
+          if (slide instanceof HTMLElement) {
+            const offset = (i - currentSlide) * 100;
+            slide.style.transform = `translateX(calc(${offset}% + ${deltaX}px))`;
+            slide.style.transition = 'none';
+          }
+        });
+      }
+    }, { passive: false });
+
+    container.addEventListener('touchend', (e) => {
+      if (!isSwiping) return;
+      isSwiping = false;
+      const touchEndX = e.changedTouches[0].clientX;
+      const deltaX = touchEndX - touchStartX;
+      if (swipeDirection === 'horizontal') {
+        slides.forEach((slide) => {
+          if (slide instanceof HTMLElement) {
+            slide.style.transition = 'transform 0.3s ease-out';
+          }
+        });
+        if (Math.abs(deltaX) > SWIPE_THRESHOLD) {
+          if (deltaX > 0) {
+            showSlide(currentSlide - 1);
+          } else {
+            showSlide(currentSlide + 1);
+          }
+        } else {
+          slides.forEach((slide, i) => {
+            if (slide instanceof HTMLElement) {
+              const offset = (i - currentSlide) * 100;
+              slide.style.transform = `translateX(${offset}%)`;
+            }
+          });
+        }
+      }
+      swipeDirection = null;
+    });
+
+    container.addEventListener('touchcancel', () => {
+      if (!isSwiping) return;
+      isSwiping = false;
+      slides.forEach((slide, i) => {
+        if (slide instanceof HTMLElement) {
+          slide.style.transition = 'transform 0.3s ease-out';
+          const offset = (i - currentSlide) * 100;
+          slide.style.transform = `translateX(${offset}%)`;
+        }
+      });
+    });
+
+    showSlide(0);
+  });
+
+  const dismissBanner = document.getElementById('dismiss-banner');
+  if (dismissBanner) {
+    dismissBanner.addEventListener('click', () => {
+      const banner = document.getElementById('rotate-banner');
+      if (banner) banner.classList.add('hidden');
+    });
+  }
+</script>
+---
+import Layout from '../layouts/Layout.astro';
+
+const services = [
+{
+    title: 'Small Projects',
+    description: 'Want it completed professionally? Drywall, flooring, decks, cabinet Installations and more',
+    icon: '🪚',
+    features: ['Tile', 'Aluminum', 'Siding', 'Commercial Repairs']
+  },
+  {
+    title: 'Custom Carpentry',
+    description: 'Expert craftsmanship for custom woodworking projects, including built-ins, custom cabinets, and architectural details.',
+    icon: '🔨',
+    features: ['Custom Built-ins', 'Cabinets & Shelving', 'Trim & Molding', 'Custom Furniture']
+  },
+  {
+    title: 'Home Renovations',
+    description: 'Complete home transformation services, from kitchen and bathroom remodels to full house renovations.',
+    icon: '🏠',
+    features: ['Kitchen Remodels', 'Bathroom Updates', 'Basement Finishing', 'Room Additions']
+  },
+
+  {
+    title: 'Outdoor Living',
+    description: 'Create your perfect outdoor space with custom decks, pergolas, and outdoor kitchens.',
+    icon: '🌳',
+    features: ['Custom Decks', 'Pergolas', 'Outdoor Kitchens', 'Fencing']
+  },
+  {
+    title: 'Design',
+    description: 'Spend a little extra time to get exactly what you want.',
+    icon: '🏛️',
+    features: ['3D and 2D Plans', 'Planning with Our Subtrades', 'Contacts', 'Peace of Mind']
+  }
+];
+---
+
+<Layout title="Services - Core Contracting">
+  <div class="container mx-auto px-4 py-12">
+    <h1 class="text-4xl font-display text-center mb-4">Our Services</h1>
+    <p class="text-center text-lg mb-12 max-w-2xl mx-auto">
+      Professional carpentry and contracting services tailored to your needs
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {services.map(service => (
+        <div class="bg-white dark:bg-primary-800 p-6 rounded-lg shadow-lg">
+          <div class="text-4xl mb-4">{service.icon}</div>
+          <h2 class="text-2xl font-bold mb-2">{service.title}</h2>
+          <p class="text-primary-600 dark:text-primary-300 mb-4">{service.description}</p>
+          <ul class="space-y-2">
+            {service.features.map(feature => (
+              <li class="flex items-center">
+                <svg class="h-5 w-5 text-wood-dark dark:text-wood-light mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
+                </svg>
+                {feature}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-12 text-center">
+      <a
+        href="/contact"
+        class="inline-block bg-wood-dark hover:bg-wood text-white px-8 py-3 rounded-lg transition-colors"
+      >
+        Get a Free Quote
+      </a>
+    </div>
+  </div>
+</Layout>
+---
+import Layout from '../layouts/Layout.astro';
+
+const services = [
+{
+    title: 'Small Projects',
+    description: 'Want it completed professionally? Drywall, flooring, decks, cabinet Installations and more',
+    icon: '🪚',
+    features: ['Tile', 'Aluminum', 'Siding', 'Commercial Repairs']
+  },
+  {
+    title: 'Custom Carpentry',
+    description: 'Expert craftsmanship for custom woodworking projects, including built-ins, custom cabinets, and architectural details.',
+    icon: '🔨',
+    features: ['Custom Built-ins', 'Cabinets & Shelving', 'Trim & Molding', 'Custom Furniture']
+  },
+  {
+    title: 'Home Renovations',
+    description: 'Complete home transformation services, from kitchen and bathroom remodels to full house renovations.',
+    icon: '🏠',
+    features: ['Kitchen Remodels', 'Bathroom Updates', 'Basement Finishing', 'Room Additions']
+  },
+
+  {
+    title: 'Outdoor Living',
+    description: 'Create your perfect outdoor space with custom decks, pergolas, and outdoor kitchens.',
+    icon: '🌳',
+    features: ['Custom Decks', 'Pergolas', 'Outdoor Kitchens', 'Fencing']
+  },
+  {
+    title: 'Design',
+    description: 'Spend a little extra time to get exactly what you want.',
+    icon: '🏛️',
+    features: ['3D and 2D Plans', 'Planning with Our Subtrades', 'Contacts', 'Peace of Mind']
+  }
+];
+---
+
+<Layout title="Services - Core Contracting">
+  <div class="container mx-auto px-4 py-12">
+    <h1 class="text-4xl font-display text-center mb-4">Our Services</h1>
+    <p class="text-center text-lg mb-12 max-w-2xl mx-auto">
+      Professional carpentry and contracting services tailored to your needs
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {services.map(service => (
+        <div class="bg-white dark:bg-primary-800 p-6 rounded-lg shadow-lg">
+          <div class="text-4xl mb-4">{service.icon}</div>
+          <h2 class="text-2xl font-bold mb-2">{service.title}</h2>
+          <p class="text-primary-600 dark:text-primary-300 mb-4">{service.description}</p>
+          <ul class="space-y-2">
+            {service.features.map(feature => (
+              <li class="flex items-center">
+                <svg class="h-5 w-5 text-wood-dark dark:text-wood-light mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
+                </svg>
+                {feature}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-12 text-center">
+      <a
+        href="/contact"
+        class="inline-block bg-wood-dark hover:bg-wood text-white px-8 py-3 rounded-lg transition-colors"
+      >
+        Get a Free Quote
+      </a>
+    </div>
+  </div>
+</Layout>

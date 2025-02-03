@@ -97,28 +97,48 @@ const projectTitles: Record<number, string> = {
     </div>
   </section>
 
-  <!-- Portfolio Cards Below the Carousel -->
-  <div id="portfolio-cards" class="container mx-auto px-4 py-12 transition-all duration-300 ease-in-out">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {projectImages.map((imagePath, index) => (
-        <div class="bg-white dark:bg-primary-800 rounded-lg shadow-lg overflow-hidden">
-          <img
-            src={imagePath}
-            alt={`Project ${index + 1}`}
-            class="w-full h-64 object-cover"
-          />
-          <div class="p-6">
-            <!-- Remove the "Project {index + 1}" placeholder and use the real title -->
-            <h2 class="text-2xl font-bold mb-2">{projectTitles[index + 1]}</h2>
-            <button class="bg-wood-dark hover:bg-wood text-white px-4 py-2 rounded-lg transition-colors">
-              View Project
-            </button>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-</Layout>
+<!-- Portfolio Cards Below the Carousel -->
+<div id="portfolio-cards" class="container mx-auto px-4 py-12 mb-48 transition-all duration-300 ease-in-out">
+  {(() => {
+    // Group projectImages into rows of up to 3 items
+    const rows = [];
+    for (let i = 0; i < projectImages.length; i += 3) {
+      rows.push(projectImages.slice(i, i + 3));
+    }
+    return rows.map((row, rowIndex) => (
+      <div class={`flex justify-center items-start gap-4 ${rowIndex > 0 ? "mt-16" : ""}`}>
+        {row.map((imagePath, colIndex) => {
+          const globalIndex = rowIndex * 3 + colIndex;
+          let alignmentClass = "";
+          if (row.length === 3) {
+            // For full rows: left, center, and right align
+            if (colIndex === 0) alignmentClass = "self-start";
+            else if (colIndex === 1) alignmentClass = "mx-auto";
+            else if (colIndex === 2) alignmentClass = "self-end";
+          } else {
+            // In incomplete rows, center all cards
+            alignmentClass = "mx-auto";
+          }
+          return (
+            <div class={`transform scale-110 bg-white dark:bg-primary-800 rounded-lg shadow-lg overflow-hidden ${alignmentClass}`}>
+              <img
+                src={imagePath}
+                alt={`Project ${globalIndex + 1}`}
+                class="w-full h-64 object-cover"
+              />
+              <div class="p-6">
+                <h2 class="text-2xl font-bold mb-2">{projectTitles[globalIndex + 1]}</h2>
+                <button class="bg-wood-dark hover:bg-wood text-white px-4 py-2 rounded-lg transition-colors">
+                  View Project
+                </button>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    ));
+  })()}
+</div>
 
 <!-- Vanilla JS for carousel and banner behavior -->
 <script>
