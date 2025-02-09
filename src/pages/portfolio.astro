@@ -25,25 +25,25 @@ const topImages = [
   '/images/Top10.jpeg',
 ];
 
-const projectImages = [
-  '/images/placeholder_1.jpeg',
-  '/images/placeholder_2.jpeg',
-  '/images/placeholder_3.jpeg',
-  '/images/placeholder_4.jpeg',
-  '/images/placeholder_5.jpeg',
-  '/images/placeholder_6.jpeg',
-];
+// Optional: Define a TypeScript interface for better type safety
+interface Project {
+  id: number;
+  title: string;
+  link: string;
+  image: string;
+}
 
-// Using a dictionary (object) for the project titles
-const projectTitles: Record<number, string> = {
-  1: 'High-End Bathroom Uplift',
-  2: 'Backyard Reno',
-  3: 'Bathroom Maple Beams',
-  4: 'Vertical Siding on Poolhouse',
-  5: 'Apartment Fire-Door',
-  6: 'Beachouse Stair Repair'
-};
+// Array of project objects
+const projects: Project[] = [
+  { id: 1, title: 'High-End Bathroom Uplift', link: '/p-sub/p1', image: '/images/placeholder_1.jpeg' },
+  { id: 2, title: 'Spring Backyard Reno',            link: '/p-sub/p2', image: '/images/placeholder_2.jpeg' },
+  { id: 3, title: 'Bathroom Maple Beams',      link: '/p-sub/p3', image: '/images/placeholder_3.jpeg' },
+  { id: 4, title: 'Vertical Siding on Poolhouse', link: '/p-sub/p4', image: '/images/placeholder_4.jpeg' },
+  { id: 5, title: 'Apartment Fire-Door',       link: '/p-sub/p5', image: '/images/placeholder_5.jpeg' },
+  { id: 6, title: 'Beachouse Stair Repair',    link: '/p-sub/p6', image: '/images/placeholder_6.jpeg' },
+];
 ---
+
 <Layout title="Portfolio - Core Contracting">
   <!-- Banner prompting device rotation with dismiss button -->
   <div id="rotate-banner" class="hidden fixed top-0 left-0 w-full bg-yellow-300 text-black p-3 z-[999] flex items-center justify-between">
@@ -100,19 +100,20 @@ const projectTitles: Record<number, string> = {
   <!-- Portfolio Cards Below the Carousel -->
   <div id="portfolio-cards" class="container mx-auto px-4 py-12 transition-all duration-300 ease-in-out">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {projectImages.map((imagePath, index) => (
+      {projects.map((project) => (
         <div class="bg-white dark:bg-primary-800 rounded-lg shadow-lg overflow-hidden">
           <img
-            src={imagePath}
-            alt={`Project ${index + 1}`}
+            src={project.image}
+            alt={project.title}
             class="w-full h-64 object-cover"
           />
           <div class="p-6">
-            <!-- Remove the "Project {index + 1}" placeholder and use the real title -->
-            <h2 class="text-2xl font-bold mb-2">{projectTitles[index + 1]}</h2>
-            <button class="bg-wood-dark hover:bg-wood text-white px-4 py-2 rounded-lg transition-colors">
-              View Project
-            </button>
+            <h2 class="text-2xl font-bold mb-2">{project.title}</h2>
+            <a href={project.link}>
+              <button class="bg-wood-dark hover:bg-wood text-white px-4 py-2 rounded-lg transition-colors">
+                View Project
+              </button>
+            </a>
           </div>
         </div>
       ))}

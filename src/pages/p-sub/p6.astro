@@ -1,0 +1,48 @@
+---
+export const prerender = false;
+
+import Layout from '../../layouts/Layout.astro';
+
+// Replace these with dynamic content if desired (e.g., via frontmatter or CMS data)
+const projectTitle = 'High-End Bathroom Uplift';
+const projectDescription = 'This project involved a complete bathroom transformation with high-quality materials, custom cabinetry, and premium fixtures. Our expert team delivered outstanding craftsmanship that exceeded our client’s expectations.';
+
+const gridImages = [
+  '/images/page6_1.jpeg',
+  '/images/page6_2.jpeg',
+  '/images/page6_3.jpeg',
+  '/images/page6_4.jpeg',
+  '/images/page6_5.jpeg',
+  '/images/page6_6.jpeg',
+  '/images/page6_7.jpeg',
+  '/images/page6_8.jpeg',
+  '/images/page6_9.jpeg',
+];
+---
+<Layout title={`Portfolio - ${projectTitle}`}>
+  <div class="container mx-auto px-4 py-12">
+    <!-- Project Title and Description -->
+    <h1 class="text-4xl font-display text-center mb-4">{projectTitle}</h1>
+    <p class="text-center mb-8 max-w-2xl mx-auto">{projectDescription}</p>
+
+    <!-- 3x3 Image Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      {gridImages.map((image, index) => (
+        <div class="overflow-hidden rounded-lg shadow">
+          <img
+            src={image}
+            alt={`Project Image ${index + 1}`}
+            class="w-full h-64 object-cover"
+          />
+        </div>
+      ))}
+    </div>
+
+    <!-- Navigation Back to Main Portfolio -->
+    <div class="mt-8 text-center">
+      <a href="/portfolio" class="bg-wood-dark hover:bg-wood text-white px-6 py-3 rounded-lg transition-colors">
+        Back to Portfolio
+      </a>
+    </div>
+  </div>
+</Layout>
