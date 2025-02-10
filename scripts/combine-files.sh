@@ -1,10 +1,13 @@
 #!/bin/bash
 
-# Set the name of the output file
-output_file="combined_files.txt"
+# Get the directory where the script resides
+script_dir="$(cd "$(dirname "$0")" && pwd)"
 
-# Get the current directory automatically
-repo_root="$PWD"
+# Set the repository root as one level up from the script directory
+repo_root="$(cd "$script_dir/.." && pwd)"
+
+# Set the name of the output file relative to the script directory
+output_file="$script_dir/combined_files.txt"
 
 # Check for the -l option
 if [ "$1" == "-l" ]; then
@@ -46,7 +49,7 @@ echo "" >> "$temp_file"
 
 # Process each file name provided as a command-line argument
 for file_pattern in "$@"; do
-  # Find files matching the pattern (including [id].ts)
+  # Find files matching the pattern (including [id].ts) starting from the repo root
   find "$repo_root" -name "$file_pattern" -type f -print0 | while IFS= read -r -d $'\0' file; do
     # Check if the file is text-based
     if file "$file" | grep -q "text"; then
