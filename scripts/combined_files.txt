@@ -1,2 +1,225 @@
-Files used in this run: Layout Header ThemeToggle
+Files used in this run: Layout.astro Header.astro ThemeToggle.astro
 
+---
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/700.css';
+import '@fontsource/merriweather/400.css';
+import '@fontsource/merriweather/700.css';
+import '@fontsource/racing-sans-one/400.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = "Core Contracting - Professional Carpentry and Contracting Services in North Bay, Ontario",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <style>
+      html {
+        -webkit-text-size-adjust: 100%; /* Maintain compatibility */
+      }
+
+      /* Feature detection for view-transition properties */
+      @supports (view-transition-name: fade) {
+        html {
+          /* Safely ignore experimental property */
+        }
+      }
+    </style>
+  </head>
+  <body
+    class="min-h-screen bg-primary-50 dark:bg-primary-900 text-primary-900 dark:text-primary-50 transition-colors duration-300"
+  >
+    <Header>
+      <slot name="theme-toggle" slot="theme-toggle" />
+    </Header>
+    <main class="container mx-auto px-4 py-8">
+      <slot transition:animate="slide" />
+    </main>
+    <Footer />
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (mobileMenuButton && mobileMenu) {
+          mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
+---
+import ThemeToggle from "./ThemeToggle.astro";
+
+const navItems = [
+  { href: "/", text: "Home" },
+  { href: "/services", text: "Services" },
+  { href: "/portfolio", text: "Portfolio" },
+  { href: "/about", text: "About" },
+  { href: "/blog", text: "Blog" },
+  { href: "/contact", text: "Contact" },
+];
+---
+
+<header class="bg-white dark:bg-primary-800 shadow-md">
+  <nav class="container mx-auto px-4 py-4">
+    <div class="flex items-center justify-between">
+      <a
+        href="/"
+        class="text-2xl font-display text-wood-dark dark:text-wood-light"
+      >
+        Core Contracting
+      </a>
+
+      <div class="hidden md:flex items-center space-x-6">
+        {
+          navItems.map((item) => (
+            <a
+              href={item.href}
+              class:list={[
+                "text-primary-600 dark:text-primary-300 hover:text-wood-dark dark:hover:text-wood-light transition-colors",
+                {
+                  "font-bold": Astro.url.pathname === item.href,
+                  "hover:text-blue-700 dark:hover:text-blue-300":
+                    Astro.url.pathname !== item.href,
+                  "active:text-blue-800 dark:active:text-blue-200":
+                    Astro.url.pathname !== item.href,
+                },
+              ]}
+            >
+              {item.text}
+              {" "}
+            </a>
+          ))
+        }
+        <ThemeToggle />
+      </div>
+
+      <div class="flex items-center md:hidden">
+        <button
+
+          id="mobile-menu-button"
+
+          class="md:hidden p-2 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-700 active:bg-primary-200 dark:active:bg-primary-600"
+
+          aria-label="Toggle menu"
+
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div
+      id="mobile-menu"
+      class="hidden md:hidden mt-4 space-y-4 bg-primary-50 dark:bg-primary-800 p-4 rounded-lg"
+    >
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              "block py-2 text-primary-600 dark:text-primary-300 hover:text-wood-dark dark:hover:text-wood-light transition-colors",
+              {
+                "font-bold": Astro.url.pathname === item.href,
+                "hover:text-blue-700 dark:hover:text-blue-300":
+                  Astro.url.pathname !== item.href,
+                "active:text-blue-800 dark:active:text-blue-200":
+                  Astro.url.pathname !== item.href,
+              },
+            ]}
+          >
+            {item.text}{" "}
+          </a>
+        ))
+      }
+    </div>
+  </nav>
+</header>
+
+---
+// (No frontmatter is required in this case)
+---
+
+<button id="theme-toggle" type="button" aria-label="Toggle Light/Dark">
+  <span id="theme-icon" class="flex items-center justify-center"></span>
+</button>
+
+<script>
+  // Function to update the theme toggle icon
+  function updateThemeIcon(isDark) {
+    const themeIcon = document.getElementById('theme-icon');
+    if (isDark) {
+      themeIcon.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round"
+             stroke-linejoin="round" class="w-6 h-6 text-yellow-300">
+          <circle cx="12" cy="12" r="5" />
+          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+        </svg>
+      `;
+    } else {
+      themeIcon.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round"
+             stroke-linejoin="round" class="w-6 h-6 text-blue-700">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+      `;
+    }
+  }
+
+  // Initialize the icon based on the current theme.
+  // The initial theme is already set by an inline script in your layout's <head>
+  updateThemeIcon(document.documentElement.classList.contains('dark'));
+
+  // Attach click event to toggle the theme and update localStorage
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    const isDark = document.documentElement.classList.contains('dark');
+    if (isDark) {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('colorScheme', 'light');
+    } else {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('colorScheme', 'dark');
+    }
+    updateThemeIcon(!isDark);
+  });
+</script>
