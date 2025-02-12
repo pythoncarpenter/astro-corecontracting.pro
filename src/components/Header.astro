@@ -21,6 +21,7 @@ const navItems = [
         Core Contracting
       </a>
 
+      <!-- Desktop Navigation -->
       <div class="hidden md:flex items-center space-x-6">
         {
           navItems.map((item) => (
@@ -37,23 +38,19 @@ const navItems = [
                 },
               ]}
             >
-              {item.text}
-              {" "}
+              {item.text}{" "}
             </a>
           ))
         }
         <ThemeToggle />
       </div>
 
+      <!-- Mobile Menu Toggle Button -->
       <div class="flex items-center md:hidden">
         <button
-
           id="mobile-menu-button"
-
           class="md:hidden p-2 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-700 active:bg-primary-200 dark:active:bg-primary-600"
-
           aria-label="Toggle menu"
-
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -66,12 +63,14 @@ const navItems = [
               stroke-linecap="round"
               stroke-linejoin="round"
               stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16"></path>
+              d="M4 6h16M4 12h16M4 18h16"
+            ></path>
           </svg>
         </button>
       </div>
     </div>
 
+    <!-- Mobile Menu -->
     <div
       id="mobile-menu"
       class="hidden md:hidden mt-4 space-y-4 bg-primary-50 dark:bg-primary-800 p-4 rounded-lg"
@@ -95,6 +94,10 @@ const navItems = [
           </a>
         ))
       }
+      <!-- Include ThemeToggle for Mobile -->
+      <div class="mt-4">
+        <ThemeToggle />
+      </div>
     </div>
   </nav>
 </header>

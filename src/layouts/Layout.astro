@@ -16,10 +16,20 @@ const {
   title,
   description = "Core Contracting - Professional Carpentry and Contracting Services in North Bay, Ontario",
 } = Astro.props;
+
+// Access SSR request
+const request = Astro.request;
+const cookieHeader = request?.headers.get('cookie') ?? "";
+
+// Attempt to match `theme=dark` or `theme=light` from the cookie
+const match = cookieHeader.match(/theme=(dark|light)/);
+const userTheme = match?.[1] ?? "light"; 
+// If no cookie, fallback to light or your existing logic
+
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class={userTheme === "dark" ? "dark" : ""}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
