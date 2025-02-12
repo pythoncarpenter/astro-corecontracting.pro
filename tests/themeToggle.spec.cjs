@@ -1,5 +1,8 @@
-// tests/themeToggle.spec.js
+// tests/themeToggle.spec.cjs
 const { test, expect } = require('@playwright/test');
+
+// Determine base URL from environment or fallback to localhost
+const baseUrl = process.env.BASE_URL || 'http://localhost:4321';
 
 // Helper function to attach a MutationObserver that logs theme changes.
 async function attachThemeObserver(page) {
@@ -25,8 +28,8 @@ test.describe('Theme Toggle Behavior - Dark Mode (System default dark)', () => {
     // Attach MutationObserver to capture class changes on <html>
     await attachThemeObserver(page);
 
-    // Navigate to your website (adjust the URL as needed)
-    await page.goto('http://localhost:4321');
+    // Navigate using the baseUrl variable
+    await page.goto(baseUrl);
     await page.waitForLoadState('load');
 
     // Debug: Log initial class attribute of <html>
@@ -67,8 +70,8 @@ test.describe('Theme Toggle Behavior - Light Mode (System default light)', () =>
     // Attach MutationObserver to capture class changes on <html>
     await attachThemeObserver(page);
 
-    // Navigate to your website (adjust the URL as needed)
-    await page.goto('http://localhost:4321');
+    // Navigate using the baseUrl variable
+    await page.goto(baseUrl);
     await page.waitForLoadState('load');
 
     // Debug: Log initial class attribute of <html>
