@@ -1,12 +1,12 @@
 ---
 // No frontmatter needed for this component
 ---
-<button class="theme-toggle-btn p-2 rounded focus:outline-none" aria-label="Toggle Light/Dark">
+<button id="theme-toggle" class="theme-toggle-btn p-2 rounded focus:outline-none" aria-label="Toggle Light/Dark">
   <span class="theme-icon flex items-center justify-center"></span>
 </button>
 
-<script>
-  // Define SVG icons
+<script is:inline>
+  // Define SVG icons for visual feedback
   const sunIcon = `
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
          stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -24,18 +24,29 @@
     </svg>
   `;
 
-  // Update all theme toggle icons across the page
+  // Function to update the toggle button icons across the page
   function updateAllToggleIcons(isDark) {
     document.querySelectorAll('.theme-icon').forEach((iconEl) => {
       iconEl.innerHTML = isDark ? sunIcon : moonIcon;
     });
   }
 
-  // Set initial state based on <html> class (set by your layout)  
-  const isDarkMode = document.documentElement.classList.contains('dark');
+  // Determine the initial theme:
+  // - Use stored value if available
+  // - Otherwise, use system preference (via matchMedia)
+  const storedTheme = localStorage.getItem('colorScheme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const isDarkMode = storedTheme ? storedTheme === 'dark' : prefersDark;
+
+  if (isDarkMode) {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+  localStorage.setItem('colorScheme', isDarkMode ? 'dark' : 'light');
   updateAllToggleIcons(isDarkMode);
 
-  // Function to toggle the theme
+  // Function to toggle the theme on user action
   function toggleTheme() {
     const currentlyDark = document.documentElement.classList.contains('dark');
     const newThemeIsDark = !currentlyDark;
@@ -49,7 +60,7 @@
     updateAllToggleIcons(newThemeIsDark);
   }
 
-  // Attach the event listener to all toggle buttons (both desktop and mobile)
+  // Attach event listener to the toggle button
   document.querySelectorAll('.theme-toggle-btn').forEach((btn) => {
     btn.addEventListener('click', toggleTheme);
   });

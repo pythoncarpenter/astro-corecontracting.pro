@@ -1,4 +1,3 @@
-// tests/themeToggle.spec.cjs
 const { test, expect } = require('@playwright/test');
 
 // Determine base URL from environment or fallback to localhost
