@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail  # Exit on error, undefined var, and handle pipeline errors
+set -euo pipefail
 
 # Directory configuration
 PROJECT_DIR="/Users/mitchmcquoid/z9b-projects/business_proj/astro-corecontracting.pro"
@@ -26,7 +26,7 @@ echo -e "${YELLOW}=== Core Contracting Quick Deploy ===${NC}"
 cd "$PROJECT_DIR" || exit 1
 echo -e "${BLUE}Starting deployment process...${NC}"
 
-# Build the project (uncomment if needed)
+# Build the project
 echo -e "${BLUE}Running npm build...${NC}"
 npm run build
 check_status
