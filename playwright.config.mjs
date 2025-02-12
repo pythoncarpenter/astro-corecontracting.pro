@@ -8,4 +8,5 @@ export default defineConfig({
   // You can add more configuration options here if needed
   use: {
     baseURL: process.env.BASE_URL || 'http://localhost:4321'
+  }
 });
