@@ -59,5 +59,5 @@ if [ "${1:-}" = "pw" ]; then
     echo -e "${BLUE}Running Playwright tests on draft URL...${NC}"
     export BASE_URL="$DRAFT_URL"
     echo -e "${BLUE}BASE_URL set to ${BASE_URL}${NC}"
-    npx playwright test
+    npx playwright test -ui
 fi

@@ -7,6 +7,7 @@ export default defineConfig({
   testDir: './tests',
   // You can add more configuration options here if needed
   use: {
+    headless: false,
     baseURL: process.env.BASE_URL || 'http://localhost:4321'
   }
 });
